@@ -31,22 +31,24 @@ REPO_ROOT   = Path(__file__).resolve().parent.parent
 DATA_DIR    = REPO_ROOT / "data"
 OUTPUT_FILE = DATA_DIR / "activities.json"
 
-FETCH_LIMIT  = 20
+FETCH_LIMIT   = 20
 RUNNING_TYPES = {"running", "trail_running", "treadmill_running"}
 
-BASE_URL = "https://connectapi.garmin.com"
-ACTIVITY_LIST_URL = f"{BASE_URL}/activity-service/activity/search/activities"
-ACTIVITY_LAPS_URL = f"{BASE_URL}/activity-service/activity/{{act_id}}/splits"
+# URL corretti Garmin Connect
+ACTIVITY_LIST_URL = "https://connect.garmin.com/activitylist-service/activities/search/activities"
+ACTIVITY_LAPS_URL = "https://connect.garmin.com/activity-service/activity/{act_id}/splits"
 
 # ── Helper ──────────────────────────────────────────────────────────────────
 
 def get_session(jwt_fgp: str, sso_guid: str) -> requests.Session:
     session = requests.Session()
     session.headers.update({
-        "User-Agent": "GCM-iOS-5.7.2.1 (com.garmin.connect.mobile; build:5.7.2.1; iOS 17.0) Alamofire/5.7.1",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
         "NK": "NT",
         "X-app-ver": "4.70.1.0",
-        "X-lang": "it-IT",
+        "Accept": "application/json, text/javascript, */*; q=0.01",
+        "Accept-Language": "it-IT,it;q=0.9",
+        "Referer": "https://connect.garmin.com/modern/activities",
     })
     session.cookies.set("JWT_FGP", jwt_fgp, domain=".garmin.com")
     session.cookies.set("GARMIN-SSO-CUST-GUID", sso_guid, domain=".garmin.com")
@@ -57,9 +59,9 @@ def fetch_activities(session: requests.Session) -> list:
     params = {
         "start": 0,
         "limit": FETCH_LIMIT,
-        "activityType": "running",
     }
     r = session.get(ACTIVITY_LIST_URL, params=params, timeout=30)
+    log.info("Status attività: %s", r.status_code)
     r.raise_for_status()
     return r.json()
 
@@ -121,29 +123,30 @@ def parse_laps(laps_raw: list) -> list:
 
 
 def build_activity(act: dict, laps_raw: list) -> dict:
-    dist  = act.get("distance") or 0
-    dur   = act.get("duration") or act.get("movingDuration") or 0
+    dist   = act.get("distance") or 0
+    dur    = act.get("duration") or act.get("movingDuration") or 0
     avg_hr = act.get("averageHR") or act.get("averageHeartRate")
     max_hr = act.get("maxHR") or act.get("maxHeartRate")
-    pace  = (dur / (dist / 1000)) if dist > 50 else None
+    pace   = (dur / (dist / 1000)) if dist > 50 else None
     return {
-        "garmin_id":     act.get("activityId"),
-        "date":          activity_date(act),
-        "start_time":    act.get("startTimeLocal", "")[:19],
-        "name":          act.get("activityName", "Corsa"),
-        "type":          act.get("activityType", {}).get("typeKey", "running"),
-        "distance_m":    round(dist),
-        "distance_km":   round(dist / 1000, 2),
-        "duration_s":    round(dur),
-        "avg_hr":        round(avg_hr) if avg_hr else None,
-        "max_hr":        round(max_hr) if max_hr else None,
-        "avg_pace_s_km": round(pace) if pace else None,
-        "avg_pace_fmt":  fmt_pace(pace) if pace else "—",
-        "calories":      act.get("calories"),
+        "garmin_id":      act.get("activityId"),
+        "date":           activity_date(act),
+        "start_time":     act.get("startTimeLocal", "")[:19],
+        "name":           act.get("activityName", "Corsa"),
+        "type":           act.get("activityType", {}).get("typeKey", "running"),
+        "distance_m":     round(dist),
+        "distance_km":    round(dist / 1000, 2),
+        "duration_s":     round(dur),
+        "avg_hr":         round(avg_hr) if avg_hr else None,
+        "max_hr":         round(max_hr) if max_hr else None,
+        "avg_pace_s_km":  round(pace) if pace else None,
+        "avg_pace_fmt":   fmt_pace(pace) if pace else "—",
+        "calories":       act.get("calories"),
         "elevation_gain": act.get("elevationGain"),
-        "laps":          parse_laps(laps_raw),
-        "fetched_at":    datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "laps":           parse_laps(laps_raw),
+        "fetched_at":     datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
     }
+
 
 # ── Main ────────────────────────────────────────────────────────────────────
 
@@ -169,7 +172,10 @@ def main():
         raise SystemExit(f"❌  Errore API Garmin: {e}")
 
     if not isinstance(activities, list):
-        raise SystemExit(f"❌  Risposta inattesa da Garmin: {activities}")
+        log.error("Risposta inattesa: %s", str(activities)[:300])
+        raise SystemExit("❌  Risposta non valida da Garmin")
+
+    log.info("Attività ricevute: %d", len(activities))
 
     new_acts = [
         a for a in activities
