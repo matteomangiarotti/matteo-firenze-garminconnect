@@ -34,9 +34,16 @@ OUTPUT_FILE = DATA_DIR / "activities.json"
 FETCH_LIMIT   = 20
 RUNNING_TYPES = {"running", "trail_running", "treadmill_running"}
 
-# URL corretti Garmin Connect
-ACTIVITY_LIST_URL = "https://connect.garmin.com/activitylist-service/activities/search/activities"
-ACTIVITY_LAPS_URL = "https://connect.garmin.com/activity-service/activity/{act_id}/splits"
+# Endpoints Garmin Connect (lista da provare in ordine)
+ACTIVITY_LIST_URLS = [
+    "https://connect.garmin.com/activitylist-service/activities/search/activities",
+    "https://connect.garmin.com/proxy/activitylist-service/activities/search/activities",
+    "https://connect.garmin.com/modern/proxy/activitylist-service/activities/search/activities",
+]
+ACTIVITY_LAPS_URLS = [
+    "https://connect.garmin.com/activity-service/activity/{act_id}/splits",
+    "https://connect.garmin.com/proxy/activity-service/activity/{act_id}/splits",
+]
 
 # ── Helper ──────────────────────────────────────────────────────────────────
 
@@ -49,6 +56,8 @@ def get_session(jwt_fgp: str, sso_guid: str) -> requests.Session:
         "Accept": "application/json, text/javascript, */*; q=0.01",
         "Accept-Language": "it-IT,it;q=0.9",
         "Referer": "https://connect.garmin.com/modern/activities",
+        "X-Requested-With": "XMLHttpRequest",
+        "Di-Backend": "connectapi.garmin.com",
     })
     session.cookies.set("JWT_FGP", jwt_fgp, domain=".garmin.com")
     session.cookies.set("GARMIN-SSO-CUST-GUID", sso_guid, domain=".garmin.com")
@@ -56,26 +65,33 @@ def get_session(jwt_fgp: str, sso_guid: str) -> requests.Session:
 
 
 def fetch_activities(session: requests.Session) -> list:
-    params = {
-        "start": 0,
-        "limit": FETCH_LIMIT,
-    }
-    r = session.get(ACTIVITY_LIST_URL, params=params, timeout=30)
-    log.info("Status attività: %s", r.status_code)
-    r.raise_for_status()
-    return r.json()
+    """Prova gli endpoint in ordine finché uno funziona."""
+    params = {"start": 0, "limit": FETCH_LIMIT}
+    last_error = None
+    for url in ACTIVITY_LIST_URLS:
+        try:
+            log.info("Provo endpoint: %s", url)
+            r = session.get(url, params=params, timeout=30)
+            log.info("  Status: %s", r.status_code)
+            if r.status_code == 200:
+                return r.json()
+            last_error = f"HTTP {r.status_code} da {url}"
+        except Exception as e:
+            last_error = str(e)
+            log.warning("  Errore: %s", e)
+    raise SystemExit(f"❌  Nessun endpoint funzionante. Ultimo errore: {last_error}")
 
 
 def fetch_laps(session: requests.Session, act_id: int) -> list:
-    url = ACTIVITY_LAPS_URL.format(act_id=act_id)
-    try:
-        r = session.get(url, timeout=30)
-        r.raise_for_status()
-        data = r.json()
-        return data.get("lapDTOs", [])
-    except Exception as e:
-        log.warning("Lap non disponibili per %s: %s", act_id, e)
-        return []
+    for url_tpl in ACTIVITY_LAPS_URLS:
+        url = url_tpl.format(act_id=act_id)
+        try:
+            r = session.get(url, timeout=30)
+            if r.status_code == 200:
+                return r.json().get("lapDTOs", [])
+        except Exception as e:
+            log.warning("Lap non disponibili per %s: %s", act_id, e)
+    return []
 
 
 def load_existing() -> dict:
@@ -166,10 +182,7 @@ def main():
     session = get_session(jwt_fgp, sso_guid)
 
     log.info("Scarico le ultime %d attività...", FETCH_LIMIT)
-    try:
-        activities = fetch_activities(session)
-    except requests.HTTPError as e:
-        raise SystemExit(f"❌  Errore API Garmin: {e}")
+    activities = fetch_activities(session)
 
     if not isinstance(activities, list):
         log.error("Risposta inattesa: %s", str(activities)[:300])
