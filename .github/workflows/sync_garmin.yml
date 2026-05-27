@@ -1,0 +1,47 @@
+name: Sync Garmin Activities
+
+on:
+  # Esegue ogni 15 minuti (puoi ridurlo a 10 se vuoi)
+  schedule:
+    - cron: "*/15 * * * *"
+
+  # Permette di avviarlo manualmente dalla tab Actions su GitHub
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # necessario per il commit automatico
+
+    steps:
+      # 1. Checkout del repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Installa Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # 3. Installa dipendenze
+      - name: Install dependencies
+        run: pip install garminconnect
+
+      # 4. Esegue lo script di sincronizzazione
+      - name: Run Garmin sync script
+        env:
+          GARMIN_EMAIL:    ${{ secrets.GARMIN_EMAIL }}
+          GARMIN_PASSWORD: ${{ secrets.GARMIN_PASSWORD }}
+        run: python scripts/scarica_garmin.py
+
+      # 5. Commit e push di data/activities.json se è cambiato
+      - name: Commit updated activities
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/activities.json
+          # Commita solo se c'è qualcosa di nuovo
+          git diff --cached --quiet || git commit -m "chore: aggiorna activities.json [skip ci]"
+          git push
