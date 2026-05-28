@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-scarica_garmin.py — usa GARMIN-SSO-CUST-GUID + GARMIN-SSO-GUID
+scarica_garmin.py — usa JWT_WEB + SESSIONID
 """
 import os, json, time, logging, requests
 from datetime import datetime, timezone
@@ -15,7 +15,7 @@ OUTPUT_FILE = DATA_DIR / "activities.json"
 FETCH_LIMIT = 20
 RUNNING_TYPES = {"running", "trail_running", "treadmill_running"}
 
-def get_session(cust_guid, sso_guid):
+def get_session(jwt_web, session_id, cust_guid, sso_guid):
     s = requests.Session()
     s.headers.update({
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
@@ -25,28 +25,30 @@ def get_session(cust_guid, sso_guid):
         "Accept-Language": "it-IT,it;q=0.9",
         "Referer": "https://connect.garmin.com/modern/activities",
         "X-Requested-With": "XMLHttpRequest",
-        "Di-Backend": "connectapi.garmin.com",
+        "Authorization": f"Bearer {jwt_web}",
     })
+    s.cookies.set("JWT_WEB", jwt_web, domain=".garmin.com")
+    s.cookies.set("SESSIONID", session_id, domain="connect.garmin.com")
     s.cookies.set("GARMIN-SSO", "1", domain=".garmin.com")
     s.cookies.set("GARMIN-SSO-CUST-GUID", cust_guid, domain=".garmin.com")
     s.cookies.set("GARMIN-SSO-GUID", sso_guid, domain=".garmin.com")
     return s
 
 def fetch_activities(session):
-    # Prova varianti di parametri sul primo endpoint che risponde 200
-    url = "https://connect.garmin.com/proxy/activitylist-service/activities/search/activities"
-    param_variants = [
-        {"start": 0, "limit": FETCH_LIMIT},
-        {"start": "0", "limit": str(FETCH_LIMIT), "activityType": "running"},
-        {"start": 0, "limit": FETCH_LIMIT, "sortField": "startLocal", "sortOrder": "desc"},
+    endpoints = [
+        ("https://connect.garmin.com/proxy/activitylist-service/activities/search/activities",
+         {"start": 0, "limit": FETCH_LIMIT}),
+        ("https://connect.garmin.com/proxy/activitylist-service/activities/search/activities",
+         {"start": 0, "limit": FETCH_LIMIT, "sortField": "startLocal", "sortOrder": "desc"}),
+        ("https://connect.garmin.com/activitylist-service/activities/search/activities",
+         {"start": 0, "limit": FETCH_LIMIT}),
     ]
-    for params in param_variants:
+    for url, params in endpoints:
         try:
-            log.info("Provo params: %s", params)
+            log.info("Provo: %s | params: %s", url.split("/")[-1], params)
             r = session.get(url, params=params, timeout=30)
-            log.info("  → %s | %s", r.status_code, r.headers.get("Content-Type",""))
-            log.info("  → Body: %s", r.text[:300])
-            if r.status_code == 200 and r.text.strip():
+            log.info("  → %s | %s | body: %s", r.status_code, r.headers.get("Content-Type",""), r.text[:300])
+            if r.status_code == 200 and r.text.strip() and r.text.strip() != "{}":
                 data = r.json()
                 if isinstance(data, list) and data:
                     log.info("  ✅ Lista con %d elementi", len(data))
@@ -56,19 +58,10 @@ def fetch_activities(session):
                         if key in data and isinstance(data[key], list) and data[key]:
                             log.info("  ✅ Dict[%s] con %d elementi", key, len(data[key]))
                             return data[key]
-                    log.warning("  → Dict senza lista: %s", list(data.keys()))
+                    log.warning("  → Dict keys: %s", list(data.keys()))
         except Exception as e:
             log.warning("  → Eccezione: %s", e)
-
-    # Prova endpoint alternativo Garmin moderne API
-    url2 = "https://connect.garmin.com/proxy/userstats-service/activities/recentActivities"
-    try:
-        r2 = session.get(url2, params={"numActivities": FETCH_LIMIT}, timeout=30)
-        log.info("recentActivities → %s | %s", r2.status_code, r2.text[:300])
-    except Exception as e:
-        log.warning("recentActivities → %s", e)
-
-    raise SystemExit("❌ Nessun endpoint funzionante — vedi log sopra")
+    raise SystemExit("❌ Nessun endpoint funzionante")
 
 def fetch_laps(session, act_id):
     url = f"https://connect.garmin.com/proxy/activity-service/activity/{act_id}/splits"
@@ -125,17 +118,20 @@ def build_activity(act, laps_raw):
             "fetched_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")}
 
 def main():
-    cust_guid = os.environ.get("GARMIN_SSO_GUID", "").strip()
-    sso_guid  = os.environ.get("GARMIN_SSO_GUID2", "").strip()
-    if not cust_guid or not sso_guid:
-        raise SystemExit("❌  Imposta GARMIN_SSO_GUID e GARMIN_SSO_GUID2")
+    jwt_web    = os.environ.get("GARMIN_JWT_WEB", "").strip()
+    session_id = os.environ.get("GARMIN_SESSIONID", "").strip()
+    cust_guid  = os.environ.get("GARMIN_SSO_GUID", "").strip()
+    sso_guid   = os.environ.get("GARMIN_SSO_GUID2", "").strip()
+
+    if not jwt_web or not session_id:
+        raise SystemExit("❌  Imposta GARMIN_JWT_WEB e GARMIN_SESSIONID")
 
     DATA_DIR.mkdir(exist_ok=True)
     data     = load_existing()
     seen_ids = existing_ids(data)
     log.info("Attività già salvate: %d", len(seen_ids))
 
-    session    = get_session(cust_guid, sso_guid)
+    session    = get_session(jwt_web, session_id, cust_guid, sso_guid)
     activities = fetch_activities(session)
     log.info("Totale attività ricevute: %d", len(activities))
 
