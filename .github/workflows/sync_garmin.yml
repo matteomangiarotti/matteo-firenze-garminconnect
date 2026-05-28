@@ -25,6 +25,8 @@ jobs:
 
       - name: Run Garmin sync script
         env:
+          GARMIN_JWT_WEB:   ${{ secrets.GARMIN_JWT_WEB }}
+          GARMIN_SESSIONID: ${{ secrets.GARMIN_SESSIONID }}
           GARMIN_SSO_GUID:  ${{ secrets.GARMIN_SSO_GUID }}
           GARMIN_SSO_GUID2: ${{ secrets.GARMIN_SSO_GUID2 }}
         run: python scripts/scarica_garmin.py
