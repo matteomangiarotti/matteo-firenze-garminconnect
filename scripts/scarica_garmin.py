@@ -6,8 +6,8 @@ Scarica le attività di corsa da Garmin Connect usando cookie di sessione
 e aggiorna data/activities.json.
 
 Variabili d'ambiente richieste (GitHub Secrets):
-  GARMIN_JWT_FGP    – cookie JWT_FGP da connect.garmin.com
-  GARMIN_SSO_GUID   – cookie GARMIN-SSO-CUST-GUID da connect.garmin.com
+  GARMIN_SSO_GUID   – cookie GARMIN-SSO-CUST-GUID
+  GARMIN_SSO_GUID2  – cookie GARMIN-SSO-GUID
 """
 
 import os
@@ -18,73 +18,72 @@ import requests
 from datetime import datetime, timezone
 from pathlib import Path
 
-# ── Configurazione ──────────────────────────────────────────────────────────
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s  %(levelname)s  %(message)s",
-    datefmt="%H:%M:%S",
-)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s  %(levelname)s  %(message)s", datefmt="%H:%M:%S")
 log = logging.getLogger(__name__)
 
 REPO_ROOT   = Path(__file__).resolve().parent.parent
 DATA_DIR    = REPO_ROOT / "data"
 OUTPUT_FILE = DATA_DIR / "activities.json"
-
-FETCH_LIMIT   = 20
+FETCH_LIMIT = 20
 RUNNING_TYPES = {"running", "trail_running", "treadmill_running"}
 
-# Endpoints Garmin Connect (lista da provare in ordine)
-ACTIVITY_LIST_URLS = [
-    "https://connect.garmin.com/activitylist-service/activities/search/activities",
-    "https://connect.garmin.com/proxy/activitylist-service/activities/search/activities",
-    "https://connect.garmin.com/modern/proxy/activitylist-service/activities/search/activities",
-]
-ACTIVITY_LAPS_URLS = [
-    "https://connect.garmin.com/activity-service/activity/{act_id}/splits",
-    "https://connect.garmin.com/proxy/activity-service/activity/{act_id}/splits",
-]
-
-# ── Helper ──────────────────────────────────────────────────────────────────
-
-def get_session(jwt_fgp: str, sso_guid: str) -> requests.Session:
+def get_session(cust_guid: str, sso_guid: str) -> requests.Session:
     session = requests.Session()
     session.headers.update({
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
         "NK": "NT",
-        "X-app-ver": "4.70.1.0",
+        "X-App-Ver": "5.25.0.30a",
         "Accept": "application/json, text/javascript, */*; q=0.01",
-        "Accept-Language": "it-IT,it;q=0.9",
+        "Accept-Language": "it-IT,it;q=0.9,en;q=0.8",
         "Referer": "https://connect.garmin.com/modern/activities",
         "X-Requested-With": "XMLHttpRequest",
-        "Di-Backend": "connectapi.garmin.com",
+        "Origin": "https://connect.garmin.com",
     })
-    session.cookies.set("JWT_FGP", jwt_fgp, domain=".garmin.com")
-    session.cookies.set("GARMIN-SSO-CUST-GUID", sso_guid, domain=".garmin.com")
+    session.cookies.set("GARMIN-SSO", "1", domain=".garmin.com")
+    session.cookies.set("GARMIN-SSO-CUST-GUID", cust_guid, domain=".garmin.com")
+    session.cookies.set("GARMIN-SSO-GUID", sso_guid, domain=".garmin.com")
     return session
 
-
 def fetch_activities(session: requests.Session) -> list:
-    """Prova gli endpoint in ordine finché uno funziona."""
+    # Prova endpoint in ordine
+    endpoints = [
+        "https://connect.garmin.com/proxy/activitylist-service/activities/search/activities",
+        "https://connect.garmin.com/activitylist-service/activities/search/activities",
+        "https://connect.garmin.com/modern/proxy/activitylist-service/activities/search/activities",
+    ]
     params = {"start": 0, "limit": FETCH_LIMIT}
-    last_error = None
-    for url in ACTIVITY_LIST_URLS:
+    for url in endpoints:
         try:
-            log.info("Provo endpoint: %s", url)
+            log.info("Provo: %s", url)
             r = session.get(url, params=params, timeout=30)
-            log.info("  Status: %s", r.status_code)
+            log.info("  → Status %s | Content-Type: %s", r.status_code, r.headers.get("Content-Type",""))
             if r.status_code == 200:
-                return r.json()
-            last_error = f"HTTP {r.status_code} da {url}"
+                try:
+                    data = r.json()
+                    if isinstance(data, list) and len(data) > 0:
+                        return data
+                    elif isinstance(data, dict):
+                        # Alcuni endpoint wrappano in un oggetto
+                        for key in ["activityList", "activities", "data"]:
+                            if key in data and isinstance(data[key], list):
+                                return data[key]
+                        log.warning("  → JSON vuoto o struttura inattesa: %s", str(data)[:200])
+                    else:
+                        log.warning("  → Lista vuota o formato inatteso")
+                except Exception as e:
+                    log.warning("  → Errore parsing JSON: %s | Body: %s", e, r.text[:200])
+            else:
+                log.warning("  → HTTP %s: %s", r.status_code, r.text[:200])
         except Exception as e:
-            last_error = str(e)
-            log.warning("  Errore: %s", e)
-    raise SystemExit(f"❌  Nessun endpoint funzionante. Ultimo errore: {last_error}")
-
+            log.warning("  → Eccezione: %s", e)
+    raise SystemExit("❌  Nessun endpoint funzionante")
 
 def fetch_laps(session: requests.Session, act_id: int) -> list:
-    for url_tpl in ACTIVITY_LAPS_URLS:
-        url = url_tpl.format(act_id=act_id)
+    endpoints = [
+        f"https://connect.garmin.com/proxy/activity-service/activity/{act_id}/splits",
+        f"https://connect.garmin.com/activity-service/activity/{act_id}/splits",
+    ]
+    for url in endpoints:
         try:
             r = session.get(url, timeout=30)
             if r.status_code == 200:
@@ -93,57 +92,45 @@ def fetch_laps(session: requests.Session, act_id: int) -> list:
             log.warning("Lap non disponibili per %s: %s", act_id, e)
     return []
 
-
 def load_existing() -> dict:
     if OUTPUT_FILE.exists():
         with open(OUTPUT_FILE, encoding="utf-8") as f:
             return json.load(f)
     return {"last_updated": None, "activities": []}
 
-
 def existing_ids(data: dict) -> set:
     return {a["garmin_id"] for a in data.get("activities", [])}
 
+def fmt_pace(spk):
+    if not spk or spk <= 0: return "—"
+    return f"{int(spk//60)}:{int(spk%60):02d}"
 
-def fmt_pace(seconds_per_km: float) -> str:
-    if not seconds_per_km or seconds_per_km <= 0:
-        return "—"
-    m = int(seconds_per_km // 60)
-    s = int(seconds_per_km % 60)
-    return f"{m}:{s:02d}"
-
-
-def activity_date(act: dict) -> str:
+def activity_date(act):
     raw = act.get("startTimeLocal") or act.get("startTimeGMT", "")
     return raw[:10] if raw else ""
 
-
-def parse_laps(laps_raw: list) -> list:
+def parse_laps(laps_raw):
     parsed = []
     for i, lap in enumerate(laps_raw or [], start=1):
-        dist   = lap.get("distance") or 0
-        dur    = lap.get("duration") or lap.get("elapsedDuration") or 0
-        avg_hr = lap.get("averageHR") or lap.get("averageHeartRate")
-        max_hr = lap.get("maxHR") or lap.get("maxHeartRate")
-        pace   = (dur / (dist / 1000)) if dist > 50 else None
+        dist = lap.get("distance") or 0
+        dur  = lap.get("duration") or lap.get("elapsedDuration") or 0
+        hr   = lap.get("averageHR") or lap.get("averageHeartRate")
+        pace = (dur / (dist / 1000)) if dist > 50 else None
         parsed.append({
             "lap_index":     i,
             "distance_m":    round(dist),
             "duration_s":    round(dur),
             "avg_pace_s_km": round(pace) if pace else None,
-            "avg_pace_fmt":  fmt_pace(pace) if pace else "—",
-            "avg_hr":        round(avg_hr) if avg_hr else None,
-            "max_hr":        round(max_hr) if max_hr else None,
+            "avg_pace_fmt":  fmt_pace(pace),
+            "avg_hr":        round(hr) if hr else None,
         })
     return parsed
 
-
-def build_activity(act: dict, laps_raw: list) -> dict:
-    dist   = act.get("distance") or 0
-    dur    = act.get("duration") or act.get("movingDuration") or 0
-    avg_hr = act.get("averageHR") or act.get("averageHeartRate")
-    max_hr = act.get("maxHR") or act.get("maxHeartRate")
-    pace   = (dur / (dist / 1000)) if dist > 50 else None
+def build_activity(act, laps_raw):
+    dist  = act.get("distance") or 0
+    dur   = act.get("duration") or act.get("movingDuration") or 0
+    hr    = act.get("averageHR") or act.get("averageHeartRate")
+    pace  = (dur / (dist / 1000)) if dist > 50 else None
     return {
         "garmin_id":      act.get("activityId"),
         "date":           activity_date(act),
@@ -153,41 +140,30 @@ def build_activity(act: dict, laps_raw: list) -> dict:
         "distance_m":     round(dist),
         "distance_km":    round(dist / 1000, 2),
         "duration_s":     round(dur),
-        "avg_hr":         round(avg_hr) if avg_hr else None,
-        "max_hr":         round(max_hr) if max_hr else None,
+        "avg_hr":         round(hr) if hr else None,
         "avg_pace_s_km":  round(pace) if pace else None,
-        "avg_pace_fmt":   fmt_pace(pace) if pace else "—",
+        "avg_pace_fmt":   fmt_pace(pace),
         "calories":       act.get("calories"),
         "elevation_gain": act.get("elevationGain"),
         "laps":           parse_laps(laps_raw),
         "fetched_at":     datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
     }
 
-
-# ── Main ────────────────────────────────────────────────────────────────────
-
 def main():
-    jwt_fgp  = os.environ.get("GARMIN_JWT_FGP", "").strip()
-    sso_guid = os.environ.get("GARMIN_SSO_GUID", "").strip()
+    cust_guid = os.environ.get("GARMIN_SSO_GUID", "").strip()
+    sso_guid  = os.environ.get("GARMIN_SSO_GUID2", "").strip()
 
-    if not jwt_fgp or not sso_guid:
-        raise SystemExit("❌  Imposta GARMIN_JWT_FGP e GARMIN_SSO_GUID come secrets")
+    if not cust_guid or not sso_guid:
+        raise SystemExit("❌  Imposta GARMIN_SSO_GUID e GARMIN_SSO_GUID2 come secrets")
 
     DATA_DIR.mkdir(exist_ok=True)
     data     = load_existing()
     seen_ids = existing_ids(data)
     log.info("Attività già salvate: %d", len(seen_ids))
 
-    log.info("Connessione a Garmin Connect...")
-    session = get_session(jwt_fgp, sso_guid)
-
+    session = get_session(cust_guid, sso_guid)
     log.info("Scarico le ultime %d attività...", FETCH_LIMIT)
     activities = fetch_activities(session)
-
-    if not isinstance(activities, list):
-        log.error("Risposta inattesa: %s", str(activities)[:300])
-        raise SystemExit("❌  Risposta non valida da Garmin")
-
     log.info("Attività ricevute: %d", len(activities))
 
     new_acts = [
@@ -195,24 +171,20 @@ def main():
         if a.get("activityType", {}).get("typeKey", "") in RUNNING_TYPES
         and a.get("activityId") not in seen_ids
     ]
-    log.info("Nuove attività running da processare: %d", len(new_acts))
+    log.info("Nuove attività running: %d", len(new_acts))
 
     if not new_acts:
-        log.info("Nessuna novità — aggiorno solo il timestamp.")
+        log.info("Nessuna novità — aggiorno timestamp.")
         data["last_updated"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
         with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
         return
 
-    added = 0
     for act in new_acts:
-        act_id   = act.get("activityId")
-        act_date = activity_date(act)
-        log.info("  Processo %s (%s)...", act_id, act_date)
+        act_id = act.get("activityId")
+        log.info("  Processo %s (%s)...", act_id, activity_date(act))
         laps_raw = fetch_laps(session, act_id)
-        record   = build_activity(act, laps_raw)
-        data["activities"].append(record)
-        added += 1
+        data["activities"].append(build_activity(act, laps_raw))
         time.sleep(1)
 
     data["activities"].sort(key=lambda x: x.get("start_time", ""), reverse=True)
@@ -221,8 +193,7 @@ def main():
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
-    log.info("✅  Aggiunte %d nuove attività → %s", added, OUTPUT_FILE)
-
+    log.info("✅  Aggiunte %d nuove attività → %s", len(new_acts), OUTPUT_FILE)
 
 if __name__ == "__main__":
     main()
