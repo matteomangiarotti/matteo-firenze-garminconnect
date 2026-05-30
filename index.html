@@ -449,9 +449,11 @@ function buildDashboard(activities){
           }
         }
 
+        const gearHtml=real.gear_name?`<div style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:2px;">👟 ${real.gear_name}${real.gear_km?' · '+real.gear_km+' km':''}</div>`:'';
         realHtml=`<div class="act-n">${real.name}</div>
           <div class="act-m">${real.distance_km?real.distance_km.toFixed(1)+' km':fmtD(real.distance_m)} · ${fmtT(real.duration_s)} · ${real.avg_pace_fmt}/km</div>
           <div style="margin-top:3px;">${hrBadge}</div>
+          ${gearHtml}
           ${lapHtml}`;
         badge=p.type==='rest'?'<span class="bdg b-bonus">+ bonus</span>':'<span class="bdg b-ok">✓</span>';
       }else if(p.type==='rest'){
