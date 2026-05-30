@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-05-30T21:35:01Z",
+  "last_updated": "2026-05-30T21:49:11Z",
   "activities": [
     {
       "garmin_id": 23072168046,
@@ -121,7 +121,9 @@
           "Cooldown assente o molto breve."
         ],
         "cap_applied": null
-      }
+      },
+      "gear_name": null,
+      "gear_km": null
     },
     {
       "garmin_id": 23059810553,
@@ -223,7 +225,9 @@
         "flags": [],
         "notes": [],
         "cap_applied": null
-      }
+      },
+      "gear_name": null,
+      "gear_km": null
     },
     {
       "garmin_id": 23043206188,
@@ -361,7 +365,9 @@
           "Cooldown assente o molto breve."
         ],
         "cap_applied": null
-      }
+      },
+      "gear_name": null,
+      "gear_km": null
     },
     {
       "garmin_id": 23032189739,
@@ -485,7 +491,9 @@
           "Cooldown assente o molto breve."
         ],
         "cap_applied": null
-      }
+      },
+      "gear_name": null,
+      "gear_km": null
     },
     {
       "garmin_id": 23023745883,
@@ -661,7 +669,9 @@
         "flags": [],
         "notes": [],
         "cap_applied": null
-      }
+      },
+      "gear_name": null,
+      "gear_km": null
     },
     {
       "garmin_id": 22994742630,
@@ -849,7 +859,9 @@
           "Deriva cardiaca di 8 bpm nella seconda meta."
         ],
         "cap_applied": null
-      }
+      },
+      "gear_name": null,
+      "gear_km": null
     },
     {
       "garmin_id": 22980701407,
@@ -973,7 +985,9 @@
           "Cooldown assente o molto breve."
         ],
         "cap_applied": null
-      }
+      },
+      "gear_name": null,
+      "gear_km": null
     },
     {
       "garmin_id": 22972288317,
@@ -1080,7 +1094,9 @@
           "Cap: Recovery: FC molto sopra il range."
         ],
         "cap_applied": "Recovery: FC molto sopra il range"
-      }
+      },
+      "gear_name": null,
+      "gear_km": null
     },
     {
       "garmin_id": 22963569017,
@@ -1224,7 +1240,9 @@
         "flags": [],
         "notes": [],
         "cap_applied": null
-      }
+      },
+      "gear_name": null,
+      "gear_km": null
     },
     {
       "garmin_id": 22951809683,
@@ -1338,7 +1356,9 @@
           "Cooldown assente o molto breve."
         ],
         "cap_applied": null
-      }
+      },
+      "gear_name": null,
+      "gear_km": null
     },
     {
       "garmin_id": 22935210022,
@@ -1468,7 +1488,9 @@
           "Cooldown assente o molto breve."
         ],
         "cap_applied": null
-      }
+      },
+      "gear_name": null,
+      "gear_km": null
     },
     {
       "garmin_id": 22917283581,
@@ -1634,7 +1656,9 @@
         "flags": [],
         "notes": [],
         "cap_applied": null
-      }
+      },
+      "gear_name": null,
+      "gear_km": null
     },
     {
       "garmin_id": 22904645423,
@@ -1756,7 +1780,9 @@
           "Cooldown assente o molto breve."
         ],
         "cap_applied": null
-      }
+      },
+      "gear_name": null,
+      "gear_km": null
     },
     {
       "garmin_id": 22893744848,
@@ -1850,7 +1876,9 @@
         "flags": [],
         "notes": [],
         "cap_applied": null
-      }
+      },
+      "gear_name": null,
+      "gear_km": null
     },
     {
       "garmin_id": 22882998668,
@@ -1980,7 +2008,9 @@
           "avg_hr": 151
         }
       ],
-      "fetched_at": "2026-05-28T13:03:10Z"
+      "fetched_at": "2026-05-28T13:03:10Z",
+      "gear_name": null,
+      "gear_km": null
     },
     {
       "garmin_id": 22863752396,
@@ -2086,7 +2116,9 @@
           "Cooldown assente o molto breve."
         ],
         "cap_applied": null
-      }
+      },
+      "gear_name": null,
+      "gear_km": null
     },
     {
       "garmin_id": 22853108541,
@@ -2208,7 +2240,9 @@
           "Cooldown assente o molto breve."
         ],
         "cap_applied": null
-      }
+      },
+      "gear_name": null,
+      "gear_km": null
     },
     {
       "garmin_id": 22836842493,
@@ -2350,7 +2384,9 @@
         "flags": [],
         "notes": [],
         "cap_applied": null
-      }
+      },
+      "gear_name": null,
+      "gear_km": null
     },
     {
       "garmin_id": 22825259463,
@@ -2476,7 +2512,9 @@
         "flags": [],
         "notes": [],
         "cap_applied": null
-      }
+      },
+      "gear_name": null,
+      "gear_km": null
     },
     {
       "garmin_id": 22800958040,
@@ -2562,7 +2600,9 @@
         "flags": [],
         "notes": [],
         "cap_applied": null
-      }
+      },
+      "gear_name": null,
+      "gear_km": null
     },
     {
       "garmin_id": 22789594427,
@@ -2724,7 +2764,9 @@
           "Cooldown assente o molto breve."
         ],
         "cap_applied": null
-      }
+      },
+      "gear_name": null,
+      "gear_km": null
     },
     {
       "garmin_id": 22770609208,
@@ -2830,7 +2872,9 @@
           "FC media 173 bpm supera il target di 18 bpm."
         ],
         "cap_applied": null
-      }
+      },
+      "gear_name": null,
+      "gear_km": null
     },
     {
       "garmin_id": 22753305099,
@@ -2946,7 +2990,9 @@
           "Cooldown assente o molto breve."
         ],
         "cap_applied": null
-      }
+      },
+      "gear_name": null,
+      "gear_km": null
     },
     {
       "garmin_id": 22735939665,
@@ -3064,7 +3110,9 @@
         "flags": [],
         "notes": [],
         "cap_applied": null
-      }
+      },
+      "gear_name": null,
+      "gear_km": null
     },
     {
       "garmin_id": 22729308568,
@@ -3202,7 +3250,9 @@
           "Cooldown assente o molto breve."
         ],
         "cap_applied": null
-      }
+      },
+      "gear_name": null,
+      "gear_km": null
     },
     {
       "garmin_id": 22704300855,
@@ -3288,7 +3338,9 @@
         "flags": [],
         "notes": [],
         "cap_applied": null
-      }
+      },
+      "gear_name": null,
+      "gear_km": null
     },
     {
       "garmin_id": 22694501795,
@@ -3386,7 +3438,9 @@
           "Cooldown assente o molto breve."
         ],
         "cap_applied": null
-      }
+      },
+      "gear_name": null,
+      "gear_km": null
     },
     {
       "garmin_id": 22662064953,
@@ -3452,7 +3506,9 @@
           "avg_hr": 144
         }
       ],
-      "fetched_at": "2026-05-28T13:03:32Z"
+      "fetched_at": "2026-05-28T13:03:32Z",
+      "gear_name": null,
+      "gear_km": null
     },
     {
       "garmin_id": 22646265581,
@@ -3526,7 +3582,9 @@
           "avg_hr": 138
         }
       ],
-      "fetched_at": "2026-05-28T13:03:33Z"
+      "fetched_at": "2026-05-28T13:03:33Z",
+      "gear_name": null,
+      "gear_km": null
     },
     {
       "garmin_id": 22633929850,
@@ -3592,7 +3650,9 @@
           "avg_hr": 153
         }
       ],
-      "fetched_at": "2026-05-28T13:03:35Z"
+      "fetched_at": "2026-05-28T13:03:35Z",
+      "gear_name": null,
+      "gear_km": null
     },
     {
       "garmin_id": 22580585917,
@@ -3954,7 +4014,9 @@
           "avg_hr": 183
         }
       ],
-      "fetched_at": "2026-05-28T13:03:37Z"
+      "fetched_at": "2026-05-28T13:03:37Z",
+      "gear_name": null,
+      "gear_km": null
     },
     {
       "garmin_id": 22562769777,
@@ -4028,7 +4090,9 @@
           "avg_hr": 138
         }
       ],
-      "fetched_at": "2026-05-28T13:03:38Z"
+      "fetched_at": "2026-05-28T13:03:38Z",
+      "gear_name": null,
+      "gear_km": null
     }
   ]
 }
