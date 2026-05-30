@@ -1,6 +1,230 @@
 {
-  "last_updated": "2026-05-28T13:03:40Z",
+  "last_updated": "2026-05-30T21:35:01Z",
   "activities": [
+    {
+      "garmin_id": 23072168046,
+      "date": "2026-05-30",
+      "start_time": "2026-05-30 21:34:09",
+      "name": "Leuven Running",
+      "type": "running",
+      "distance_m": 10756,
+      "distance_km": 10.76,
+      "duration_s": 3341,
+      "avg_hr": 151,
+      "avg_pace_s_km": 311,
+      "avg_pace_fmt": "5:10",
+      "calories": 656.0,
+      "elevation_gain": 64.0,
+      "laps": [
+        {
+          "lap_index": 1,
+          "distance_m": 1000,
+          "duration_s": 314,
+          "avg_pace_s_km": 314,
+          "avg_pace_fmt": "5:13",
+          "avg_hr": 149
+        },
+        {
+          "lap_index": 2,
+          "distance_m": 1000,
+          "duration_s": 314,
+          "avg_pace_s_km": 314,
+          "avg_pace_fmt": "5:13",
+          "avg_hr": 158
+        },
+        {
+          "lap_index": 3,
+          "distance_m": 1000,
+          "duration_s": 308,
+          "avg_pace_s_km": 308,
+          "avg_pace_fmt": "5:07",
+          "avg_hr": 147
+        },
+        {
+          "lap_index": 4,
+          "distance_m": 1000,
+          "duration_s": 311,
+          "avg_pace_s_km": 311,
+          "avg_pace_fmt": "5:11",
+          "avg_hr": 149
+        },
+        {
+          "lap_index": 5,
+          "distance_m": 1000,
+          "duration_s": 320,
+          "avg_pace_s_km": 320,
+          "avg_pace_fmt": "5:19",
+          "avg_hr": 152
+        },
+        {
+          "lap_index": 6,
+          "distance_m": 1000,
+          "duration_s": 309,
+          "avg_pace_s_km": 309,
+          "avg_pace_fmt": "5:09",
+          "avg_hr": 148
+        },
+        {
+          "lap_index": 7,
+          "distance_m": 1000,
+          "duration_s": 323,
+          "avg_pace_s_km": 323,
+          "avg_pace_fmt": "5:22",
+          "avg_hr": 155
+        },
+        {
+          "lap_index": 8,
+          "distance_m": 1000,
+          "duration_s": 310,
+          "avg_pace_s_km": 310,
+          "avg_pace_fmt": "5:09",
+          "avg_hr": 150
+        },
+        {
+          "lap_index": 9,
+          "distance_m": 1000,
+          "duration_s": 302,
+          "avg_pace_s_km": 302,
+          "avg_pace_fmt": "5:02",
+          "avg_hr": 148
+        },
+        {
+          "lap_index": 10,
+          "distance_m": 1000,
+          "duration_s": 312,
+          "avg_pace_s_km": 312,
+          "avg_pace_fmt": "5:11",
+          "avg_hr": 150
+        },
+        {
+          "lap_index": 11,
+          "distance_m": 756,
+          "duration_s": 218,
+          "avg_pace_s_km": 288,
+          "avg_pace_fmt": "4:47",
+          "avg_hr": 157
+        }
+      ],
+      "fetched_at": "2026-05-30T21:34:58Z",
+      "score": {
+        "score": 9.2,
+        "subscores": {
+          "hr": 10.0,
+          "pace": 10.0,
+          "distance": 10,
+          "wu_cd": 4.5
+        },
+        "flags": [
+          "MISSING_COOLDOWN"
+        ],
+        "notes": [
+          "Cooldown assente o molto breve."
+        ],
+        "cap_applied": null
+      }
+    },
+    {
+      "garmin_id": 23059810553,
+      "date": "2026-05-29",
+      "start_time": "2026-05-29 21:04:06",
+      "name": "Leuven Running",
+      "type": "running",
+      "distance_m": 8008,
+      "distance_km": 8.01,
+      "duration_s": 2740,
+      "avg_hr": 141,
+      "avg_pace_s_km": 342,
+      "avg_pace_fmt": "5:42",
+      "calories": 489.0,
+      "elevation_gain": 6.0,
+      "laps": [
+        {
+          "lap_index": 1,
+          "distance_m": 1000,
+          "duration_s": 342,
+          "avg_pace_s_km": 342,
+          "avg_pace_fmt": "5:42",
+          "avg_hr": 136
+        },
+        {
+          "lap_index": 2,
+          "distance_m": 1000,
+          "duration_s": 342,
+          "avg_pace_s_km": 342,
+          "avg_pace_fmt": "5:41",
+          "avg_hr": 143
+        },
+        {
+          "lap_index": 3,
+          "distance_m": 1000,
+          "duration_s": 345,
+          "avg_pace_s_km": 345,
+          "avg_pace_fmt": "5:44",
+          "avg_hr": 142
+        },
+        {
+          "lap_index": 4,
+          "distance_m": 1000,
+          "duration_s": 341,
+          "avg_pace_s_km": 341,
+          "avg_pace_fmt": "5:41",
+          "avg_hr": 143
+        },
+        {
+          "lap_index": 5,
+          "distance_m": 1000,
+          "duration_s": 341,
+          "avg_pace_s_km": 341,
+          "avg_pace_fmt": "5:41",
+          "avg_hr": 142
+        },
+        {
+          "lap_index": 6,
+          "distance_m": 1000,
+          "duration_s": 344,
+          "avg_pace_s_km": 344,
+          "avg_pace_fmt": "5:43",
+          "avg_hr": 141
+        },
+        {
+          "lap_index": 7,
+          "distance_m": 1000,
+          "duration_s": 342,
+          "avg_pace_s_km": 342,
+          "avg_pace_fmt": "5:41",
+          "avg_hr": 143
+        },
+        {
+          "lap_index": 8,
+          "distance_m": 1000,
+          "duration_s": 341,
+          "avg_pace_s_km": 341,
+          "avg_pace_fmt": "5:40",
+          "avg_hr": 142
+        },
+        {
+          "lap_index": 9,
+          "distance_m": 8,
+          "duration_s": 2,
+          "avg_pace_s_km": null,
+          "avg_pace_fmt": "---",
+          "avg_hr": 144
+        }
+      ],
+      "fetched_at": "2026-05-30T21:35:00Z",
+      "score": {
+        "score": 9.6,
+        "subscores": {
+          "hr": 10.0,
+          "pace": 10.0,
+          "distance": 10,
+          "wu_cd": 8.0
+        },
+        "flags": [],
+        "notes": [],
+        "cap_applied": null
+      }
+    },
     {
       "garmin_id": 23043206188,
       "date": "2026-05-28",
@@ -121,7 +345,23 @@
           "avg_hr": 166
         }
       ],
-      "fetched_at": "2026-05-28T13:02:50Z"
+      "fetched_at": "2026-05-28T13:02:50Z",
+      "score": {
+        "score": 8.9,
+        "subscores": {
+          "hr": 8.95,
+          "pace": 10.0,
+          "distance": 10,
+          "wu_cd": 4.5
+        },
+        "flags": [
+          "MISSING_COOLDOWN"
+        ],
+        "notes": [
+          "Cooldown assente o molto breve."
+        ],
+        "cap_applied": null
+      }
     },
     {
       "garmin_id": 23032189739,
@@ -227,7 +467,25 @@
           "avg_hr": 172
         }
       ],
-      "fetched_at": "2026-05-28T13:02:51Z"
+      "fetched_at": "2026-05-28T13:02:51Z",
+      "score": {
+        "score": 7.7,
+        "subscores": {
+          "hr": 6.15,
+          "pace": 8.8,
+          "distance": 10,
+          "wu_cd": 4.5
+        },
+        "flags": [
+          "MISSING_COOLDOWN",
+          "HR_HIGH"
+        ],
+        "notes": [
+          "FC media 166 bpm supera il target di 11 bpm.",
+          "Cooldown assente o molto breve."
+        ],
+        "cap_applied": null
+      }
     },
     {
       "garmin_id": 23023745883,
@@ -389,7 +647,21 @@
           "avg_hr": 162
         }
       ],
-      "fetched_at": "2026-05-28T13:02:53Z"
+      "fetched_at": "2026-05-28T13:02:53Z",
+      "score": {
+        "score": 6.8,
+        "subscores": {
+          "fast_blocks": 4.77,
+          "structure": 8.13,
+          "recoveries": 6.27,
+          "wu_cd": 10.0,
+          "hr": 9.3,
+          "distance": 7.0
+        },
+        "flags": [],
+        "notes": [],
+        "cap_applied": null
+      }
     },
     {
       "garmin_id": 22994742630,
@@ -559,7 +831,25 @@
           "avg_hr": 181
         }
       ],
-      "fetched_at": "2026-05-28T13:02:55Z"
+      "fetched_at": "2026-05-28T13:02:55Z",
+      "score": {
+        "score": 7.9,
+        "subscores": {
+          "hr_drift": 6.25,
+          "pace": 6.4,
+          "distance": 10,
+          "wu_cd": 8.0
+        },
+        "flags": [
+          "CARDIAC_DRIFT",
+          "HR_HIGH"
+        ],
+        "notes": [
+          "FC media 170 bpm supera il target di 10 bpm.",
+          "Deriva cardiaca di 8 bpm nella seconda meta."
+        ],
+        "cap_applied": null
+      }
     },
     {
       "garmin_id": 22980701407,
@@ -665,7 +955,25 @@
           "avg_hr": 182
         }
       ],
-      "fetched_at": "2026-05-28T13:02:56Z"
+      "fetched_at": "2026-05-28T13:02:56Z",
+      "score": {
+        "score": 6.9,
+        "subscores": {
+          "hr": 4.75,
+          "pace": 7.8,
+          "distance": 10,
+          "wu_cd": 4.5
+        },
+        "flags": [
+          "MISSING_COOLDOWN",
+          "HR_HIGH"
+        ],
+        "notes": [
+          "FC media 170 bpm supera il target di 15 bpm.",
+          "Cooldown assente o molto breve."
+        ],
+        "cap_applied": null
+      }
     },
     {
       "garmin_id": 22972288317,
@@ -755,7 +1063,24 @@
           "avg_hr": 169
         }
       ],
-      "fetched_at": "2026-05-28T13:02:58Z"
+      "fetched_at": "2026-05-28T13:02:58Z",
+      "score": {
+        "score": 6.5,
+        "subscores": {
+          "hr": 4.4,
+          "pace": 9.4,
+          "distance": 10,
+          "wu_cd": 8.0
+        },
+        "flags": [
+          "HR_HIGH"
+        ],
+        "notes": [
+          "FC media 163 bpm supera il target di 16 bpm.",
+          "Cap: Recovery: FC molto sopra il range."
+        ],
+        "cap_applied": "Recovery: FC molto sopra il range"
+      }
     },
     {
       "garmin_id": 22963569017,
@@ -885,7 +1210,21 @@
           "avg_hr": 146
         }
       ],
-      "fetched_at": "2026-05-28T13:03:00Z"
+      "fetched_at": "2026-05-28T13:03:00Z",
+      "score": {
+        "score": 7.5,
+        "subscores": {
+          "fast_blocks": 6.27,
+          "structure": 8.19,
+          "recoveries": 6.38,
+          "wu_cd": 10.0,
+          "hr": 10.0,
+          "distance": 7.0
+        },
+        "flags": [],
+        "notes": [],
+        "cap_applied": null
+      }
     },
     {
       "garmin_id": 22951809683,
@@ -983,7 +1322,23 @@
           "avg_hr": 156
         }
       ],
-      "fetched_at": "2026-05-28T13:03:02Z"
+      "fetched_at": "2026-05-28T13:03:02Z",
+      "score": {
+        "score": 8.8,
+        "subscores": {
+          "hr": 10.0,
+          "pace": 8.8,
+          "distance": 10,
+          "wu_cd": 4.5
+        },
+        "flags": [
+          "MISSING_COOLDOWN"
+        ],
+        "notes": [
+          "Cooldown assente o molto breve."
+        ],
+        "cap_applied": null
+      }
     },
     {
       "garmin_id": 22935210022,
@@ -1097,7 +1452,23 @@
           "avg_hr": 165
         }
       ],
-      "fetched_at": "2026-05-28T13:03:03Z"
+      "fetched_at": "2026-05-28T13:03:03Z",
+      "score": {
+        "score": 8.4,
+        "subscores": {
+          "hr": 10.0,
+          "pace": 7.4,
+          "distance": 10,
+          "wu_cd": 4.5
+        },
+        "flags": [
+          "MISSING_COOLDOWN"
+        ],
+        "notes": [
+          "Cooldown assente o molto breve."
+        ],
+        "cap_applied": null
+      }
     },
     {
       "garmin_id": 22917283581,
@@ -1251,7 +1622,19 @@
           "avg_hr": 144
         }
       ],
-      "fetched_at": "2026-05-28T13:03:05Z"
+      "fetched_at": "2026-05-28T13:03:05Z",
+      "score": {
+        "score": 9.1,
+        "subscores": {
+          "hr_drift": 9.84,
+          "pace": 7.6,
+          "distance": 10,
+          "wu_cd": 8.0
+        },
+        "flags": [],
+        "notes": [],
+        "cap_applied": null
+      }
     },
     {
       "garmin_id": 22904645423,
@@ -1357,7 +1740,23 @@
           "avg_hr": 157
         }
       ],
-      "fetched_at": "2026-05-28T13:03:06Z"
+      "fetched_at": "2026-05-28T13:03:06Z",
+      "score": {
+        "score": 9.2,
+        "subscores": {
+          "hr": 10.0,
+          "pace": 10.0,
+          "distance": 10,
+          "wu_cd": 4.5
+        },
+        "flags": [
+          "MISSING_COOLDOWN"
+        ],
+        "notes": [
+          "Cooldown assente o molto breve."
+        ],
+        "cap_applied": null
+      }
     },
     {
       "garmin_id": 22893744848,
@@ -1439,7 +1838,19 @@
           "avg_hr": 161
         }
       ],
-      "fetched_at": "2026-05-28T13:03:08Z"
+      "fetched_at": "2026-05-28T13:03:08Z",
+      "score": {
+        "score": 8.5,
+        "subscores": {
+          "hr": 7.55,
+          "pace": 10.0,
+          "distance": 10,
+          "wu_cd": 8.0
+        },
+        "flags": [],
+        "notes": [],
+        "cap_applied": null
+      }
     },
     {
       "garmin_id": 22882998668,
@@ -1659,7 +2070,23 @@
           "avg_hr": 151
         }
       ],
-      "fetched_at": "2026-05-28T13:03:12Z"
+      "fetched_at": "2026-05-28T13:03:12Z",
+      "score": {
+        "score": 9.0,
+        "subscores": {
+          "hr": 10.0,
+          "pace": 9.4,
+          "distance": 10,
+          "wu_cd": 4.5
+        },
+        "flags": [
+          "MISSING_COOLDOWN"
+        ],
+        "notes": [
+          "Cooldown assente o molto breve."
+        ],
+        "cap_applied": null
+      }
     },
     {
       "garmin_id": 22853108541,
@@ -1765,7 +2192,23 @@
           "avg_hr": 169
         }
       ],
-      "fetched_at": "2026-05-28T13:03:13Z"
+      "fetched_at": "2026-05-28T13:03:13Z",
+      "score": {
+        "score": 8.0,
+        "subscores": {
+          "hr": 8.6,
+          "pace": 7.4,
+          "distance": 10,
+          "wu_cd": 4.5
+        },
+        "flags": [
+          "MISSING_COOLDOWN"
+        ],
+        "notes": [
+          "Cooldown assente o molto breve."
+        ],
+        "cap_applied": null
+      }
     },
     {
       "garmin_id": 22836842493,
@@ -1895,7 +2338,19 @@
           "avg_hr": 155
         }
       ],
-      "fetched_at": "2026-05-28T13:03:15Z"
+      "fetched_at": "2026-05-28T13:03:15Z",
+      "score": {
+        "score": 8.6,
+        "subscores": {
+          "hr_drift": 10.0,
+          "pace": 10.0,
+          "distance": 7.0,
+          "wu_cd": 8.0
+        },
+        "flags": [],
+        "notes": [],
+        "cap_applied": null
+      }
     },
     {
       "garmin_id": 22825259463,
@@ -2009,7 +2464,19 @@
           "avg_hr": 162
         }
       ],
-      "fetched_at": "2026-05-28T13:03:17Z"
+      "fetched_at": "2026-05-28T13:03:17Z",
+      "score": {
+        "score": 8.3,
+        "subscores": {
+          "hr": 10.0,
+          "pace": 8.8,
+          "distance": 7.0,
+          "wu_cd": 6.0
+        },
+        "flags": [],
+        "notes": [],
+        "cap_applied": null
+      }
     },
     {
       "garmin_id": 22800958040,
@@ -2083,7 +2550,19 @@
           "avg_hr": 146
         }
       ],
-      "fetched_at": "2026-05-28T13:03:18Z"
+      "fetched_at": "2026-05-28T13:03:18Z",
+      "score": {
+        "score": 9.4,
+        "subscores": {
+          "hr": 10.0,
+          "pace": 10.0,
+          "distance": 7.0,
+          "wu_cd": 10.0
+        },
+        "flags": [],
+        "notes": [],
+        "cap_applied": null
+      }
     },
     {
       "garmin_id": 22789594427,
@@ -2229,7 +2708,23 @@
           "avg_hr": 149
         }
       ],
-      "fetched_at": "2026-05-28T13:03:20Z"
+      "fetched_at": "2026-05-28T13:03:20Z",
+      "score": {
+        "score": 8.4,
+        "subscores": {
+          "hr": 10.0,
+          "pace": 10.0,
+          "distance": 7.0,
+          "wu_cd": 4.5
+        },
+        "flags": [
+          "MISSING_COOLDOWN"
+        ],
+        "notes": [
+          "Cooldown assente o molto breve."
+        ],
+        "cap_applied": null
+      }
     },
     {
       "garmin_id": 22770609208,
@@ -2319,7 +2814,23 @@
           "avg_hr": 174
         }
       ],
-      "fetched_at": "2026-05-28T13:03:22Z"
+      "fetched_at": "2026-05-28T13:03:22Z",
+      "score": {
+        "score": 5.9,
+        "subscores": {
+          "hr": 3.7,
+          "pace": 7.2,
+          "distance": 7.0,
+          "wu_cd": 6.0
+        },
+        "flags": [
+          "HR_HIGH"
+        ],
+        "notes": [
+          "FC media 173 bpm supera il target di 18 bpm."
+        ],
+        "cap_applied": null
+      }
     },
     {
       "garmin_id": 22753305099,
@@ -2417,7 +2928,25 @@
           "avg_hr": 175
         }
       ],
-      "fetched_at": "2026-05-28T13:03:23Z"
+      "fetched_at": "2026-05-28T13:03:23Z",
+      "score": {
+        "score": 6.6,
+        "subscores": {
+          "hr": 4.75,
+          "pace": 9.2,
+          "distance": 7.0,
+          "wu_cd": 4.5
+        },
+        "flags": [
+          "MISSING_COOLDOWN",
+          "HR_HIGH"
+        ],
+        "notes": [
+          "FC media 170 bpm supera il target di 15 bpm.",
+          "Cooldown assente o molto breve."
+        ],
+        "cap_applied": null
+      }
     },
     {
       "garmin_id": 22735939665,
@@ -2523,7 +3052,19 @@
           "avg_hr": 166
         }
       ],
-      "fetched_at": "2026-05-28T13:03:25Z"
+      "fetched_at": "2026-05-28T13:03:25Z",
+      "score": {
+        "score": 8.3,
+        "subscores": {
+          "hr": 8.95,
+          "pace": 10.0,
+          "distance": 7.0,
+          "wu_cd": 6.0
+        },
+        "flags": [],
+        "notes": [],
+        "cap_applied": null
+      }
     },
     {
       "garmin_id": 22729308568,
@@ -2645,7 +3186,23 @@
           "avg_hr": 161
         }
       ],
-      "fetched_at": "2026-05-28T13:03:27Z"
+      "fetched_at": "2026-05-28T13:03:27Z",
+      "score": {
+        "score": 7.9,
+        "subscores": {
+          "hr": 10.0,
+          "pace": 8.2,
+          "distance": 7.0,
+          "wu_cd": 4.5
+        },
+        "flags": [
+          "MISSING_COOLDOWN"
+        ],
+        "notes": [
+          "Cooldown assente o molto breve."
+        ],
+        "cap_applied": null
+      }
     },
     {
       "garmin_id": 22704300855,
@@ -2719,7 +3276,19 @@
           "avg_hr": 158
         }
       ],
-      "fetched_at": "2026-05-28T13:03:28Z"
+      "fetched_at": "2026-05-28T13:03:28Z",
+      "score": {
+        "score": 7.7,
+        "subscores": {
+          "hr": 10.0,
+          "pace": 6.8,
+          "distance": 7.0,
+          "wu_cd": 6.0
+        },
+        "flags": [],
+        "notes": [],
+        "cap_applied": null
+      }
     },
     {
       "garmin_id": 22694501795,
@@ -2801,7 +3370,23 @@
           "avg_hr": 157
         }
       ],
-      "fetched_at": "2026-05-28T13:03:30Z"
+      "fetched_at": "2026-05-28T13:03:30Z",
+      "score": {
+        "score": 8.4,
+        "subscores": {
+          "hr": 10.0,
+          "pace": 10.0,
+          "distance": 7.0,
+          "wu_cd": 4.5
+        },
+        "flags": [
+          "MISSING_COOLDOWN"
+        ],
+        "notes": [
+          "Cooldown assente o molto breve."
+        ],
+        "cap_applied": null
+      }
     },
     {
       "garmin_id": 22662064953,
