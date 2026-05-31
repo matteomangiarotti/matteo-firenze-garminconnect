@@ -363,8 +363,47 @@ function autoScore(plan,act){
 const setStatus=(st,msg)=>{document.getElementById('sdot').className='sdot '+st;document.getElementById('s-txt').textContent=msg;};
 
 // ── BUILD DASHBOARD ───────────────────────────────────────────────────────────
+// ── GEAR SNAPSHOT (km totali per scarpa alla data di snapshot) ──
+const GEAR_SNAPSHOT_KM={
+  'Nike Vomero plus': 67.0,
+  'Kiprun KS900 light': 670.6,
+};
+const GEAR_SNAPSHOT_DATE='2026-05-11';
+
+function buildGearTotals(activities){
+  // Ordina per data crescente
+  const sorted=[...activities].sort((a,b)=>(a.start_time||a.date).localeCompare(b.start_time||b.date));
+
+  // Km per scarpa nelle attivita <= snapshot
+  const kmInBefore={};
+  sorted.filter(a=>a.date<=GEAR_SNAPSHOT_DATE).forEach(a=>{
+    const g=a.gear_name; if(!g) return;
+    kmInBefore[g]=(kmInBefore[g]||0)+(a.distance_km||0);
+  });
+
+  // Base pre-tracking = snapshot - km registrati fino allo snapshot
+  const gearBase={};
+  Object.keys(GEAR_SNAPSHOT_KM).forEach(name=>{
+    gearBase[name]=Math.max(0, GEAR_SNAPSHOT_KM[name]-(kmInBefore[name]||0));
+  });
+
+  // Km cumulativi per ogni attivita in ordine cronologico
+  const gearRunning={};
+  const actGearKm={};
+  sorted.forEach(a=>{
+    const g=a.gear_name; if(!g) return;
+    if(gearRunning[g]===undefined) gearRunning[g]=gearBase[g]||0;
+    gearRunning[g]+=(a.distance_km||0);
+    actGearKm[a.garmin_id]={name:g, km:Math.round(gearRunning[g]*10)/10};
+  });
+  return actGearKm;
+}
+
 function buildDashboard(activities){
   // Indicizza attività per data
+  // Calcola km cumulativi per gear
+  const gearTotals=buildGearTotals(activities||[]);
+
   const byDate={};
   (activities||[]).forEach(a=>{
     const ds=a.date;
@@ -483,12 +522,14 @@ function buildDashboard(activities){
       scoreCell+='</td>';
 
       const rowCls=isToday?'today-row':'';
-      const gearCell=real&&real.gear_name
-        ?`<td style="vertical-align:top;padding:8px 9px;border-top:1px solid var(--border2);border-right:1px solid var(--border2);">
-            <div class="gear-name">${real.gear_name}</div>
-            ${real.gear_km?`<div class="gear-km">${real.gear_km} km</div>`:''}
-          </td>`
-        :`<td style="vertical-align:top;padding:8px 9px;border-top:1px solid var(--border2);border-right:1px solid var(--border2);"><span class="act-e">—</span></td>`;
+      // Gear cell con km cumulativi
+      let gearHtml2='<span class="act-e">—</span>';
+      if(real&&real.gear_name){
+        const gt=gearTotals[real.garmin_id];
+        const kmTot=gt?gt.km:null;
+        gearHtml2=`<div class="gear-name">${real.gear_name}</div>${kmTot!==null?`<div class="gear-km">${kmTot} km</div>`:''}`;
+      }
+      const gearCell=`<td style="vertical-align:top;padding:8px 9px;border-top:1px solid var(--border2);border-right:1px solid var(--border2);">${gearHtml2}</td>`;
 
       const tableRow=`<tr class="${rowCls}">
         <td><div class="dn">${DN[di]}</div><div class="dd">${d.getDate()} ${fmtDt(p.date).split(' ')[1]}</div>${badge}</td>
