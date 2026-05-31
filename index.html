@@ -700,6 +700,7 @@ const FLAG_TYPE={
   HR_LOW:'diag', CARDIAC_DRIFT:'diag', HIGH_STRESS:'diag',
   MISSING_WARMUP:'warn', MISSING_COOLDOWN:'warn', SHORT_RECOVERY:'warn',
 };
+const FLAG_QUALITA_ONLY=new Set(['MISSING_WARMUP','MISSING_COOLDOWN']);
 const FLAG_LABELS={
   HR_HIGH:'FC troppo alta', HR_LOW:'FC bassa (diagnostica)', TOO_FAST:'Passo troppo veloce',
   FADE:'Calo progressivo', INCOMPLETE:'Distanza incompleta', NO_FAST_BLOCKS:'Nessuna ripetuta',
@@ -734,14 +735,16 @@ function openScorePanel(panelId){
   }).join('');
 
   // Flag
-  const flagHtml=flags.length?flags.map(f=>{
+  const visibleFlags=flags.filter(f=>!FLAG_QUALITA_ONLY.has(f)||wtype==='qualita');
+  const flagHtml=visibleFlags.length?visibleFlags.map(f=>{
     const t=FLAG_TYPE[f]||'warn';
     const lbl=FLAG_LABELS[f]||f;
     return `<span class="sp-flag sp-flag-${t}">${lbl}</span>`;
   }).join(''):'<span style="font-family:var(--mono);font-size:10px;color:var(--text3);">Nessuna flag</span>';
 
   // Note
-  const notesHtml=notes.filter(n=>!n.startsWith('Cap:')).map(n=>`<div class="sp-note">${n}</div>`).join('');
+  const wucdKeywords=['Warm-up','Cooldown','warm-up','cooldown'];
+  const notesHtml=notes.filter(n=>!n.startsWith('Cap:')&&(wtype==='qualita'||!wucdKeywords.some(k=>n.includes(k)))).map(n=>`<div class="sp-note">${n}</div>`).join('');
   const capNote=notes.find(n=>n.startsWith('Cap:'));
   const capHtml=capNote?`<div class="sp-note" style="color:var(--amber);">⚠ ${capNote}</div>`:'';
 
@@ -754,7 +757,7 @@ function openScorePanel(panelId){
     <button class="sp-close" onclick="closeScorePanel()">✕</button>
     <div class="sp-header">
       <div>
-        <div class="sp-title" style="color:${c};">${sv.score}<span style="font-size:14px;font-weight:400;color:var(--text2);"> / 10</span></div>
+        <div class="sp-title" style="color:${c};">${Number(sv.score).toFixed(1)}<span style="font-size:14px;font-weight:400;color:var(--text2);"> / 10</span></div>
         <div class="sp-sub">${typeLabels[wtype]||wtype} · ${SL(sv.score)}</div>
       </div>
     </div>
