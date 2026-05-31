@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-05-31T13:11:32Z",
+  "last_updated": "2026-05-31T13:12:39Z",
   "activities": [
     {
       "garmin_id": 23072168046,
@@ -2010,7 +2010,8 @@
       ],
       "fetched_at": "2026-05-28T13:03:10Z",
       "gear_name": "Nike Vomero plus",
-      "gear_km": null
+      "gear_km": null,
+      "score": null
     },
     {
       "garmin_id": 22863752396,
@@ -3508,7 +3509,8 @@
       ],
       "fetched_at": "2026-05-28T13:03:32Z",
       "gear_name": "Kiprun KS900 light",
-      "gear_km": null
+      "gear_km": null,
+      "score": null
     },
     {
       "garmin_id": 22646265581,
@@ -3584,7 +3586,8 @@
       ],
       "fetched_at": "2026-05-28T13:03:33Z",
       "gear_name": "Nike Vomero plus",
-      "gear_km": null
+      "gear_km": null,
+      "score": null
     },
     {
       "garmin_id": 22633929850,
@@ -3652,7 +3655,8 @@
       ],
       "fetched_at": "2026-05-28T13:03:35Z",
       "gear_name": "Nike Vomero plus",
-      "gear_km": null
+      "gear_km": null,
+      "score": null
     },
     {
       "garmin_id": 22580585917,
@@ -4016,7 +4020,8 @@
       ],
       "fetched_at": "2026-05-28T13:03:37Z",
       "gear_name": "Kiprun KS900 light",
-      "gear_km": null
+      "gear_km": null,
+      "score": null
     },
     {
       "garmin_id": 22562769777,
@@ -4092,7 +4097,8 @@
       ],
       "fetched_at": "2026-05-28T13:03:38Z",
       "gear_name": "Kiprun KS900 light",
-      "gear_km": null
+      "gear_km": null,
+      "score": null
     }
   ]
 }
