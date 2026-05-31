@@ -720,6 +720,8 @@ function openScorePanel(panelId){
 
   // Barre sotto-voti
   const barRows=Object.entries(subscores).map(([k,v])=>{
+    // WU+CD mostrato solo per qualita e lungo
+    if(k==='wu_cd'&&wtype!=='qualita'&&wtype!=='lungo') return '';
     const w=weights[k]||'—';
     const col=SC(v);
     const lbl=SUBSCORE_LABELS[k]||k;
@@ -751,7 +753,6 @@ function openScorePanel(panelId){
   <div class="score-panel">
     <button class="sp-close" onclick="closeScorePanel()">✕</button>
     <div class="sp-header">
-      <div class="sp-circle" style="background:${c}18;color:${c};">${sv.score}</div>
       <div>
         <div class="sp-title" style="color:${c};">${sv.score}<span style="font-size:14px;font-weight:400;color:var(--text2);"> / 10</span></div>
         <div class="sp-sub">${typeLabels[wtype]||wtype} · ${SL(sv.score)}</div>
