@@ -463,9 +463,12 @@ function buildDashboard(activities){
       const isPast=p.date<TODAY,isToday=p.date===TODAY,isFut=p.date>TODAY;
       const isRace=p.summary==='FIRENZE MARATHON';
 
-      // Voto
+      // Voto — legge dal JSON Garmin (priorità) poi fallback autoScore JS
       let sv=VOTI[p.date]||null;
-      if(!sv&&real&&p.type!=='rest')sv=autoScore(p,real);
+      if(!sv&&real&&real.score&&typeof real.score==='object'&&real.score.subscores){
+        sv=real.score;  // usa il voto calcolato dallo script Python
+      }
+      if(!sv&&real&&p.type!=='rest')sv=autoScore(p,real);  // fallback vecchio motore
       if(sv)allScoresMap[p.date]=sv.score;
 
       // Piano cell
