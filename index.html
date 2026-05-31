@@ -86,6 +86,8 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);}
 .act-n{font-weight:600;font-size:12px;}
 .act-m{font-family:var(--mono);font-size:10px;color:var(--text2);margin-top:2px;line-height:1.6;}
 .act-e{font-family:var(--mono);font-size:11px;color:var(--text3);}
+.gear-name{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--text);}
+.gear-km{font-family:var(--mono);font-size:10px;color:var(--text2);margin-top:2px;}
 .lap-table{width:100%;border-collapse:collapse;margin-top:6px;}
 .lap-table td{font-family:var(--mono);font-size:10px;padding:2px 4px;border-top:1px solid var(--border2);color:var(--text2);}
 .lap-table td:first-child{color:var(--text3);width:28px;}
@@ -449,11 +451,9 @@ function buildDashboard(activities){
           }
         }
 
-        const gearHtml=real.gear_name?`<div style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:2px;">👟 ${real.gear_name}${real.gear_km?' · '+real.gear_km+' km':''}</div>`:'';
         realHtml=`<div class="act-n">${real.name}</div>
           <div class="act-m">${real.distance_km?real.distance_km.toFixed(1)+' km':fmtD(real.distance_m)} · ${fmtT(real.duration_s)} · ${real.avg_pace_fmt}/km</div>
           <div style="margin-top:3px;">${hrBadge}</div>
-          ${gearHtml}
           ${lapHtml}`;
         badge=p.type==='rest'?'<span class="bdg b-bonus">+ bonus</span>':'<span class="bdg b-ok">✓</span>';
       }else if(p.type==='rest'){
@@ -483,10 +483,18 @@ function buildDashboard(activities){
       scoreCell+='</td>';
 
       const rowCls=isToday?'today-row':'';
+      const gearCell=real&&real.gear_name
+        ?`<td style="vertical-align:top;padding:8px 9px;border-top:1px solid var(--border2);border-right:1px solid var(--border2);">
+            <div class="gear-name">${real.gear_name}</div>
+            ${real.gear_km?`<div class="gear-km">${real.gear_km} km</div>`:''}
+          </td>`
+        :`<td style="vertical-align:top;padding:8px 9px;border-top:1px solid var(--border2);border-right:1px solid var(--border2);"><span class="act-e">—</span></td>`;
+
       const tableRow=`<tr class="${rowCls}">
         <td><div class="dn">${DN[di]}</div><div class="dd">${d.getDate()} ${fmtDt(p.date).split(' ')[1]}</div>${badge}</td>
         <td>${planCell}</td>
         <td>${realHtml}</td>
+        ${gearCell}
         ${scoreCell}
       </tr>`;
 
@@ -514,11 +522,12 @@ function buildDashboard(activities){
       </div>
       <div id="wb${wi}" style="display:${isCurr?'block':'none'}">
         <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
-          <table class="tbl" style="min-width:460px;">
+          <table class="tbl" style="min-width:560px;">
             <thead><tr>
               <th style="width:74px;">Giorno</th>
-              <th>Piano Firenze</th>
-              <th>Garmin live</th>
+              <th style="width:30%;">Piano Firenze</th>
+              <th style="width:30%;">Garmin live</th>
+              <th style="width:130px;">Gear</th>
               <th style="width:70px;text-align:center;">Voto</th>
             </tr></thead>
             <tbody>${rows}</tbody>
