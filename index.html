@@ -100,11 +100,32 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);}
 .b-future{background:var(--bg3);color:var(--text3);}
 .b-race{background:var(--purple-d);color:var(--purple);}
 .sc-wrap{text-align:center;}
-.sc-circle{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;font-weight:700;margin:0 auto 2px;cursor:help;transition:transform .15s;}
+.sc-circle{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;font-weight:700;margin:0 auto 2px;cursor:pointer;transition:transform .15s;}
 .sc-circle:hover{transform:scale(1.1);}
 .sc-lbl{font-family:var(--mono);font-size:9px;color:var(--text3);}
-#sc-global-tip{display:none;position:fixed;z-index:9999;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 12px;width:260px;font-size:11px;color:var(--text2);line-height:1.5;box-shadow:0 8px 24px rgba(0,0,0,.13);text-align:left;pointer-events:none;}
-.tip-row{display:flex;justify-content:space-between;padding:1px 0;}
+.score-panel-overlay{position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,.25);}
+.score-panel{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9999;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px;width:340px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,.18);}
+.sp-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.sp-circle{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:20px;font-weight:700;flex-shrink:0;}
+.sp-title{font-size:22px;font-weight:800;line-height:1;}
+.sp-sub{font-family:var(--mono);font-size:11px;color:var(--text2);margin-top:3px;}
+.sp-section{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin:14px 0 8px;}
+.sp-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.sp-bar-label{font-size:11px;color:var(--text2);width:100px;flex-shrink:0;}
+.sp-bar-wrap{flex:1;height:5px;background:var(--bg3);border-radius:3px;overflow:hidden;}
+.sp-bar{height:100%;border-radius:3px;}
+.sp-bar-val{font-family:var(--mono);font-size:11px;font-weight:600;width:28px;text-align:right;flex-shrink:0;}
+.sp-bar-w{font-family:var(--mono);font-size:10px;color:var(--text3);width:28px;text-align:right;flex-shrink:0;}
+.sp-flag{display:inline-flex;align-items:center;gap:3px;font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:20px;margin:2px 3px 2px 0;}
+.sp-flag-err{background:#fee2e2;color:#b91c1c;}
+.sp-flag-warn{background:#fef3c7;color:#92400e;}
+.sp-flag-diag{background:#d1fae5;color:#065f46;}
+.sp-note{font-size:11px;color:var(--text2);line-height:1.6;padding:8px 0;border-top:1px solid var(--border2);margin-top:8px;}
+.sp-close{position:absolute;top:12px;right:14px;background:none;border:none;font-size:18px;cursor:pointer;color:var(--text3);line-height:1;}
+.sp-close:hover{color:var(--text);}
+.sp-legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;padding-top:10px;border-top:1px solid var(--border2);}
+.sp-leg-item{display:flex;align-items:center;gap:4px;font-family:var(--mono);font-size:9px;color:var(--text3);}
+.sp-leg-dot{width:7px;height:7px;border-radius:50%;}
 .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:9px;margin-bottom:18px;}
 .stat-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;box-shadow:var(--sh);}
 .st-lbl{font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px;}
@@ -141,7 +162,6 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);}
 <div class="ld-bar"><div class="ld-fill"></div></div>
 <div class="ld-txt" id="ld-txt">Caricamento...</div>
 </div>
-<div id="sc-global-tip"></div>
 <div class="shell">
 <div class="hdr">
 <div>
@@ -510,13 +530,10 @@ function buildDashboard(activities){
       if(isRace){scoreCell+='<div style="font-size:18px;">🏁</div>';}
       else if(sv){
         const c=SC(sv.score);
-        const bd=sv.breakdown||{};
-        const weights=p.type==='recovery'?{fc:50,passo:30,dist:20}:p.type==='qualita'?{fc:30,lap:50,passo:20}:{fc:30,passo:50,dist:20};
-        const wLabels={fc:'FC',passo:'Passo',dist:'Distanza',lap:'Lap veloci'};
-        const bdHtml=Object.entries(weights).map(([k,w])=>{const v=bd[k];if(v==null)return'';return`<div class="tip-row"><span>${wLabels[k]} <span style="color:var(--text3);font-size:9px;">(${w}%)</span></span><span style="color:${SC(v)};">${v}/10</span></div>`;}).filter(x=>x).join('');
-        const fcLine=sv.fc?`<div style="font-size:10px;color:var(--text2);">FC ${Math.round(sv.fc)} bpm · target ${sv.hrTarget?sv.hrTarget[0]+'-'+sv.hrTarget[1]:''} bpm</div>`:'';
-        const tipHtml=`<strong>${sv.score}/10 — ${SL(sv.score)}</strong>${bdHtml?bdHtml:''}${fcLine}`;
-        scoreCell+=`<div class="sc-wrap" data-tip="${encodeURIComponent(tipHtml)}"><div class="sc-circle" style="background:${c}18;color:${c};">${sv.score}</div><div class="sc-lbl">${SL(sv.score)}</div></div>`;
+        const panelId='sp_'+p.date.replace(/-/g,'');
+        scoreCell+=`<div class="sc-wrap" onclick="openScorePanel('${panelId}')"><div class="sc-circle" style="background:${c}18;color:${c};">${sv.score}</div><div class="sc-lbl">${SL(sv.score)}</div></div>`;
+        // Pannello nascosto (creato nel DOM)
+        scoreCell+=`<div id="${panelId}" style="display:none" data-score="${encodeURIComponent(JSON.stringify(sv))}" data-type="${p.type}" data-date="${p.date}"></div>`;
       }else if(p.type==='rest'){scoreCell+='<span style="color:var(--text3);font-size:13px;">—</span>';}
       else{scoreCell+='<span style="color:var(--text3);font-family:var(--mono);font-size:12px;">?</span>';}
       scoreCell+='</td>';
@@ -663,16 +680,107 @@ async function sync(){
 function toggleW(id){const el=document.getElementById(id);el.style.display=el.style.display==='none'?'block':'none';}
 function showTab(n){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.querySelector(`[onclick="showTab('${n}')"]`).classList.add('active');document.getElementById('panel-'+n).classList.add('active');}
 
-// ── TOOLTIP ───────────────────────────────────────────────────────────────────
-(function(){
-  const tip=document.getElementById('sc-global-tip');
-  let currentWrap=null;
-  function showTip(wrap,e){const encoded=wrap.getAttribute('data-tip');if(!encoded)return;tip.innerHTML=decodeURIComponent(encoded);tip.style.display='block';positionTip(e);}
-  function positionTip(e){const TW=tip.offsetWidth||260,TH=tip.offsetHeight||180,VW=window.innerWidth,VH=window.innerHeight,MARGIN=10;let x=e.clientX+14,y=e.clientY+14;if(x+TW>VW-MARGIN)x=e.clientX-TW-10;if(y+TH>VH-MARGIN)y=e.clientY-TH-10;if(x<MARGIN)x=MARGIN;if(y<MARGIN)y=MARGIN;tip.style.left=x+'px';tip.style.top=y+'px';}
-  document.addEventListener('mouseover',function(e){const wrap=e.target.closest('.sc-wrap[data-tip]');if(!wrap){if(currentWrap){tip.style.display='none';currentWrap=null;}return;}currentWrap=wrap;showTip(wrap,e);});
-  document.addEventListener('mousemove',function(e){if(!currentWrap)return;positionTip(e);});
-  document.addEventListener('mouseout',function(e){if(!currentWrap)return;const related=e.relatedTarget;if(!related||!related.closest('.sc-wrap[data-tip]')){tip.style.display='none';currentWrap=null;}});
-})();
+// ── SCORE PANEL ───────────────────────────────────────────────────────────────
+const SUBSCORE_LABELS={
+  hr:'FC', hr_drift:'FC + deriva', pace:'Passo', distance:'Distanza',
+  wu_cd:'WU + CD', fast_blocks:'Blocchi veloci', structure:'Struttura',
+  recoveries:'Recuperi', hr_hr:'FC'
+};
+const SUBSCORE_WEIGHTS={
+  recovery:  {hr:50, pace:20, distance:30},
+  easy:      {hr:35, pace:35, distance:30},
+  lungo:     {hr_drift:25, pace:25, distance:50, wu_cd:20},
+  qualita:   {fast_blocks:40, structure:25, recoveries:10, wu_cd:10, hr:10, distance:5},
+};
+const FLAG_TYPE={
+  HR_HIGH:'err', TOO_FAST:'err', FADE:'err', INCOMPLETE:'err', NO_FAST_BLOCKS:'err',
+  HR_LOW:'diag', CARDIAC_DRIFT:'diag', HIGH_STRESS:'diag',
+  MISSING_WARMUP:'warn', MISSING_COOLDOWN:'warn', SHORT_RECOVERY:'warn',
+};
+const FLAG_LABELS={
+  HR_HIGH:'FC troppo alta', HR_LOW:'FC bassa (diagnostica)', TOO_FAST:'Passo troppo veloce',
+  FADE:'Calo progressivo', INCOMPLETE:'Distanza incompleta', NO_FAST_BLOCKS:'Nessuna ripetuta',
+  CARDIAC_DRIFT:'Deriva cardiaca', MISSING_WARMUP:'Warm-up breve/assente',
+  MISSING_COOLDOWN:'Cooldown breve/assente', SHORT_RECOVERY:'Recuperi corti',
+};
+
+function openScorePanel(panelId){
+  const el=document.getElementById(panelId);
+  if(!el)return;
+  const sv=JSON.parse(decodeURIComponent(el.getAttribute('data-score')));
+  const wtype=el.getAttribute('data-type');
+  const c=SC(sv.score);
+  const weights=SUBSCORE_WEIGHTS[wtype]||{};
+  const subscores=sv.subscores||{};
+  const flags=sv.flags||[];
+  const notes=sv.notes||[];
+
+  // Barre sotto-voti
+  const barRows=Object.entries(subscores).map(([k,v])=>{
+    const w=weights[k]||'—';
+    const col=SC(v);
+    const lbl=SUBSCORE_LABELS[k]||k;
+    return `<div class="sp-bar-row">
+      <div class="sp-bar-label">${lbl}</div>
+      <div class="sp-bar-wrap"><div class="sp-bar" style="width:${v*10}%;background:${col};"></div></div>
+      <div class="sp-bar-val" style="color:${col};">${v}</div>
+      <div class="sp-bar-w">${w!=='—'?w+'%':'—'}</div>
+    </div>`;
+  }).join('');
+
+  // Flag
+  const flagHtml=flags.length?flags.map(f=>{
+    const t=FLAG_TYPE[f]||'warn';
+    const lbl=FLAG_LABELS[f]||f;
+    return `<span class="sp-flag sp-flag-${t}">${lbl}</span>`;
+  }).join(''):'<span style="font-family:var(--mono);font-size:10px;color:var(--text3);">Nessuna flag</span>';
+
+  // Note
+  const notesHtml=notes.filter(n=>!n.startsWith('Cap:')).map(n=>`<div class="sp-note">${n}</div>`).join('');
+  const capNote=notes.find(n=>n.startsWith('Cap:'));
+  const capHtml=capNote?`<div class="sp-note" style="color:var(--amber);">⚠ ${capNote}</div>`:'';
+
+  // Legenda tipo allenamento
+  const typeLabels={recovery:'Recovery',easy:'Facile',lungo:'Lungo',qualita:'Qualità'};
+
+  const html=`
+  <div class="score-panel-overlay" onclick="closeScorePanel()"></div>
+  <div class="score-panel">
+    <button class="sp-close" onclick="closeScorePanel()">✕</button>
+    <div class="sp-header">
+      <div class="sp-circle" style="background:${c}18;color:${c};">${sv.score}</div>
+      <div>
+        <div class="sp-title" style="color:${c};">${sv.score}<span style="font-size:14px;font-weight:400;color:var(--text2);"> / 10</span></div>
+        <div class="sp-sub">${typeLabels[wtype]||wtype} · ${SL(sv.score)}</div>
+      </div>
+    </div>
+    <div class="sp-section">Sotto-voti</div>
+    ${barRows}
+    <div class="sp-section">Flag</div>
+    <div style="margin-bottom:4px;">${flagHtml}</div>
+    ${notesHtml}
+    ${capHtml}
+    <div class="sp-legend">
+      <div class="sp-leg-item"><div class="sp-leg-dot" style="background:#b91c1c;"></div>Errore</div>
+      <div class="sp-leg-item"><div class="sp-leg-dot" style="background:#92400e;"></div>Avviso</div>
+      <div class="sp-leg-item"><div class="sp-leg-dot" style="background:#065f46;"></div>Diagnostica</div>
+      <div style="margin-left:auto;font-family:var(--mono);font-size:9px;color:var(--text3);">% = peso nel voto</div>
+    </div>
+  </div>`;
+
+  let container=document.getElementById('score-panel-container');
+  if(!container){container=document.createElement('div');container.id='score-panel-container';document.body.appendChild(container);}
+  container.innerHTML=html;
+  document.body.style.overflow='hidden';
+}
+
+function closeScorePanel(){
+  const c=document.getElementById('score-panel-container');
+  if(c)c.innerHTML='';
+  document.body.style.overflow='';
+}
+
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeScorePanel();});
 
 sync();
 
