@@ -757,7 +757,7 @@ function openScorePanel(panelId){
     <button class="sp-close" onclick="closeScorePanel()">✕</button>
     <div class="sp-header">
       <div>
-        <div class="sp-title" style="color:${c};">${Number(sv.score).toFixed(1)}<span style="font-size:14px;font-weight:400;color:var(--text2);"> / 10</span></div>
+        <div class="sp-title" style="color:${c};">${Number(sv.score).toFixed(2)}<span style="font-size:14px;font-weight:400;color:var(--text2);"> / 10</span></div>
         <div class="sp-sub">${typeLabels[wtype]||wtype} · ${SL(sv.score)}</div>
       </div>
     </div>
