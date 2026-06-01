@@ -729,7 +729,7 @@ function openScorePanel(panelId){
     return `<div class="sp-bar-row">
       <div class="sp-bar-label">${lbl}</div>
       <div class="sp-bar-wrap"><div class="sp-bar" style="width:${v*10}%;background:${col};"></div></div>
-      <div class="sp-bar-val" style="color:${col};">${v}</div>
+      <div class="sp-bar-val" style="color:${col};">${Number(v).toFixed(2)}</div>
       <div class="sp-bar-w">${w!=='—'?w+'%':'—'}</div>
     </div>`;
   }).join('');
