@@ -479,11 +479,11 @@ function buildDashboard(activities){
       let fcChip='';
       if(p.fcDesc&&p.type!=='rest'){
         const label=p.hrMin&&p.hrMax?`${p.hrMin}–${p.hrMax} bpm`:'';
-        if(label){const zp=getZone(Math.round((p.hrMin+p.hrMax)/2));fcChip=`<span class="fc-pill" style="font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:20px;display:inline-block;margin-top:3px;background:${zp?zp.bg:'#f3f4f6'};color:${zp?zp.col:'#888'};">FC ${label}</span>`;}
+        if(label){fcChip=`<div style="font-family:var(--mono);font-size:10px;color:var(--text2);margin-top:3px;">FC ${label}</div>`;}
       }
       const planCell=p.type==='rest'
         ?`<div class="plan-t" style="color:var(--text3);">Riposo</div>${p.desc&&p.desc!=='—'?`<div class="plan-d" style="color:var(--text3);">${p.desc}</div>`:''}`
-        :`<div class="plan-t" style="color:var(--blue);">${p.summary}${typeLabel}</div>
+        :`<div class="plan-t" style="color:var(--text);">${p.summary}${typeLabel}</div>
           ${p.desc&&p.desc!=='—'?`<div class="plan-d">${p.desc}</div>`:''}
           ${gelText}
           <div style="margin-top:4px;">${fcChip}</div>`;
