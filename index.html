@@ -251,7 +251,9 @@ function parseICS(text){
     let desc='';
     if(ritmo)desc+='Ritmo: '+ritmo+'.';
     if(dettaglio)desc+=(desc?' ':'')+dettaglio;
-    const event={date:dateStr,summary,desc,fcDesc:fcRaw?'FC: '+fcRaw:'',type,hrMin,hrMax};
+    const ritmoStr=ritmo?'Ritmo: '+ritmo+'.':'';
+    const dettaglioStr=dettaglio||'';
+    const event={date:dateStr,summary,desc,ritmo:ritmoStr,dettaglio:dettaglioStr,fcDesc:fcRaw?'FC: '+fcRaw:'',type,hrMin,hrMax};
     if(type==='lungo'&&gelRaw){event._gelNote=gelRaw;event._gelCount=parseInt(gelRaw)||0;}
     events.push(event);
   }
@@ -484,9 +486,10 @@ function buildDashboard(activities){
       const planCell=p.type==='rest'
         ?`<div class="plan-t" style="color:var(--text3);">Riposo</div>${p.desc&&p.desc!=='—'?`<div class="plan-d" style="color:var(--text3);">${p.desc}</div>`:''}`
         :`<div class="plan-t" style="color:var(--text);">${p.summary}${typeLabel}</div>
-          ${p.desc&&p.desc!=='—'?`<div class="plan-d">${p.desc}</div>`:''}
+          ${p.ritmo?`<div class="plan-d">${p.ritmo}</div>`:''}
+          ${p.dettaglio?`<div class="plan-d">${p.dettaglio}</div>`:''}
           ${gelText}
-          <div style="margin-top:4px;">${fcChip}</div>`;
+          ${fcChip}`;
 
       // Garmin cell — mostra lap se disponibili
       let badge='',realHtml='';
