@@ -82,6 +82,7 @@ def parse_ics(path):
         ritmo     = field_val("Ritmo")
         fc_raw    = field_val("FC")
         struttura = field_val("Struttura")
+        dettaglio  = field_val("Dettaglio")
 
         # Tipo normalizzato
         if "riposo" in summary.lower():
@@ -126,6 +127,7 @@ def parse_ics(path):
             "hr_max":     hr_max,
             "distance_km": dist_km,
             "struttura":  struttura,
+            "dettaglio":   dettaglio,
         })
 
     events.sort(key=lambda x: x["date"])
@@ -151,28 +153,28 @@ def parse_struttura(raw):
               "is_prog": False}
 
     # WU
-    m = re.search(r'WU(\d+(?:\.\d+)?)(km|m)?', s, re.IGNORECASE)
+    m = re.search(r'WU\s*(\d+(?:[\.,]\d+)?)(?:\s*)?(km|m)?', s, re.IGNORECASE)
     if m:
-        val = float(m.group(1))
+        val = float(m.group(1).replace(',', '.'))
         unit = (m.group(2) or "").lower()
-        if unit == "km": result["wu_min"] = val / (5.5/60)
-        elif unit == "m": result["wu_min"] = (val/1000) / (5.5/60)
+        if unit == "km": result["wu_min"] = val * 5.5
+        elif unit == "m": result["wu_min"] = (val/1000) * 5.5
         else: result["wu_min"] = val
 
     # CD
-    m = re.search(r'CD(\d+(?:\.\d+)?)(km|m)?', s, re.IGNORECASE)
+    m = re.search(r'CD\s*(\d+(?:[\.,]\d+)?)(?:\s*)?(km|m)?', s, re.IGNORECASE)
     if m:
-        val = float(m.group(1))
+        val = float(m.group(1).replace(',', '.'))
         unit = (m.group(2) or "").lower()
-        if unit == "km": result["cd_min"] = val / (5.5/60)
-        elif unit == "m": result["cd_min"] = (val/1000) / (5.5/60)
+        if unit == "km": result["cd_min"] = val * 5.5
+        elif unit == "m": result["cd_min"] = (val/1000) * 5.5
         else: result["cd_min"] = val
 
     # PROG
     m = re.search(r'PROG(\d+(?:\.\d+)?)(km|m|\'|min)?', s, re.IGNORECASE)
     if m:
         result["is_prog"] = True
-        val = float(m.group(1))
+        val = float(m.group(1).replace(',', '.'))
         unit = (m.group(2) or "").lower().replace("'", "")
         if unit == "km": result["rep_km"] = val
         elif unit == "m": result["rep_km"] = val/1000
@@ -181,10 +183,10 @@ def parse_struttura(raw):
         return result
 
     # NxDURATA
-    m = re.search(r'(\d+)x(\d+(?:\.\d+)?)(km|m|\'|min|s)?', s, re.IGNORECASE)
+    m = re.search(r'(\d+)\s*x\s*(\d+(?:[\.,]\d+)?)(?:\s*)?(km|m|\'|min|s)?', s, re.IGNORECASE)
     if m:
         result["reps"] = int(m.group(1))
-        val = float(m.group(2))
+        val = float(m.group(2).replace(',', '.'))
         unit = (m.group(3) or "").lower().replace("'", "").replace("\u2019", "")
         if unit == "km": result["rep_km"] = val
         elif unit == "m": result["rep_km"] = val/1000
@@ -192,9 +194,9 @@ def parse_struttura(raw):
         else: result["rep_min"] = val
 
     # REC
-    m = re.search(r'REC(\d+(?:\.\d+)?)(km|m|s)?', s, re.IGNORECASE)
+    m = re.search(r'REC\s*(\d+(?:[\.,]\d+)?)(?:\s*)?(km|m|s)?', s, re.IGNORECASE)
     if m:
-        val = float(m.group(1))
+        val = float(m.group(1).replace(',', '.'))
         unit = (m.group(2) or "").lower()
         if unit == "km": result["rec_km"] = val
         elif unit == "m": result["rec_km"] = val/1000
@@ -202,6 +204,101 @@ def parse_struttura(raw):
         else: result["rec_min"] = val
 
     return result
+
+
+def parse_pace_range_seconds(text):
+    """Estrae il primo range passo tipo 5:30–5:50/km e lo restituisce in secondi/km."""
+    ranges = parse_all_pace_ranges_seconds(text)
+    return ranges[0] if ranges else (None, None)
+
+
+def parse_all_pace_ranges_seconds(text):
+    """Estrae tutti i range passo tipo 5:30–5:50/km in secondi/km."""
+    if not text:
+        return []
+    out = []
+    for m in re.finditer(r'(\d):(\d{2})\s*[–\-]\s*(\d):(\d{2})\s*/?\s*km', text, re.IGNORECASE):
+        p_min = int(m.group(1)) * 60 + int(m.group(2))
+        p_max = int(m.group(3)) * 60 + int(m.group(4))
+        out.append((p_min, p_max))
+    return out
+
+
+def parse_detail_targets(detail):
+    """Legge dal campo Dettaglio target utili allo scoring.
+
+    In particolare i recuperi devono essere letti dal dettaglio dell'allenamento,
+    perché la Struttura spesso contiene solo REC2 mentre il passo corretto sta in
+    frasi tipo: "con 2' jog a 5:30–5:50/km".
+    """
+    if not detail:
+        return {}
+
+    d = detail.replace('’', "'").replace('–', '-').strip()
+    out = {}
+
+    # Recuperi: preferisce una frase che contenga jog/recupero/recuperi.
+    # Esempi gestiti:
+    #   con 2' jog a 5:30-5:50/km
+    #   recuperi 2' a 5:30-5:50/km
+    #   2 min recupero a 5:30-5:50/km
+    rec_candidates = [x.strip() for x in re.split(r'[.;]', d) if re.search(r'\b(jog|recuper\w*|rec\b)', x, re.IGNORECASE)]
+    for seg in rec_candidates:
+        m_dur = re.search(r'(\d+(?:[\.,]\d+)?)\s*(?:\'|min(?:uti?)?|m\b)', seg, re.IGNORECASE)
+        pace_ranges = parse_all_pace_ranges_seconds(seg)
+        # Nei dettagli tipo "Ripetute a 4:05-4:10/km con 2' jog a 5:30-5:50/km"
+        # il range del recupero e' l'ultimo, non quello delle ripetute.
+        p_min, p_max = pace_ranges[-1] if pace_ranges else (None, None)
+        if m_dur:
+            out['rec_min_detail'] = float(m_dur.group(1).replace(',', '.'))
+        if p_min and p_max:
+            out['rec_pace_min_s'] = p_min
+            out['rec_pace_max_s'] = p_max
+        if 'rec_min_detail' in out or 'rec_pace_min_s' in out:
+            break
+
+    # Warm-up / cooldown dal dettaglio, come fallback se Struttura non li contiene.
+    # Esempi: "2 km risc a 5:20-5:40/km", "2 km defat".
+    for seg in re.split(r'[.;]', d):
+        seg_l = seg.lower()
+        m_km = re.search(r'(\d+(?:[\.,]\d+)?)\s*km', seg_l)
+        if not m_km:
+            continue
+        km = float(m_km.group(1).replace(',', '.'))
+        p_min, p_max = parse_pace_range_seconds(seg)
+        pace_ref_min_km = ((p_min + p_max) / 2 / 60) if p_min and p_max else 5.5
+        target_min = km * pace_ref_min_km
+        if re.search(r'\b(risc|riscald|warm\s*up|wu)\b', seg_l):
+            out.setdefault('wu_min_detail', target_min)
+        if re.search(r'\b(defat|defatic|cool\s*down|cd)\b', seg_l):
+            out.setdefault('cd_min_detail', target_min)
+
+    return out
+
+
+def merge_detail_targets_into_structure(st, detail_targets):
+    """Integra nel parser struttura i target letti dal Dettaglio."""
+    st = dict(st or {})
+    if not detail_targets:
+        return st
+
+    # Durata recupero: il dettaglio ha priorità, perché rappresenta il testo umano del workout.
+    if detail_targets.get('rec_min_detail') is not None:
+        st['rec_min'] = detail_targets['rec_min_detail']
+
+    # Passo recupero: serve allo scoring, non era presente nella Struttura compatta.
+    if detail_targets.get('rec_pace_min_s') is not None:
+        st['rec_pace_min_s'] = detail_targets['rec_pace_min_s']
+    if detail_targets.get('rec_pace_max_s') is not None:
+        st['rec_pace_max_s'] = detail_targets['rec_pace_max_s']
+
+    # WU/CD fallback: non sovrascrive Struttura se gia' riconosciuta.
+    if (st.get('wu_min') or 0) <= 0 and detail_targets.get('wu_min_detail') is not None:
+        st['wu_min'] = detail_targets['wu_min_detail']
+    if (st.get('cd_min') or 0) <= 0 and detail_targets.get('cd_min_detail') is not None:
+        st['cd_min'] = detail_targets['cd_min_detail']
+
+    return st
 
 # ══════════════════════════════════════════════════════════════════════════════
 # SEZIONE 4 — MOTORE DI SCORING
@@ -278,45 +375,50 @@ def score_cardiac_drift(laps, flags, notes):
         return 4.0
 
 def segment_laps(laps, plan):
-    """Separa lap in fast/slow/warmup/cooldown.
+    """Separa lap in fast/recovery/warmup/cooldown.
 
-    Alcuni split Garmin molto corti possono avere avg_pace_s_km = None.
-    In quel caso non devono essere usati per confronti numerici, altrimenti
-    il backfill dello scoring va in errore con:
-    \'NoneType\' and \'int\'.
+    - fast_laps: blocchi veloci della seduta
+    - recovery_laps: solo i recuperi tra i blocchi veloci
+    - wu_laps: lap lenti prima del primo blocco veloce
+    - cd_laps: lap lenti dopo l'ultimo blocco veloce
+
+    Prima lo script metteva tutti i lap lenti in slow_laps, includendo anche WU e CD:
+    questo abbassava artificialmente il voto dei recuperi.
     """
     if not laps:
         return [], [], [], []
 
     threshold = (plan.get("pace_min_s") or 280) + 15
-    fast, slow = [], []
 
     def valid_pace_lap(lap):
         pace = lap.get("avg_pace_s_km")
         dist = lap.get("distance_m") or 0
         return pace is not None and dist >= 100
 
-    for lap in laps:
-        if not valid_pace_lap(lap):
-            continue
-        pace = lap.get("avg_pace_s_km")
-        if pace < threshold:
-            fast.append(lap)
-        else:
-            slow.append(lap)
+    valid = [lap for lap in laps if valid_pace_lap(lap)]
+    if not valid:
+        return [], [], [], []
 
-    first_fast = laps.index(fast[0]) if fast else len(laps)
-    last_fast  = laps.index(fast[-1]) if fast else 0
+    fast_laps = [lap for lap in valid if lap.get("avg_pace_s_km") < threshold]
+    if not fast_laps:
+        return [], [], [], []
 
-    wu = [
-        l for l in laps[:first_fast]
-        if valid_pace_lap(l) and l.get("avg_pace_s_km") >= threshold
+    first_fast_idx = laps.index(fast_laps[0])
+    last_fast_idx  = laps.index(fast_laps[-1])
+
+    wu_laps = [
+        lap for lap in laps[:first_fast_idx]
+        if valid_pace_lap(lap) and lap.get("avg_pace_s_km") >= threshold
     ]
-    cd = [
-        l for l in laps[last_fast+1:]
-        if valid_pace_lap(l) and l.get("avg_pace_s_km") >= threshold
+    recovery_laps = [
+        lap for lap in laps[first_fast_idx + 1:last_fast_idx]
+        if valid_pace_lap(lap) and lap.get("avg_pace_s_km") >= threshold
     ]
-    return fast, slow, wu, cd
+    cd_laps = [
+        lap for lap in laps[last_fast_idx + 1:]
+        if valid_pace_lap(lap) and lap.get("avg_pace_s_km") >= threshold
+    ]
+    return fast_laps, recovery_laps, wu_laps, cd_laps
 
 def score_fast_blocks(fast_laps, plan, st, flags, notes):
     if not fast_laps:
@@ -351,23 +453,65 @@ def score_fast_blocks(fast_laps, plan, st, flags, notes):
     s = 0.70*score_vic + 0.30*score_reg - pen_fade
     return round(clamp(s, 1, 10), 2)
 
-def score_recoveries(slow_laps, plan, st, flags, notes):
-    if not slow_laps:
+def score_recoveries(recovery_laps, plan, st, flags, notes):
+    """Valuta i recuperi leggendo i target dal Dettaglio dell'allenamento quando presenti.
+
+    La Struttura compatta spesso dice solo REC2; il passo corretto del recupero e'
+    nel dettaglio, per esempio "2' jog a 5:30-5:50/km". Se quel range esiste,
+    il voto intensita' usa quel range, non un riferimento fisso tipo 8:00/km.
+    """
+    if not recovery_laps:
         if (st.get("reps") or 0) > 1:
             flags.append("SHORT_RECOVERY")
             notes.append("Recuperi non rilevati tra le ripetute.")
             return 3.0
         return 7.0
-    target_rec_s = (st.get("rec_min") or 2.0) * 60
+
+    target_rec_s = (st.get("rec_min") or st.get("rec_min_detail") or 2.0) * 60
+    rec_pace_min = st.get("rec_pace_min_s")  # limite veloce, es. 5:30/km = 330 s/km
+    rec_pace_max = st.get("rec_pace_max_s")  # limite lento,  es. 5:50/km = 350 s/km
+
     scores = []
-    for lap in slow_laps:
+    for lap in recovery_laps:
         dur  = lap.get("duration_s") or 0
-        pace = lap.get("avg_pace_s_km") or 999
-        ratio = dur/target_rec_s if target_rec_s > 0 else 1.0
-        s_dur = 10.0 if ratio >= 0.80 else (6.0 if ratio >= 0.50 else 3.0)
-        if ratio < 0.50: flags.append("SHORT_RECOVERY")
-        s_int = clamp(10 - max(0, 480-pace)*0.05, 1, 10)
-        scores.append(0.50*s_dur + 0.50*s_int)
+        pace = lap.get("avg_pace_s_km")
+
+        ratio = dur / target_rec_s if target_rec_s > 0 else 1.0
+        if ratio >= 0.90:
+            s_dur = 10.0
+        elif ratio >= 0.80:
+            s_dur = 9.0
+        elif ratio >= 0.60:
+            s_dur = 7.0
+        elif ratio >= 0.50:
+            s_dur = 6.0
+        else:
+            s_dur = 3.0
+            flags.append("SHORT_RECOVERY")
+
+        if pace is None:
+            s_int = 7.0
+        elif rec_pace_min and rec_pace_max:
+            # Se il dettaglio dice 5:30-5:50/km, quel range e' considerato perfetto.
+            if rec_pace_min <= pace <= rec_pace_max:
+                s_int = 10.0
+            elif pace < rec_pace_min:
+                # recupero un po' troppo veloce: penalizzazione moderata
+                s_int = clamp(10 - (rec_pace_min - pace) * 0.10, 6, 10)
+            else:
+                # recupero piu' lento del target: penalizzazione leggera
+                s_int = clamp(10 - (pace - rec_pace_max) * 0.05, 6, 10)
+        else:
+            # Fallback conservativo: un jog intorno a 5:20-6:15/km va bene.
+            if 320 <= pace <= 375:
+                s_int = 10.0
+            elif pace < 320:
+                s_int = clamp(10 - (320 - pace) * 0.08, 5, 10)
+            else:
+                s_int = clamp(10 - (pace - 375) * 0.03, 6, 10)
+
+        scores.append(0.60*s_dur + 0.40*s_int)
+
     return round(clamp(sum(scores)/len(scores), 1, 10), 2)
 
 def score_wucd(wu_laps, cd_laps, plan, st, flags, notes):
@@ -473,17 +617,31 @@ def auto_score(plan, activity):
         s_recov  = score_recoveries(slow_laps, plan, st, flags, notes)
         s_hr     = score_hr(activity.get("avg_hr"), plan.get("hr_min") or 161, plan.get("hr_max") or 174, flags, notes)
         s_dist   = score_distance(activity.get("distance_km",0), plan.get("distance_km"), flags, notes)
-        if has_wu or has_cd:
-            s_wucd   = score_wucd(wu_l, cd_l, plan, st, flags, notes)
-            s_struct = (s_recov + s_wucd)/2
-            subscores = {"fast_blocks": s_blocks, "structure": s_struct, "recoveries": s_recov,
-                         "wu_cd": s_wucd, "hr": s_hr, "distance": s_dist}
-            weighted  = 0.40*s_blocks + 0.25*s_struct + 0.10*s_recov + 0.10*s_wucd + 0.10*s_hr + 0.05*s_dist
-        else:
-            # Senza WU/CD: ridistribuisce il peso su blocchi veloci e recuperi
-            s_struct = s_recov
-            subscores = {"fast_blocks": s_blocks, "recoveries": s_recov, "hr": s_hr, "distance": s_dist}
-            weighted  = 0.55*s_blocks + 0.25*s_recov + 0.12*s_hr + 0.08*s_dist
+
+        # Per gli allenamenti di qualita vogliamo SEMPRE mostrare gli stessi
+        # 6 sotto-voti nel popup: blocchi veloci, struttura, recuperi, WU+CD, FC, distanza.
+        # Prima, se la Struttura ICS non conteneva WU/CD espliciti, lo script saltava
+        # s_wucd e s_struct: per questo il 02/06 mostrava solo 4 sotto-voti.
+        # Qui invece WU/CD viene sempre valutato usando i lap prima/dopo i blocchi veloci.
+        s_wucd   = score_wucd(wu_l, cd_l, plan, st, flags, notes)
+        s_struct = (s_recov + s_wucd) / 2
+
+        subscores = {
+            "fast_blocks": s_blocks,
+            "structure":   s_struct,
+            "recoveries":  s_recov,
+            "wu_cd":       s_wucd,
+            "hr":          s_hr,
+            "distance":    s_dist,
+        }
+        weighted = (
+            0.40*s_blocks +
+            0.25*s_struct +
+            0.10*s_recov +
+            0.10*s_wucd +
+            0.10*s_hr +
+            0.05*s_dist
+        )
     else:
         s_hr   = score_hr(activity.get("avg_hr"), plan.get("hr_min") or 140, plan.get("hr_max") or 165, flags, notes)
         s_pace = score_pace(activity.get("avg_pace_s_km"), plan.get("pace_min_s"), plan.get("pace_max_s"), flags, notes)
@@ -503,6 +661,7 @@ def auto_score(plan, activity):
         "flags":       list(set(flags)),
         "notes":       notes,
         "cap_applied": cap_reason,
+        "scoring_version": 5,
     }
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -702,12 +861,15 @@ def main():
     if ics_path.exists():
         try:
             events = parse_ics(ics_path)
-            # Aggiungi struttura parsata agli eventi qualita
+            # Aggiungi struttura parsata e target letti dal Dettaglio.
+            # Se il campo Struttura manca nel piano locale, usa il SUMMARY come fallback
+            # (es. "5 x 1 km") e poi integra recuperi/WU/CD dal Dettaglio.
             for e in events:
-                if e["type"] == "qualita" and e.get("struttura"):
-                    e["struttura_parsed"] = parse_struttura(e["struttura"])
-                else:
-                    e["struttura_parsed"] = {}
+                raw_struct = e.get("struttura") or e.get("summary") or e.get("dettaglio") or ""
+                st = parse_struttura(raw_struct)
+                detail_targets = parse_detail_targets(e.get("dettaglio", ""))
+                e["detail_targets"] = detail_targets
+                e["struttura_parsed"] = merge_detail_targets_into_structure(st, detail_targets)
             plan_index = build_plan_index(events)
             log.info("Piano ICS caricato: %d eventi", len(events))
         except Exception as ex:
@@ -793,21 +955,42 @@ def main():
     # Alcuni record vecchi possono avere un voto finale ma subscores vuoto: in quel caso
     # il popup mostra il voto ma non mostra i sotto-voti. Quindi ricalcoliamo anche se
     # subscores non è un dizionario valido oppure è vuoto.
-    def needs_score_backfill(score_obj):
+    def expected_subscore_keys(plan):
+        if not plan:
+            return set()
+        wtype = plan.get("type", "")
+        if wtype == "qualita":
+            return {"fast_blocks", "structure", "recoveries", "wu_cd", "hr", "distance"}
+        if wtype in ("easy", "recovery"):
+            return {"hr", "pace", "distance"}
+        if wtype == "lungo":
+            return {"hr_drift", "pace", "distance"}
+        return set()
+
+    def needs_score_backfill(score_obj, plan=None):
         if score_obj is None:
             return True
         if not isinstance(score_obj, dict):
             return True
+        if score_obj.get("score") is None:
+            return True
+
         subs = score_obj.get("subscores")
         if not isinstance(subs, dict) or len(subs) == 0:
             return True
-        if score_obj.get("score") is None:
+
+        expected = expected_subscore_keys(plan)
+        if expected and not expected.issubset(set(subs.keys())):
             return True
+
+        if score_obj.get("scoring_version") != 5:
+            return True
+
         return False
 
     for record in data.get("activities", []):
-        if needs_score_backfill(record.get("score")):
-            plan = plan_index.get(record.get("date", ""))
+        plan = plan_index.get(record.get("date", ""))
+        if plan and needs_score_backfill(record.get("score"), plan):
             if plan:
                 try:
                     sc = auto_score(plan, record)
