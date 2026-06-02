@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-02T22:10:42Z",
+  "last_updated": "2026-06-02T22:52:49Z",
   "activities": [
     {
       "garmin_id": 23108028661,
@@ -140,7 +140,18 @@
         }
       ],
       "fetched_at": "2026-06-02T19:36:49Z",
-      "score": null
+      "score": {
+        "score": 8.6,
+        "subscores": {
+          "fast_blocks": 9.17,
+          "recoveries": 6.09,
+          "hr": 10.0,
+          "distance": 10
+        },
+        "flags": [],
+        "notes": [],
+        "cap_applied": null
+      }
     },
     {
       "garmin_id": 23084025466,
@@ -2351,7 +2362,22 @@
       "fetched_at": "2026-05-28T13:03:10Z",
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
-      "score": null
+      "score": {
+        "score": 5.9,
+        "subscores": {
+          "fast_blocks": 4.91,
+          "recoveries": 6.25,
+          "hr": 9.12,
+          "distance": 7.0
+        },
+        "flags": [
+          "HR_LOW"
+        ],
+        "notes": [
+          "FC 150 bpm sotto target di 11 bpm — controlla le soglie."
+        ],
+        "cap_applied": null
+      }
     },
     {
       "garmin_id": 22863752396,
