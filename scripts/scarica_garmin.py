@@ -214,7 +214,7 @@ def fmt_pace(s):
     return f"{int(s//60)}:{int(s%60):02d}/km"
 
 def score_hr(hr, hr_min, hr_max, flags, notes):
-    if not hr: return 7.0
+    if not hr or not hr_min or not hr_max: return 7.0
     delta_up   = max(0, hr - hr_max)
     delta_down = max(0, hr_min - hr)
     if delta_up == 0 and delta_down == 0:
@@ -383,8 +383,12 @@ def apply_caps(score, plan, activity, fast_laps, flags):
             cap, reason = 6.0, "Qualita: nessun blocco veloce"
         if t_reps > 0 and len(fast_laps)/t_reps < 0.70 and 7.0 < cap:
             cap, reason = 7.0, "Qualita: meno del 70% delle ripetute"
-        if "MISSING_WARMUP" in flags and "MISSING_COOLDOWN" in flags and 8.5 < cap:
-            cap, reason = 8.5, "Qualita: warm-up e cooldown assenti"
+        if "MISSING_WARMUP" in flags and "MISSING_COOLDOWN" in flags:
+            # Cap solo se WU/CD erano previsti nel piano
+            st_check = plan.get("struttura_parsed") or {}
+            if (st_check.get("wu_min") or 0) > 0 or (st_check.get("cd_min") or 0) > 0:
+                if 8.5 < cap:
+                    cap, reason = 8.5, "Qualita: warm-up e cooldown assenti (previsti nel piano)"
     elif wtype == "lungo":
         if t_dist > 0 and dist/t_dist < 0.70 and 6.0 < cap:
             cap, reason = 6.0, "Lungo: meno del 70% della distanza"
@@ -397,28 +401,30 @@ def auto_score(plan, activity):
     if not plan or plan.get("type") == "rest":
         return None
     flags, notes = [], []
-    laps = activity.get("laps") or []
-    st   = plan.get("struttura_parsed") or {}
+    laps  = activity.get("laps") or []
+    st    = plan.get("struttura_parsed") or {}
     wtype = plan.get("type","easy")
 
+    # WU/CD valutati solo se esplicitamente previsti nella Struttura
+    has_wu = (st.get("wu_min") or 0) > 0
+    has_cd = (st.get("cd_min") or 0) > 0
+
     if wtype == "recovery":
+        # Recovery: no WU/CD — solo FC, passo, distanza
         s_hr   = score_hr(activity.get("avg_hr"), plan.get("hr_min") or 129, plan.get("hr_max") or 147, flags, notes)
         s_pace = score_pace(activity.get("avg_pace_s_km"), plan.get("pace_min_s"), plan.get("pace_max_s"), flags, notes, "recovery")
         s_dist = score_distance(activity.get("distance_km",0), plan.get("distance_km"), flags, notes)
-        wu_l   = laps[:2]; cd_l = laps[-2:]
-        s_wucd = score_wucd(wu_l, cd_l, plan, st, flags, notes)
-        subscores = {"hr": s_hr, "pace": s_pace, "distance": s_dist, "wu_cd": s_wucd}
-        weighted  = 0.45*s_hr + 0.15*s_pace + 0.20*s_dist + 0.20*s_wucd
+        subscores = {"hr": s_hr, "pace": s_pace, "distance": s_dist}
+        weighted  = 0.50*s_hr + 0.20*s_pace + 0.30*s_dist
         fast_laps = []
 
     elif wtype == "easy":
+        # Easy: no WU/CD — FC, passo, distanza
         s_hr   = score_hr(activity.get("avg_hr"), plan.get("hr_min") or 147, plan.get("hr_max") or 160, flags, notes)
         s_pace = score_pace(activity.get("avg_pace_s_km"), plan.get("pace_min_s"), plan.get("pace_max_s"), flags, notes, "easy")
         s_dist = score_distance(activity.get("distance_km",0), plan.get("distance_km"), flags, notes)
-        wu_l   = laps[:1]; cd_l = laps[-1:]
-        s_wucd = score_wucd(wu_l, cd_l, plan, st, flags, notes)
-        subscores = {"hr": s_hr, "pace": s_pace, "distance": s_dist, "wu_cd": s_wucd}
-        weighted  = 0.30*s_hr + 0.30*s_pace + 0.25*s_dist + 0.15*s_wucd
+        subscores = {"hr": s_hr, "pace": s_pace, "distance": s_dist}
+        weighted  = 0.35*s_hr + 0.35*s_pace + 0.30*s_dist
         fast_laps = []
 
     elif wtype == "lungo":
@@ -426,24 +432,34 @@ def auto_score(plan, activity):
         s_pace  = score_pace(activity.get("avg_pace_s_km"), plan.get("pace_min_s"), plan.get("pace_max_s"), flags, notes, "lungo")
         s_dist  = score_distance(activity.get("distance_km",0), plan.get("distance_km"), flags, notes)
         s_drift = score_cardiac_drift(laps, flags, notes)
-        wu_l    = laps[:2]; cd_l = laps[-2:]
-        s_wucd  = score_wucd(wu_l, cd_l, plan, st, flags, notes)
         s_hr_d  = (s_hr + s_drift)/2
-        subscores = {"hr_drift": s_hr_d, "pace": s_pace, "distance": s_dist, "wu_cd": s_wucd}
-        weighted  = 0.25*s_hr_d + 0.25*s_pace + 0.35*s_dist + 0.15*s_wucd
+        if has_wu or has_cd:
+            wu_l   = laps[:2]; cd_l = laps[-2:]
+            s_wucd = score_wucd(wu_l, cd_l, plan, st, flags, notes)
+            subscores = {"hr_drift": s_hr_d, "pace": s_pace, "distance": s_dist, "wu_cd": s_wucd}
+            weighted  = 0.22*s_hr_d + 0.23*s_pace + 0.35*s_dist + 0.20*s_wucd
+        else:
+            subscores = {"hr_drift": s_hr_d, "pace": s_pace, "distance": s_dist}
+            weighted  = 0.25*s_hr_d + 0.25*s_pace + 0.50*s_dist
         fast_laps = []
 
     elif wtype == "qualita":
         fast_laps, slow_laps, wu_l, cd_l = segment_laps(laps, plan)
-        s_blocks  = score_fast_blocks(fast_laps, plan, st, flags, notes)
-        s_recov   = score_recoveries(slow_laps, plan, st, flags, notes)
-        s_wucd    = score_wucd(wu_l, cd_l, plan, st, flags, notes)
-        s_hr      = score_hr(activity.get("avg_hr"), plan.get("hr_min") or 161, plan.get("hr_max") or 174, flags, notes)
-        s_dist    = score_distance(activity.get("distance_km",0), plan.get("distance_km"), flags, notes)
-        s_struct  = (s_recov + s_wucd)/2
-        subscores = {"fast_blocks": s_blocks, "structure": s_struct, "recoveries": s_recov,
-                     "wu_cd": s_wucd, "hr": s_hr, "distance": s_dist}
-        weighted  = 0.40*s_blocks + 0.25*s_struct + 0.10*s_recov + 0.10*s_wucd + 0.10*s_hr + 0.05*s_dist
+        s_blocks = score_fast_blocks(fast_laps, plan, st, flags, notes)
+        s_recov  = score_recoveries(slow_laps, plan, st, flags, notes)
+        s_hr     = score_hr(activity.get("avg_hr"), plan.get("hr_min") or 161, plan.get("hr_max") or 174, flags, notes)
+        s_dist   = score_distance(activity.get("distance_km",0), plan.get("distance_km"), flags, notes)
+        if has_wu or has_cd:
+            s_wucd   = score_wucd(wu_l, cd_l, plan, st, flags, notes)
+            s_struct = (s_recov + s_wucd)/2
+            subscores = {"fast_blocks": s_blocks, "structure": s_struct, "recoveries": s_recov,
+                         "wu_cd": s_wucd, "hr": s_hr, "distance": s_dist}
+            weighted  = 0.40*s_blocks + 0.25*s_struct + 0.10*s_recov + 0.10*s_wucd + 0.10*s_hr + 0.05*s_dist
+        else:
+            # Senza WU/CD: ridistribuisce il peso su blocchi veloci e recuperi
+            s_struct = s_recov
+            subscores = {"fast_blocks": s_blocks, "recoveries": s_recov, "hr": s_hr, "distance": s_dist}
+            weighted  = 0.55*s_blocks + 0.25*s_recov + 0.12*s_hr + 0.08*s_dist
     else:
         s_hr   = score_hr(activity.get("avg_hr"), plan.get("hr_min") or 140, plan.get("hr_max") or 165, flags, notes)
         s_pace = score_pace(activity.get("avg_pace_s_km"), plan.get("pace_min_s"), plan.get("pace_max_s"), flags, notes)
@@ -541,6 +557,72 @@ def build_activity(act, laps_raw, gear_name=None, gear_km=None):
         "fetched_at":     datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "score":          None,
     }
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# SEZIONE 5b — STRAVA GEAR
+# ══════════════════════════════════════════════════════════════════════════════
+
+def get_strava_token():
+    """Ottieni access token Strava tramite refresh token."""
+    import urllib.request, urllib.parse
+    client_id     = os.environ.get("STRAVA_CLIENT_ID","").strip()
+    client_secret = os.environ.get("STRAVA_CLIENT_SECRET","").strip()
+    refresh_token = os.environ.get("STRAVA_REFRESH_TOKEN","").strip()
+    if not all([client_id, client_secret, refresh_token]):
+        return None
+    try:
+        import urllib.request, urllib.parse, json as _json
+        data = urllib.parse.urlencode({
+            "client_id":     client_id,
+            "client_secret": client_secret,
+            "refresh_token": refresh_token,
+            "grant_type":    "refresh_token",
+        }).encode()
+        req  = urllib.request.Request("https://www.strava.com/oauth/token", data=data, method="POST")
+        resp = urllib.request.urlopen(req, timeout=10)
+        return _json.loads(resp.read()).get("access_token")
+    except Exception as e:
+        log.warning("Strava token fallito: %s", e)
+        return None
+
+def fetch_strava_gear(token):
+    """Scarica lista attivita Strava con gear_id e abbina per data."""
+    if not token:
+        return {}
+    try:
+        import urllib.request, json as _json
+        url = "https://www.strava.com/api/v3/athlete/activities?per_page=200"
+        req = urllib.request.Request(url, headers={"Authorization": "Bearer "+token})
+        resp = urllib.request.urlopen(req, timeout=15)
+        acts = _json.loads(resp.read())
+        # Indice data -> gear_id
+        gear_by_date = {}
+        gear_names   = {}
+        for a in acts:
+            date = (a.get("start_date_local") or "")[:10]
+            gid  = a.get("gear_id")
+            if date and gid:
+                gear_by_date[date] = gid
+        return gear_by_date, gear_names
+    except Exception as e:
+        log.warning("Strava activities fallito: %s", e)
+        return {}, {}
+
+def fetch_strava_gear_name(token, gear_id):
+    """Recupera nome scarpa da Strava."""
+    if not token or not gear_id:
+        return None
+    try:
+        import urllib.request, json as _json
+        url = f"https://www.strava.com/api/v3/gear/{gear_id}"
+        req = urllib.request.Request(url, headers={"Authorization": "Bearer "+token})
+        resp = urllib.request.urlopen(req, timeout=10)
+        data = _json.loads(resp.read())
+        return data.get("name") or data.get("description")
+    except Exception as e:
+        log.warning("Strava gear name fallito per %s: %s", gear_id, e)
+        return None
 
 # ══════════════════════════════════════════════════════════════════════════════
 # SEZIONE 6 — GIT PUSH
@@ -640,11 +722,7 @@ def main():
     log.info("Nuove attivita running: %d", len(new_acts))
 
     if not new_acts:
-        data["last_updated"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-        with open(output_file,"w",encoding="utf-8") as f:
-            json.dump(data, f, ensure_ascii=False, indent=2)
-        log.info("Nessuna novita.")
-        return
+        log.info("Nessuna nuova attivita — procedo con backfill gear se necessario.")
 
     added = 0
     for act in new_acts:
@@ -686,8 +764,12 @@ def main():
         added += 1
         time.sleep(1.5)
 
-    # Ricalcola scoring per attivita esistenti senza voto (backfill)
+    # Ricalcola scoring per tutte le attivita (forza aggiornamento formato)
     for record in data.get("activities", []):
+        sv = record.get("score")
+        # Ricalcola se score mancante O se non ha subscores (vecchio formato)
+        if sv is None or not isinstance(sv, dict) or "subscores" not in sv:
+            record["score"] = None  # reset
         if record.get("score") is None:
             plan = plan_index.get(record.get("date",""))
             if plan:
@@ -698,6 +780,30 @@ def main():
                         log.info("  Backfill voto %s: %s", record["date"], sc["score"])
                 except Exception as e:
                     log.warning("  Errore backfill scoring %s: %s", record.get("date"), e)
+
+    # Backfill gear da Strava per attivita senza gear
+    no_gear = [r for r in data.get("activities", []) if r.get("gear_name") is None]
+    if no_gear:
+        log.info("Recupero gear da Strava per %d attivita...", len(no_gear))
+        strava_token = get_strava_token()
+        if strava_token:
+            gear_by_date, _ = fetch_strava_gear(strava_token)
+            gear_name_cache = {}
+            for record in no_gear:
+                date   = record.get("date","")
+                gear_id = gear_by_date.get(date)
+                if gear_id:
+                    if gear_id not in gear_name_cache:
+                        gear_name_cache[gear_id] = fetch_strava_gear_name(strava_token, gear_id)
+                    gear_name = gear_name_cache[gear_id]
+                    record["gear_name"] = gear_name
+                    record["gear_km"]   = None
+                    log.info("  Gear %s: %s", date, gear_name)
+                else:
+                    record["gear_name"] = None
+                    record["gear_km"]   = None
+        else:
+            log.warning("Token Strava non disponibile — gear non recuperato.")
 
     data["activities"].sort(key=lambda x: x.get("start_time",""), reverse=True)
     data["last_updated"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
