@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-02T23:08:59Z",
+  "last_updated": "2026-06-02T23:18:32Z",
   "activities": [
     {
       "garmin_id": 23108028661,
@@ -141,18 +141,19 @@
       ],
       "fetched_at": "2026-06-02T19:36:49Z",
       "score": {
-        "score": 7.9,
+        "score": 9.6,
         "subscores": {
           "fast_blocks": 9.17,
-          "structure": 6.04,
-          "recoveries": 6.09,
-          "wu_cd": 6.0,
+          "structure": 9.94,
+          "recoveries": 9.88,
+          "wu_cd": 10.0,
           "hr": 10.0,
           "distance": 10
         },
         "flags": [],
         "notes": [],
-        "cap_applied": null
+        "cap_applied": null,
+        "scoring_version": 5
       }
     },
     {
@@ -351,7 +352,8 @@
         },
         "flags": [],
         "notes": [],
-        "cap_applied": null
+        "cap_applied": null,
+        "scoring_version": 5
       }
     },
     {
@@ -460,20 +462,16 @@
       ],
       "fetched_at": "2026-05-30T21:34:58Z",
       "score": {
-        "score": 9.2,
+        "score": 10.0,
         "subscores": {
           "hr": 10.0,
           "pace": 10.0,
-          "distance": 10,
-          "wu_cd": 4.5
+          "distance": 10
         },
-        "flags": [
-          "MISSING_COOLDOWN"
-        ],
-        "notes": [
-          "Cooldown assente o molto breve."
-        ],
-        "cap_applied": null
+        "flags": [],
+        "notes": [],
+        "cap_applied": null,
+        "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null
@@ -568,16 +566,16 @@
       ],
       "fetched_at": "2026-05-30T21:35:00Z",
       "score": {
-        "score": 9.6,
+        "score": 10.0,
         "subscores": {
           "hr": 10.0,
           "pace": 10.0,
-          "distance": 10,
-          "wu_cd": 8.0
+          "distance": 10
         },
         "flags": [],
         "notes": [],
-        "cap_applied": null
+        "cap_applied": null,
+        "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null
@@ -704,20 +702,16 @@
       ],
       "fetched_at": "2026-05-28T13:02:50Z",
       "score": {
-        "score": 8.9,
+        "score": 9.6,
         "subscores": {
           "hr": 8.95,
           "pace": 10.0,
-          "distance": 10,
-          "wu_cd": 4.5
+          "distance": 10
         },
-        "flags": [
-          "MISSING_COOLDOWN"
-        ],
-        "notes": [
-          "Cooldown assente o molto breve."
-        ],
-        "cap_applied": null
+        "flags": [],
+        "notes": [],
+        "cap_applied": null,
+        "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null
@@ -828,22 +822,20 @@
       ],
       "fetched_at": "2026-05-28T13:02:51Z",
       "score": {
-        "score": 7.7,
+        "score": 8.2,
         "subscores": {
           "hr": 6.15,
           "pace": 8.8,
-          "distance": 10,
-          "wu_cd": 4.5
+          "distance": 10
         },
         "flags": [
-          "MISSING_COOLDOWN",
           "HR_HIGH"
         ],
         "notes": [
-          "FC media 166 bpm supera il target di 11 bpm.",
-          "Cooldown assente o molto breve."
+          "FC media 166 bpm supera il target di 11 bpm."
         ],
-        "cap_applied": null
+        "cap_applied": null,
+        "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null
@@ -1010,18 +1002,19 @@
       ],
       "fetched_at": "2026-05-28T13:02:53Z",
       "score": {
-        "score": 6.8,
+        "score": 7.7,
         "subscores": {
           "fast_blocks": 4.77,
-          "structure": 8.13,
-          "recoveries": 6.27,
+          "structure": 9.94,
+          "recoveries": 9.88,
           "wu_cd": 10.0,
           "hr": 9.3,
           "distance": 7.0
         },
         "flags": [],
         "notes": [],
-        "cap_applied": null
+        "cap_applied": null,
+        "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null
@@ -1196,22 +1189,22 @@
       ],
       "fetched_at": "2026-05-28T13:02:55Z",
       "score": {
-        "score": 7.9,
+        "score": 8.2,
         "subscores": {
           "hr_drift": 6.25,
           "pace": 6.4,
-          "distance": 10,
-          "wu_cd": 8.0
+          "distance": 10
         },
         "flags": [
-          "CARDIAC_DRIFT",
-          "HR_HIGH"
+          "HR_HIGH",
+          "CARDIAC_DRIFT"
         ],
         "notes": [
           "FC media 170 bpm supera il target di 10 bpm.",
           "Deriva cardiaca di 8 bpm nella seconda meta."
         ],
-        "cap_applied": null
+        "cap_applied": null,
+        "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null
@@ -1322,22 +1315,20 @@
       ],
       "fetched_at": "2026-05-28T13:02:56Z",
       "score": {
-        "score": 6.9,
+        "score": 7.4,
         "subscores": {
           "hr": 4.75,
           "pace": 7.8,
-          "distance": 10,
-          "wu_cd": 4.5
+          "distance": 10
         },
         "flags": [
-          "MISSING_COOLDOWN",
           "HR_HIGH"
         ],
         "notes": [
-          "FC media 170 bpm supera il target di 15 bpm.",
-          "Cooldown assente o molto breve."
+          "FC media 170 bpm supera il target di 15 bpm."
         ],
-        "cap_applied": null
+        "cap_applied": null,
+        "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null
@@ -1436,8 +1427,7 @@
         "subscores": {
           "hr": 4.4,
           "pace": 9.4,
-          "distance": 10,
-          "wu_cd": 8.0
+          "distance": 10
         },
         "flags": [
           "HR_HIGH"
@@ -1446,7 +1436,8 @@
           "FC media 163 bpm supera il target di 16 bpm.",
           "Cap: Recovery: FC molto sopra il range."
         ],
-        "cap_applied": "Recovery: FC molto sopra il range"
+        "cap_applied": "Recovery: FC molto sopra il range",
+        "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null
@@ -1581,18 +1572,19 @@
       ],
       "fetched_at": "2026-05-28T13:03:00Z",
       "score": {
-        "score": 7.5,
+        "score": 7.7,
         "subscores": {
           "fast_blocks": 6.27,
-          "structure": 8.19,
-          "recoveries": 6.38,
+          "structure": 8.5,
+          "recoveries": 7.0,
           "wu_cd": 10.0,
           "hr": 10.0,
           "distance": 7.0
         },
         "flags": [],
         "notes": [],
-        "cap_applied": null
+        "cap_applied": null,
+        "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null
@@ -1695,20 +1687,16 @@
       ],
       "fetched_at": "2026-05-28T13:03:02Z",
       "score": {
-        "score": 8.8,
+        "score": 9.6,
         "subscores": {
           "hr": 10.0,
           "pace": 8.8,
-          "distance": 10,
-          "wu_cd": 4.5
+          "distance": 10
         },
-        "flags": [
-          "MISSING_COOLDOWN"
-        ],
-        "notes": [
-          "Cooldown assente o molto breve."
-        ],
-        "cap_applied": null
+        "flags": [],
+        "notes": [],
+        "cap_applied": null,
+        "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null
@@ -1827,20 +1815,16 @@
       ],
       "fetched_at": "2026-05-28T13:03:03Z",
       "score": {
-        "score": 8.4,
+        "score": 9.1,
         "subscores": {
           "hr": 10.0,
           "pace": 7.4,
-          "distance": 10,
-          "wu_cd": 4.5
+          "distance": 10
         },
-        "flags": [
-          "MISSING_COOLDOWN"
-        ],
-        "notes": [
-          "Cooldown assente o molto breve."
-        ],
-        "cap_applied": null
+        "flags": [],
+        "notes": [],
+        "cap_applied": null,
+        "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null
@@ -1999,16 +1983,16 @@
       ],
       "fetched_at": "2026-05-28T13:03:05Z",
       "score": {
-        "score": 9.1,
+        "score": 9.4,
         "subscores": {
           "hr_drift": 9.84,
           "pace": 7.6,
-          "distance": 10,
-          "wu_cd": 8.0
+          "distance": 10
         },
         "flags": [],
         "notes": [],
-        "cap_applied": null
+        "cap_applied": null,
+        "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null
@@ -2119,20 +2103,16 @@
       ],
       "fetched_at": "2026-05-28T13:03:06Z",
       "score": {
-        "score": 9.2,
+        "score": 10.0,
         "subscores": {
           "hr": 10.0,
           "pace": 10.0,
-          "distance": 10,
-          "wu_cd": 4.5
+          "distance": 10
         },
-        "flags": [
-          "MISSING_COOLDOWN"
-        ],
-        "notes": [
-          "Cooldown assente o molto breve."
-        ],
-        "cap_applied": null
+        "flags": [],
+        "notes": [],
+        "cap_applied": null,
+        "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null
@@ -2219,16 +2199,16 @@
       ],
       "fetched_at": "2026-05-28T13:03:08Z",
       "score": {
-        "score": 8.5,
+        "score": 8.8,
         "subscores": {
           "hr": 7.55,
           "pace": 10.0,
-          "distance": 10,
-          "wu_cd": 8.0
+          "distance": 10
         },
         "flags": [],
         "notes": [],
-        "cap_applied": null
+        "cap_applied": null,
+        "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null
@@ -2365,10 +2345,12 @@
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
       "score": {
-        "score": 5.9,
+        "score": 7.7,
         "subscores": {
           "fast_blocks": 4.91,
-          "recoveries": 6.25,
+          "structure": 10.0,
+          "recoveries": 10,
+          "wu_cd": 10.0,
           "hr": 9.12,
           "distance": 7.0
         },
@@ -2378,7 +2360,8 @@
         "notes": [
           "FC 150 bpm sotto target di 11 bpm — controlla le soglie."
         ],
-        "cap_applied": null
+        "cap_applied": null,
+        "scoring_version": 5
       }
     },
     {
@@ -2471,20 +2454,16 @@
       ],
       "fetched_at": "2026-05-28T13:03:12Z",
       "score": {
-        "score": 9.0,
+        "score": 9.8,
         "subscores": {
           "hr": 10.0,
           "pace": 9.4,
-          "distance": 10,
-          "wu_cd": 4.5
+          "distance": 10
         },
-        "flags": [
-          "MISSING_COOLDOWN"
-        ],
-        "notes": [
-          "Cooldown assente o molto breve."
-        ],
-        "cap_applied": null
+        "flags": [],
+        "notes": [],
+        "cap_applied": null,
+        "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null
@@ -2595,20 +2574,16 @@
       ],
       "fetched_at": "2026-05-28T13:03:13Z",
       "score": {
-        "score": 8.0,
+        "score": 8.6,
         "subscores": {
           "hr": 8.6,
           "pace": 7.4,
-          "distance": 10,
-          "wu_cd": 4.5
+          "distance": 10
         },
-        "flags": [
-          "MISSING_COOLDOWN"
-        ],
-        "notes": [
-          "Cooldown assente o molto breve."
-        ],
-        "cap_applied": null
+        "flags": [],
+        "notes": [],
+        "cap_applied": null,
+        "scoring_version": 5
       },
       "gear_name": "Kiprun KS900 light",
       "gear_km": null
@@ -2743,16 +2718,16 @@
       ],
       "fetched_at": "2026-05-28T13:03:15Z",
       "score": {
-        "score": 8.6,
+        "score": 8.5,
         "subscores": {
           "hr_drift": 10.0,
           "pace": 10.0,
-          "distance": 7.0,
-          "wu_cd": 8.0
+          "distance": 7.0
         },
         "flags": [],
         "notes": [],
-        "cap_applied": null
+        "cap_applied": null,
+        "scoring_version": 5
       },
       "gear_name": "Kiprun KS900 light",
       "gear_km": null
@@ -2871,16 +2846,16 @@
       ],
       "fetched_at": "2026-05-28T13:03:17Z",
       "score": {
-        "score": 8.3,
+        "score": 8.7,
         "subscores": {
           "hr": 10.0,
           "pace": 8.8,
-          "distance": 7.0,
-          "wu_cd": 6.0
+          "distance": 7.0
         },
         "flags": [],
         "notes": [],
-        "cap_applied": null
+        "cap_applied": null,
+        "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null
@@ -2959,16 +2934,16 @@
       ],
       "fetched_at": "2026-05-28T13:03:18Z",
       "score": {
-        "score": 9.4,
+        "score": 9.1,
         "subscores": {
           "hr": 10.0,
           "pace": 10.0,
-          "distance": 7.0,
-          "wu_cd": 10.0
+          "distance": 7.0
         },
         "flags": [],
         "notes": [],
-        "cap_applied": null
+        "cap_applied": null,
+        "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null
@@ -3119,20 +3094,16 @@
       ],
       "fetched_at": "2026-05-28T13:03:20Z",
       "score": {
-        "score": 8.4,
+        "score": 9.1,
         "subscores": {
           "hr": 10.0,
           "pace": 10.0,
-          "distance": 7.0,
-          "wu_cd": 4.5
+          "distance": 7.0
         },
-        "flags": [
-          "MISSING_COOLDOWN"
-        ],
-        "notes": [
-          "Cooldown assente o molto breve."
-        ],
-        "cap_applied": null
+        "flags": [],
+        "notes": [],
+        "cap_applied": null,
+        "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null
@@ -3231,8 +3202,7 @@
         "subscores": {
           "hr": 3.7,
           "pace": 7.2,
-          "distance": 7.0,
-          "wu_cd": 6.0
+          "distance": 7.0
         },
         "flags": [
           "HR_HIGH"
@@ -3240,7 +3210,8 @@
         "notes": [
           "FC media 173 bpm supera il target di 18 bpm."
         ],
-        "cap_applied": null
+        "cap_applied": null,
+        "scoring_version": 5
       },
       "gear_name": "Kiprun KS900 light",
       "gear_km": null
@@ -3343,22 +3314,20 @@
       ],
       "fetched_at": "2026-05-28T13:03:23Z",
       "score": {
-        "score": 6.6,
+        "score": 7.0,
         "subscores": {
           "hr": 4.75,
           "pace": 9.2,
-          "distance": 7.0,
-          "wu_cd": 4.5
+          "distance": 7.0
         },
         "flags": [
-          "MISSING_COOLDOWN",
           "HR_HIGH"
         ],
         "notes": [
-          "FC media 170 bpm supera il target di 15 bpm.",
-          "Cooldown assente o molto breve."
+          "FC media 170 bpm supera il target di 15 bpm."
         ],
-        "cap_applied": null
+        "cap_applied": null,
+        "scoring_version": 5
       },
       "gear_name": "Kiprun KS900 light",
       "gear_km": null
@@ -3469,16 +3438,16 @@
       ],
       "fetched_at": "2026-05-28T13:03:25Z",
       "score": {
-        "score": 8.3,
+        "score": 8.7,
         "subscores": {
           "hr": 8.95,
           "pace": 10.0,
-          "distance": 7.0,
-          "wu_cd": 6.0
+          "distance": 7.0
         },
         "flags": [],
         "notes": [],
-        "cap_applied": null
+        "cap_applied": null,
+        "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null
@@ -3605,20 +3574,16 @@
       ],
       "fetched_at": "2026-05-28T13:03:27Z",
       "score": {
-        "score": 7.9,
+        "score": 8.5,
         "subscores": {
           "hr": 10.0,
           "pace": 8.2,
-          "distance": 7.0,
-          "wu_cd": 4.5
+          "distance": 7.0
         },
-        "flags": [
-          "MISSING_COOLDOWN"
-        ],
-        "notes": [
-          "Cooldown assente o molto breve."
-        ],
-        "cap_applied": null
+        "flags": [],
+        "notes": [],
+        "cap_applied": null,
+        "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null
@@ -3697,16 +3662,16 @@
       ],
       "fetched_at": "2026-05-28T13:03:28Z",
       "score": {
-        "score": 7.7,
+        "score": 8.0,
         "subscores": {
           "hr": 10.0,
           "pace": 6.8,
-          "distance": 7.0,
-          "wu_cd": 6.0
+          "distance": 7.0
         },
         "flags": [],
         "notes": [],
-        "cap_applied": null
+        "cap_applied": null,
+        "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null
@@ -3793,20 +3758,16 @@
       ],
       "fetched_at": "2026-05-28T13:03:30Z",
       "score": {
-        "score": 8.4,
+        "score": 9.1,
         "subscores": {
           "hr": 10.0,
           "pace": 10.0,
-          "distance": 7.0,
-          "wu_cd": 4.5
+          "distance": 7.0
         },
-        "flags": [
-          "MISSING_COOLDOWN"
-        ],
-        "notes": [
-          "Cooldown assente o molto breve."
-        ],
-        "cap_applied": null
+        "flags": [],
+        "notes": [],
+        "cap_applied": null,
+        "scoring_version": 5
       },
       "gear_name": "Kiprun KS900 light",
       "gear_km": null
