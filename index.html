@@ -20,7 +20,7 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
---orange:#FC4C02;--orange-d:rgba(252,76,2,.08);
+--orange:#1565C0;--orange-d:rgba(21,101,192,.08);
 --green:#15803d;--green-d:rgba(21,128,61,.1);
 --blue:#1d4ed8;--blue-d:rgba(29,78,216,.1);
 --amber:#b45309;--amber-d:rgba(180,83,9,.1);
@@ -63,12 +63,14 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);}
 .tab:hover{color:var(--text);}
 .tab.active{background:var(--orange);color:#fff;font-weight:500;}
 .panel{display:none;}.panel.active{display:block;}
-.zone-legend{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;padding:10px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-sm);box-shadow:var(--sh);}
-.zone-chip{font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:20px;font-weight:500;}
+.zone-legend{display:flex;flex-direction:row;align-items:flex-start;gap:12px;margin-bottom:14px;padding:10px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-sm);box-shadow:var(--sh);}.zone-legend-chips{display:flex;flex-direction:column;gap:4px;}
+.zone-chip{font-family:var(--mono);font-size:10px;padding:2px 10px;border-radius:20px;font-weight:500;display:grid;grid-template-columns:90px 52px 90px;gap:0;}.zone-chip-name{}.zone-chip-pct{}.zone-chip-bpm{padding-left:8px;}
 .wk{border:1px solid var(--border);border-radius:var(--r);margin-bottom:7px;overflow-x:auto;overflow-y:hidden;background:var(--bg2);box-shadow:var(--sh);-webkit-overflow-scrolling:touch;}
-.wk-hdr{padding:10px 14px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:background .15s;user-select:none;}
+.wk-hdr{padding:10px 14px;display:grid;grid-template-columns:70px 1fr auto;align-items:center;cursor:pointer;transition:background .15s;user-select:none;}
 .wk-hdr:hover{background:var(--bg3);}
 .wk-title{font-size:13px;font-weight:700;}
+.wk-num{font-size:13px;font-weight:700;white-space:nowrap;}
+.wk-period{font-family:var(--mono);font-size:12px;color:var(--text2);text-align:center;}
 .arrow{color:var(--orange);margin-right:4px;}
 .wk-meta{font-family:var(--mono);font-size:11px;color:var(--text2);display:flex;align-items:center;gap:8px;}
 .tbl{width:100%;border-collapse:collapse;min-width:520px;}
@@ -189,12 +191,14 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);}
 </div>
 
 <div class="zone-legend">
-<span style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-right:4px;">FC max 198 bpm →</span>
-<span class="zone-chip" style="background:#dbeafe;color:#1d4ed8;">Z1 Warm Up &nbsp;65-74% &nbsp;129-147 bpm</span>
-<span class="zone-chip" style="background:#d1fae5;color:#15803d;">Z2 Easy &nbsp;74-81% &nbsp;147-160 bpm</span>
-<span class="zone-chip" style="background:#fef9c3;color:#92400e;">Z3 Aerobic &nbsp;81-88% &nbsp;161-174 bpm</span>
-<span class="zone-chip" style="background:#fed7aa;color:#9a3412;">Z4 Threshold &nbsp;88-94% &nbsp;175-186 bpm</span>
-<span class="zone-chip" style="background:#fecaca;color:#b91c1c;">Z5 Maximum &nbsp;94-100% &nbsp;187-198 bpm</span>
+<span style="font-family:var(--mono);font-size:10px;color:var(--text3);white-space:nowrap;padding-top:2px;">FC max 198 bpm →</span>
+<div class="zone-legend-chips">
+<span class="zone-chip" style="background:#dbeafe;color:#1d4ed8;"><span class="zone-chip-name">Z1 Warm Up</span><span class="zone-chip-pct">65-74%</span><span class="zone-chip-bpm">129-147 bpm</span></span>
+<span class="zone-chip" style="background:#d1fae5;color:#15803d;"><span class="zone-chip-name">Z2 Easy</span><span class="zone-chip-pct">74-81%</span><span class="zone-chip-bpm">147-160 bpm</span></span>
+<span class="zone-chip" style="background:#fef9c3;color:#92400e;"><span class="zone-chip-name">Z3 Aerobic</span><span class="zone-chip-pct">81-88%</span><span class="zone-chip-bpm">161-174 bpm</span></span>
+<span class="zone-chip" style="background:#fed7aa;color:#9a3412;"><span class="zone-chip-name">Z4 Threshold</span><span class="zone-chip-pct">88-94%</span><span class="zone-chip-bpm">175-186 bpm</span></span>
+<span class="zone-chip" style="background:#fecaca;color:#b91c1c;"><span class="zone-chip-name">Z5 Maximum</span><span class="zone-chip-pct">94-100%</span><span class="zone-chip-bpm">187-198 bpm</span></span>
+</div>
 </div>
 
 <div class="tabs">
@@ -308,6 +312,7 @@ const fmtP=s=>{const m=Math.floor(s/60),sc=Math.round(s%60);return m+"'"+String(
 const fmtD=m=>(m/1000).toFixed(1)+' km';
 const fmtT=s=>{const h=Math.floor(s/3600),m=Math.floor((s%3600)/60);return h?h+'h '+m+'m':m+'m';};
 const fmtDt=ds=>new Date(ds).toLocaleDateString('it-IT',{day:'2-digit',month:'short'});
+const fmtDtShort=ds=>{const d=new Date(ds);return String(d.getDate()).padStart(2,'0')+'/'+(String(d.getMonth()+1).padStart(2,'0'));};
 const getWMon=ds=>{const d=new Date(ds),dy=d.getDay()===0?6:d.getDay()-1,m=new Date(d);m.setDate(d.getDate()-dy);return m.toISOString().slice(0,10);};
 const DN=['Lun','Mar','Mer','Gio','Ven','Sab','Dom'];
 const TC={easy:'#1d4ed8',recovery:'#15803d',lungo:'#b45309',qualita:'#FC4C02',rest:'#a8a29e'};
@@ -581,7 +586,8 @@ function buildDashboard(activities){
     const card=document.createElement('div');card.className='wk';
     card.innerHTML=`
       <div class="wk-hdr" onclick="toggleW('wb${wi}')">
-        <div class="wk-title">${isCurr?'<span class="arrow">▶</span>':''}Sett. ${wi+1} · ${fmtDt(mon)} – ${fmtDt(end.toISOString().slice(0,10))}</div>
+        <div class="wk-num">${isCurr?'<span class="arrow">▶</span>':''}Sett. ${wi+1}</div>
+        <div class="wk-period">${fmtDtShort(mon)} – ${fmtDtShort(end.toISOString().slice(0,10))}</div>
         <div class="wk-meta">${done.length}/${runDays.length} sessioni <span style="color:${pctCol};font-weight:600;">${pctStr}</span></div>
       </div>
       <div id="wb${wi}" style="display:${isCurr?'block':'none'}">
