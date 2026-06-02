@@ -51,13 +51,15 @@ def fetch_garmin_activities(session, limit=10):
     """Scarica lista attivita recenti da Garmin."""
     import requests
     urls = [
+        f"https://connectapi.garmin.com/activitylist-service/activities/search/activities?start=0&limit={limit}",
         f"https://connectapi.garmin.com/activity-service/activity/search/activities?start=0&limit={limit}",
         f"https://connect.garmin.com/proxy/activitylist-service/activities/search/activities?start=0&limit={limit}",
+        f"https://connect.garmin.com/activitylist-service/activities/search/activities?start=0&limit={limit}",
     ]
     for url in urls:
         try:
             r = session.get(url, timeout=30)
-            log.info("GET %s -> %s", url.split("?")[0].split("/")[-1], r.status_code)
+            log.info("GET %s -> %s | body: %s", url.split("/")[-1].split("?")[0], r.status_code, r.text[:100])
             if r.status_code == 200:
                 data = r.json()
                 if isinstance(data, list) and data:
@@ -66,6 +68,7 @@ def fetch_garmin_activities(session, limit=10):
                     for k in ["activityList","activities","data"]:
                         if k in data and isinstance(data[k], list) and data[k]:
                             return data[k]
+                    log.info("  Dict keys: %s", list(data.keys()))
         except Exception as e:
             log.warning("  Errore: %s", e)
     return []
