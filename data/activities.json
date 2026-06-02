@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-02T22:52:49Z",
+  "last_updated": "2026-06-02T23:08:59Z",
   "activities": [
     {
       "garmin_id": 23108028661,
@@ -141,10 +141,12 @@
       ],
       "fetched_at": "2026-06-02T19:36:49Z",
       "score": {
-        "score": 8.6,
+        "score": 7.9,
         "subscores": {
           "fast_blocks": 9.17,
+          "structure": 6.04,
           "recoveries": 6.09,
+          "wu_cd": 6.0,
           "hr": 10.0,
           "distance": 10
         },
