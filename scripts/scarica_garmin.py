@@ -278,20 +278,44 @@ def score_cardiac_drift(laps, flags, notes):
         return 4.0
 
 def segment_laps(laps, plan):
-    """Separa lap in fast/slow/warmup/cooldown."""
-    if not laps: return [], [], [], []
+    """Separa lap in fast/slow/warmup/cooldown.
+
+    Alcuni split Garmin molto corti possono avere avg_pace_s_km = None.
+    In quel caso non devono essere usati per confronti numerici, altrimenti
+    il backfill dello scoring va in errore con:
+    \'NoneType\' and \'int\'.
+    """
+    if not laps:
+        return [], [], [], []
+
     threshold = (plan.get("pace_min_s") or 280) + 15
     fast, slow = [], []
-    for lap in laps:
+
+    def valid_pace_lap(lap):
         pace = lap.get("avg_pace_s_km")
-        dist = lap.get("distance_m", 0)
-        if not pace or dist < 100: continue
-        if pace < threshold: fast.append(lap)
-        else: slow.append(lap)
+        dist = lap.get("distance_m") or 0
+        return pace is not None and dist >= 100
+
+    for lap in laps:
+        if not valid_pace_lap(lap):
+            continue
+        pace = lap.get("avg_pace_s_km")
+        if pace < threshold:
+            fast.append(lap)
+        else:
+            slow.append(lap)
+
     first_fast = laps.index(fast[0]) if fast else len(laps)
     last_fast  = laps.index(fast[-1]) if fast else 0
-    wu = [l for l in laps[:first_fast] if l.get("avg_pace_s_km", 0) >= threshold]
-    cd = [l for l in laps[last_fast+1:] if l.get("avg_pace_s_km", 0) >= threshold]
+
+    wu = [
+        l for l in laps[:first_fast]
+        if valid_pace_lap(l) and l.get("avg_pace_s_km") >= threshold
+    ]
+    cd = [
+        l for l in laps[last_fast+1:]
+        if valid_pace_lap(l) and l.get("avg_pace_s_km") >= threshold
+    ]
     return fast, slow, wu, cd
 
 def score_fast_blocks(fast_laps, plan, st, flags, notes):
