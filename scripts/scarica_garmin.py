@@ -789,20 +789,36 @@ def main():
         time.sleep(1.5)
 
     # Ricalcola scoring per tutte le attivita (forza aggiornamento formato)
+    # Nota: non basta controllare se esiste la chiave "subscores".
+    # Alcuni record vecchi possono avere un voto finale ma subscores vuoto: in quel caso
+    # il popup mostra il voto ma non mostra i sotto-voti. Quindi ricalcoliamo anche se
+    # subscores non è un dizionario valido oppure è vuoto.
+    def needs_score_backfill(score_obj):
+        if score_obj is None:
+            return True
+        if not isinstance(score_obj, dict):
+            return True
+        subs = score_obj.get("subscores")
+        if not isinstance(subs, dict) or len(subs) == 0:
+            return True
+        if score_obj.get("score") is None:
+            return True
+        return False
+
     for record in data.get("activities", []):
-        sv = record.get("score")
-        # Ricalcola se score mancante O se non ha subscores (vecchio formato)
-        if sv is None or not isinstance(sv, dict) or "subscores" not in sv:
-            record["score"] = None  # reset
-        if record.get("score") is None:
-            plan = plan_index.get(record.get("date",""))
+        if needs_score_backfill(record.get("score")):
+            plan = plan_index.get(record.get("date", ""))
             if plan:
                 try:
                     sc = auto_score(plan, record)
                     if sc:
                         record["score"] = sc
-                        log.info("  Backfill voto %s: %s", record["date"], sc["score"])
+                        log.info("  Backfill voto %s: %s | Sottovoti: %s",
+                                 record.get("date"), sc.get("score"), list(sc.get("subscores", {}).keys()))
+                    else:
+                        record["score"] = None
                 except Exception as e:
+                    record["score"] = None
                     log.warning("  Errore backfill scoring %s: %s", record.get("date"), e)
 
     # Backfill gear da Strava per attivita senza gear
