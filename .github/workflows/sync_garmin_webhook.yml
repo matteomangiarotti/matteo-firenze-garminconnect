@@ -1,0 +1,41 @@
+name: Sync Garmin (Strava Webhook)
+
+on:
+  # Trigger manuale per test
+  workflow_dispatch:
+
+  # Webhook Strava arriva come repository_dispatch
+  repository_dispatch:
+    types: [strava_activity]
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run Garmin sync
+        env:
+          GARMIN_DI_TOKEN:         ${{ secrets.GARMIN_DI_TOKEN }}
+          GARMIN_DI_REFRESH_TOKEN: ${{ secrets.GARMIN_DI_REFRESH_TOKEN }}
+          STRAVA_CLIENT_ID:        ${{ secrets.STRAVA_CLIENT_ID }}
+          STRAVA_CLIENT_SECRET:    ${{ secrets.STRAVA_CLIENT_SECRET }}
+          STRAVA_REFRESH_TOKEN:    ${{ secrets.STRAVA_REFRESH_TOKEN }}
+        run: python scripts/scarica_garmin_actions.py
+
+      - name: Configure git
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
