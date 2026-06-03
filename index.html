@@ -83,7 +83,7 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);}
 .tbl td{padding:8px 9px;border-top:1px solid var(--border2);vertical-align:top;font-size:12px;}
 .tbl td:not(:last-child){border-right:1px solid var(--border2);}
 .tbl tr:hover td{background:rgba(0,0,0,.015);}
-.tbl tr.today-row td{background:rgba(29,78,216,.05);border-top-color:rgba(29,78,216,.15);}
+.tbl tr.today-row td{background:rgba(0,0,0,.04);border-top-color:rgba(0,0,0,.1);}
 .dn{font-weight:700;font-size:12px;}
 .dd{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:1px;}
 .plan-t{font-weight:600;font-size:12px;color:var(--blue);}
@@ -102,7 +102,7 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);}
 .b-miss{background:var(--amber-d);color:var(--amber);}
 .b-rest{background:var(--bg3);color:var(--text3);}
 .b-bonus{background:var(--blue-d);color:var(--blue);}
-.b-today{background:var(--orange-d);color:var(--orange);}
+.b-today{background:rgba(0,0,0,.07);color:var(--text2);}
 .b-future{background:var(--bg3);color:var(--text3);}
 .b-race{background:var(--purple-d);color:var(--purple);}
 .sc-wrap{text-align:center;}
@@ -154,7 +154,7 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);}
 }
 .m-day-cards{display:none;padding:6px 10px 10px;}
 .m-card{border:1px solid var(--border2);border-radius:var(--r-sm);margin-bottom:8px;padding:10px 12px;background:var(--bg);}
-.m-card.today-card{border-color:rgba(29,78,216,.3);background:rgba(29,78,216,.03);}
+.m-card.today-card{border-color:rgba(0,0,0,.15);background:rgba(0,0,0,.03);}
 .m-card-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
 .m-card-day{font-size:13px;font-weight:700;}
 .m-card-date{font-family:var(--mono);font-size:10px;color:var(--text3);}
@@ -533,7 +533,7 @@ function buildDashboard(activities){
       }else if(p.type==='rest'){
         realHtml='<span class="act-e">—</span>';badge='<span class="bdg b-rest">riposo</span>';
       }else if(isToday){
-        realHtml='<span class="act-e" style="color:var(--orange);">Da fare oggi</span>';badge='<span class="bdg b-today">OGGI</span>';
+        realHtml='<span class="act-e" style="color:var(--text2);">Da fare oggi</span>';badge='<span class="bdg b-today">OGGI</span>';
       }else if(isFut){
         realHtml='<span class="act-e">In programma</span>';
       }else{
