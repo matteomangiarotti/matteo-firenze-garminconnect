@@ -1,6 +1,110 @@
 {
-  "last_updated": "2026-06-05T09:30:16Z",
+  "last_updated": "2026-06-05T18:30:38Z",
   "activities": [
+    {
+      "garmin_id": 23142891175,
+      "date": "2026-06-05",
+      "start_time": "2026-06-05 19:26:58",
+      "name": "Aachen Running",
+      "type": "running",
+      "distance_m": 8004,
+      "distance_km": 8.0,
+      "duration_s": 2667,
+      "avg_hr": 140,
+      "avg_pace_s_km": 333,
+      "avg_pace_fmt": "5:33",
+      "calories": 484.0,
+      "elevation_gain": 89.0,
+      "gear_name": "Kiprun KS900 light",
+      "gear_km": null,
+      "laps": [
+        {
+          "lap_index": 1,
+          "distance_m": 1000,
+          "duration_s": 339,
+          "avg_pace_s_km": 339,
+          "avg_pace_fmt": "5:39",
+          "avg_hr": 128
+        },
+        {
+          "lap_index": 2,
+          "distance_m": 1000,
+          "duration_s": 333,
+          "avg_pace_s_km": 333,
+          "avg_pace_fmt": "5:33",
+          "avg_hr": 143
+        },
+        {
+          "lap_index": 3,
+          "distance_m": 1000,
+          "duration_s": 333,
+          "avg_pace_s_km": 333,
+          "avg_pace_fmt": "5:32",
+          "avg_hr": 141
+        },
+        {
+          "lap_index": 4,
+          "distance_m": 1000,
+          "duration_s": 338,
+          "avg_pace_s_km": 338,
+          "avg_pace_fmt": "5:38",
+          "avg_hr": 137
+        },
+        {
+          "lap_index": 5,
+          "distance_m": 1000,
+          "duration_s": 331,
+          "avg_pace_s_km": 331,
+          "avg_pace_fmt": "5:30",
+          "avg_hr": 137
+        },
+        {
+          "lap_index": 6,
+          "distance_m": 1000,
+          "duration_s": 332,
+          "avg_pace_s_km": 332,
+          "avg_pace_fmt": "5:31",
+          "avg_hr": 138
+        },
+        {
+          "lap_index": 7,
+          "distance_m": 1000,
+          "duration_s": 339,
+          "avg_pace_s_km": 339,
+          "avg_pace_fmt": "5:39",
+          "avg_hr": 145
+        },
+        {
+          "lap_index": 8,
+          "distance_m": 1000,
+          "duration_s": 320,
+          "avg_pace_s_km": 320,
+          "avg_pace_fmt": "5:20",
+          "avg_hr": 149
+        },
+        {
+          "lap_index": 9,
+          "distance_m": 4,
+          "duration_s": 1,
+          "avg_pace_s_km": null,
+          "avg_pace_fmt": "---",
+          "avg_hr": 151
+        }
+      ],
+      "fetched_at": "2026-06-05T18:30:33Z",
+      "score": {
+        "score": 10.0,
+        "subscores": {
+          "hr": 10.0,
+          "pace": 10.0,
+          "distance": 10
+        },
+        "flags": [],
+        "notes": [],
+        "cap_applied": null,
+        "scoring_version": 5
+      }
+    },
     {
       "garmin_id": 23123852312,
       "date": "2026-06-04",
