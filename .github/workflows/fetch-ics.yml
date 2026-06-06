@@ -1,10 +1,8 @@
 name: Fetch ICS Calendar
-
 on:
   schedule:
     - cron: '0 * * * *'
   workflow_dispatch:
-
 jobs:
   fetch:
     runs-on: ubuntu-latest
@@ -12,13 +10,11 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-
       - name: Download ICS
         run: |
           curl -L -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
-            "https://calendar.google.com/calendar/ical/e6dd5424d472964166d38a8ea1baa2ba7eb64c73cb34eee5daacdeea9fac5d24@group.calendar.google.com/private-c880a3246965da7209e2e48eaf500a80/basic.ics" \
+            "${{ secrets.CALENDAR_ICS_URL }}" \
             -o piano.ics --fail --silent --show-error
-
       - name: Commit if changed
         run: |
           git config user.name "github-actions[bot]"
@@ -26,3 +22,4 @@ jobs:
           git add piano.ics
           git diff --staged --quiet || git commit -m "chore: aggiorna piano.ics [skip ci]"
           git push
+          
