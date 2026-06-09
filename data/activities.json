@@ -1,6 +1,137 @@
 {
-  "last_updated": "2026-06-07T21:44:31Z",
+  "last_updated": "2026-06-09T19:41:32Z",
   "activities": [
+    {
+      "garmin_id": 23192078158,
+      "date": "2026-06-09",
+      "start_time": "2026-06-09 20:48:43",
+      "name": "Leuven - tempo continuo 25'",
+      "type": "running",
+      "distance_m": 10154,
+      "distance_km": 10.15,
+      "duration_s": 2767,
+      "avg_hr": 161,
+      "avg_pace_s_km": 272,
+      "avg_pace_fmt": "4:32",
+      "calories": 598.0,
+      "elevation_gain": 17.0,
+      "gear_name": "Nike Vomero plus",
+      "gear_km": null,
+      "laps": [
+        {
+          "lap_index": 1,
+          "distance_m": 1000,
+          "duration_s": 311,
+          "avg_pace_s_km": 311,
+          "avg_pace_fmt": "5:10",
+          "avg_hr": 137
+        },
+        {
+          "lap_index": 2,
+          "distance_m": 1000,
+          "duration_s": 301,
+          "avg_pace_s_km": 301,
+          "avg_pace_fmt": "5:00",
+          "avg_hr": 151
+        },
+        {
+          "lap_index": 3,
+          "distance_m": 1000,
+          "duration_s": 247,
+          "avg_pace_s_km": 247,
+          "avg_pace_fmt": "4:07",
+          "avg_hr": 166
+        },
+        {
+          "lap_index": 4,
+          "distance_m": 1000,
+          "duration_s": 245,
+          "avg_pace_s_km": 245,
+          "avg_pace_fmt": "4:05",
+          "avg_hr": 171
+        },
+        {
+          "lap_index": 5,
+          "distance_m": 1000,
+          "duration_s": 243,
+          "avg_pace_s_km": 243,
+          "avg_pace_fmt": "4:02",
+          "avg_hr": 172
+        },
+        {
+          "lap_index": 6,
+          "distance_m": 1000,
+          "duration_s": 243,
+          "avg_pace_s_km": 243,
+          "avg_pace_fmt": "4:03",
+          "avg_hr": 170
+        },
+        {
+          "lap_index": 7,
+          "distance_m": 1000,
+          "duration_s": 243,
+          "avg_pace_s_km": 243,
+          "avg_pace_fmt": "4:03",
+          "avg_hr": 175
+        },
+        {
+          "lap_index": 8,
+          "distance_m": 1000,
+          "duration_s": 241,
+          "avg_pace_s_km": 241,
+          "avg_pace_fmt": "4:01",
+          "avg_hr": 178
+        },
+        {
+          "lap_index": 9,
+          "distance_m": 151,
+          "duration_s": 37,
+          "avg_pace_s_km": 246,
+          "avg_pace_fmt": "4:06",
+          "avg_hr": 174
+        },
+        {
+          "lap_index": 10,
+          "distance_m": 1000,
+          "duration_s": 326,
+          "avg_pace_s_km": 326,
+          "avg_pace_fmt": "5:26",
+          "avg_hr": 154
+        },
+        {
+          "lap_index": 11,
+          "distance_m": 1000,
+          "duration_s": 329,
+          "avg_pace_s_km": 329,
+          "avg_pace_fmt": "5:28",
+          "avg_hr": 148
+        },
+        {
+          "lap_index": 12,
+          "distance_m": 3,
+          "duration_s": 1,
+          "avg_pace_s_km": null,
+          "avg_pace_fmt": "---",
+          "avg_hr": 147
+        }
+      ],
+      "fetched_at": "2026-06-09T19:41:27Z",
+      "score": {
+        "score": 8.3,
+        "subscores": {
+          "fast_blocks": 7.98,
+          "structure": 8.5,
+          "recoveries": 7.0,
+          "wu_cd": 10.0,
+          "hr": 9.65,
+          "distance": 7.0
+        },
+        "flags": [],
+        "notes": [],
+        "cap_applied": null,
+        "scoring_version": 5
+      }
+    },
     {
       "garmin_id": 23169092602,
       "date": "2026-06-07",
