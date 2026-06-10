@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-10T19:39:13Z",
+  "last_updated": "2026-06-10T22:40:35Z",
   "activities": [
     {
       "garmin_id": 23203957625,
@@ -127,7 +127,9 @@
         "notes": [],
         "cap_applied": null,
         "scoring_version": 5
-      }
+      },
+      "weather_temp": 17,
+      "weather_condition": "Prevalentemente sereno"
     },
     {
       "garmin_id": 23192078158,
@@ -258,7 +260,9 @@
         "notes": [],
         "cap_applied": null,
         "scoring_version": 5
-      }
+      },
+      "weather_temp": 15,
+      "weather_condition": "Pioviggine leggera"
     },
     {
       "garmin_id": 23169092602,
@@ -474,7 +478,9 @@
         "notes": [],
         "cap_applied": null,
         "scoring_version": 5
-      }
+      },
+      "weather_temp": 18,
+      "weather_condition": "Nuvoloso"
     },
     {
       "garmin_id": 23156174061,
@@ -594,7 +600,9 @@
         "notes": [],
         "cap_applied": null,
         "scoring_version": 5
-      }
+      },
+      "weather_temp": 15,
+      "weather_condition": "Pioviggine"
     },
     {
       "garmin_id": 23142891175,
@@ -698,7 +706,9 @@
         "notes": [],
         "cap_applied": null,
         "scoring_version": 5
-      }
+      },
+      "weather_temp": 17,
+      "weather_condition": "Parzialmente nuvoloso"
     },
     {
       "garmin_id": 23123852312,
@@ -881,7 +891,9 @@
         ],
         "cap_applied": null,
         "scoring_version": 5
-      }
+      },
+      "weather_temp": 15,
+      "weather_condition": "Nuvoloso"
     },
     {
       "garmin_id": 23119744106,
@@ -1001,7 +1013,9 @@
         "notes": [],
         "cap_applied": null,
         "scoring_version": 5
-      }
+      },
+      "weather_temp": 16,
+      "weather_condition": "Pioggia leggera"
     },
     {
       "garmin_id": 23108028661,
@@ -1156,7 +1170,9 @@
         "notes": [],
         "cap_applied": null,
         "scoring_version": 5
-      }
+      },
+      "weather_temp": 18,
+      "weather_condition": "Nuvoloso"
     },
     {
       "garmin_id": 23084025466,
@@ -1356,7 +1372,9 @@
         "notes": [],
         "cap_applied": null,
         "scoring_version": 5
-      }
+      },
+      "weather_temp": 20,
+      "weather_condition": "Nuvoloso"
     },
     {
       "garmin_id": 23072168046,
@@ -1476,7 +1494,9 @@
         "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
-      "gear_km": null
+      "gear_km": null,
+      "weather_temp": 25,
+      "weather_condition": "Nuvoloso"
     },
     {
       "garmin_id": 23059810553,
@@ -1580,7 +1600,9 @@
         "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
-      "gear_km": null
+      "gear_km": null,
+      "weather_temp": 25,
+      "weather_condition": "Nuvoloso"
     },
     {
       "garmin_id": 23043206188,
@@ -1716,7 +1738,9 @@
         "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
-      "gear_km": null
+      "gear_km": null,
+      "weather_temp": 26,
+      "weather_condition": "Sereno"
     },
     {
       "garmin_id": 23032189739,
@@ -1840,7 +1864,9 @@
         "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
-      "gear_km": null
+      "gear_km": null,
+      "weather_temp": 28,
+      "weather_condition": "Sereno"
     },
     {
       "garmin_id": 23023745883,
@@ -2019,7 +2045,9 @@
         "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
-      "gear_km": null
+      "gear_km": null,
+      "weather_temp": 30,
+      "weather_condition": "Prevalentemente sereno"
     },
     {
       "garmin_id": 22994742630,
@@ -2209,7 +2237,9 @@
         "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
-      "gear_km": null
+      "gear_km": null,
+      "weather_temp": 26,
+      "weather_condition": "Parzialmente nuvoloso"
     },
     {
       "garmin_id": 22980701407,
@@ -2333,7 +2363,9 @@
         "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
-      "gear_km": null
+      "gear_km": null,
+      "weather_temp": 24,
+      "weather_condition": "Prevalentemente sereno"
     },
     {
       "garmin_id": 22972288317,
@@ -2442,7 +2474,9 @@
         "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
-      "gear_km": null
+      "gear_km": null,
+      "weather_temp": 27,
+      "weather_condition": "Sereno"
     },
     {
       "garmin_id": 22963569017,
@@ -2589,7 +2623,9 @@
         "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
-      "gear_km": null
+      "gear_km": null,
+      "weather_temp": 20,
+      "weather_condition": "Sereno"
     },
     {
       "garmin_id": 22951809683,
@@ -2701,7 +2737,9 @@
         "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
-      "gear_km": null
+      "gear_km": null,
+      "weather_temp": 17,
+      "weather_condition": "Parzialmente nuvoloso"
     },
     {
       "garmin_id": 22935210022,
@@ -2829,7 +2867,9 @@
         "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
-      "gear_km": null
+      "gear_km": null,
+      "weather_temp": 17,
+      "weather_condition": "Nuvoloso"
     },
     {
       "garmin_id": 22917283581,
@@ -2997,7 +3037,9 @@
         "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
-      "gear_km": null
+      "gear_km": null,
+      "weather_temp": 12,
+      "weather_condition": "Pioviggine leggera"
     },
     {
       "garmin_id": 22904645423,
@@ -3117,7 +3159,9 @@
         "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
-      "gear_km": null
+      "gear_km": null,
+      "weather_temp": 12,
+      "weather_condition": "Pioviggine leggera"
     },
     {
       "garmin_id": 22893744848,
@@ -3213,7 +3257,9 @@
         "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
-      "gear_km": null
+      "gear_km": null,
+      "weather_temp": 8,
+      "weather_condition": "Nuvoloso"
     },
     {
       "garmin_id": 22882998668,
@@ -3364,7 +3410,9 @@
         ],
         "cap_applied": null,
         "scoring_version": 5
-      }
+      },
+      "weather_temp": 7,
+      "weather_condition": "Parzialmente nuvoloso"
     },
     {
       "garmin_id": 22863752396,
@@ -3468,7 +3516,9 @@
         "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
-      "gear_km": null
+      "gear_km": null,
+      "weather_temp": 10,
+      "weather_condition": "Nuvoloso"
     },
     {
       "garmin_id": 22853108541,
@@ -3588,7 +3638,9 @@
         "scoring_version": 5
       },
       "gear_name": "Kiprun KS900 light",
-      "gear_km": null
+      "gear_km": null,
+      "weather_temp": 10,
+      "weather_condition": "Nuvoloso"
     },
     {
       "garmin_id": 22836842493,
@@ -3732,7 +3784,9 @@
         "scoring_version": 5
       },
       "gear_name": "Kiprun KS900 light",
-      "gear_km": null
+      "gear_km": null,
+      "weather_temp": 13,
+      "weather_condition": "Pioggia leggera"
     },
     {
       "garmin_id": 22825259463,
@@ -3860,7 +3914,9 @@
         "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
-      "gear_km": null
+      "gear_km": null,
+      "weather_temp": 15,
+      "weather_condition": "Sereno"
     },
     {
       "garmin_id": 22800958040,
@@ -3948,7 +4004,9 @@
         "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
-      "gear_km": null
+      "gear_km": null,
+      "weather_temp": 14,
+      "weather_condition": "Parzialmente nuvoloso"
     },
     {
       "garmin_id": 22789594427,
@@ -4108,7 +4166,9 @@
         "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
-      "gear_km": null
+      "gear_km": null,
+      "weather_temp": null,
+      "weather_condition": null
     },
     {
       "garmin_id": 22770609208,
@@ -4216,7 +4276,9 @@
         "scoring_version": 5
       },
       "gear_name": "Kiprun KS900 light",
-      "gear_km": null
+      "gear_km": null,
+      "weather_temp": null,
+      "weather_condition": null
     },
     {
       "garmin_id": 22753305099,
@@ -4332,7 +4394,9 @@
         "scoring_version": 5
       },
       "gear_name": "Kiprun KS900 light",
-      "gear_km": null
+      "gear_km": null,
+      "weather_temp": null,
+      "weather_condition": null
     },
     {
       "garmin_id": 22735939665,
@@ -4452,7 +4516,9 @@
         "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
-      "gear_km": null
+      "gear_km": null,
+      "weather_temp": null,
+      "weather_condition": null
     },
     {
       "garmin_id": 22729308568,
@@ -4588,7 +4654,9 @@
         "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
-      "gear_km": null
+      "gear_km": null,
+      "weather_temp": null,
+      "weather_condition": null
     },
     {
       "garmin_id": 22704300855,
@@ -4676,7 +4744,9 @@
         "scoring_version": 5
       },
       "gear_name": "Nike Vomero plus",
-      "gear_km": null
+      "gear_km": null,
+      "weather_temp": null,
+      "weather_condition": null
     },
     {
       "garmin_id": 22694501795,
@@ -4772,7 +4842,9 @@
         "scoring_version": 5
       },
       "gear_name": "Kiprun KS900 light",
-      "gear_km": null
+      "gear_km": null,
+      "weather_temp": null,
+      "weather_condition": null
     },
     {
       "garmin_id": 22662064953,
@@ -4841,7 +4913,9 @@
       "fetched_at": "2026-05-28T13:03:32Z",
       "gear_name": "Kiprun KS900 light",
       "gear_km": null,
-      "score": null
+      "score": null,
+      "weather_temp": null,
+      "weather_condition": null
     },
     {
       "garmin_id": 22646265581,
@@ -4918,7 +4992,9 @@
       "fetched_at": "2026-05-28T13:03:33Z",
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
-      "score": null
+      "score": null,
+      "weather_temp": null,
+      "weather_condition": null
     },
     {
       "garmin_id": 22633929850,
@@ -4987,7 +5063,9 @@
       "fetched_at": "2026-05-28T13:03:35Z",
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
-      "score": null
+      "score": null,
+      "weather_temp": null,
+      "weather_condition": null
     },
     {
       "garmin_id": 22580585917,
@@ -5352,7 +5430,9 @@
       "fetched_at": "2026-05-28T13:03:37Z",
       "gear_name": "Kiprun KS900 light",
       "gear_km": null,
-      "score": null
+      "score": null,
+      "weather_temp": null,
+      "weather_condition": null
     },
     {
       "garmin_id": 22562769777,
@@ -5429,7 +5509,9 @@
       "fetched_at": "2026-05-28T13:03:38Z",
       "gear_name": "Kiprun KS900 light",
       "gear_km": null,
-      "score": null
+      "score": null,
+      "weather_temp": null,
+      "weather_condition": null
     }
   ]
 }
