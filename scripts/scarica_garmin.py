@@ -731,10 +731,15 @@ def fetch_weather(lat, lon, start_time_local):
         # Usa archive per date passate (>5 giorni fa), forecast per recenti/future
         act_date = _date.fromisoformat(date_str)
         days_ago = (_date.today() - act_date).days
-        endpoint = "archive" if days_ago > 5 else "forecast"
-        hourly_param = "temperature_2m,weather_code" if endpoint == "archive" else "temperature_2m,weathercode"
+        is_archive = days_ago > 5
+        if is_archive:
+            base_url = "https://archive-api.open-meteo.com/v1/archive"
+            hourly_param = "temperature_2m,weather_code"
+        else:
+            base_url = "https://api.open-meteo.com/v1/forecast"
+            hourly_param = "temperature_2m,weathercode"
         url = (
-            f"https://api.open-meteo.com/v1/{endpoint}"
+            f"{base_url}"
             f"?latitude={lat}&longitude={lon}"
             f"&hourly={hourly_param}"
             f"&start_date={date_str}&end_date={date_str}"
