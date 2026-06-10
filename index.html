@@ -526,7 +526,7 @@ function buildDashboard(activities){
         }
 
         const weatherLine = (real.weather_temp != null && real.weather_condition)
-          ? ` · ${real.weather_temp}°C — ${real.weather_condition}`
+          ? `<br>${real.weather_temp}°C · ${real.weather_condition}`
           : '';
         realHtml=`<div class="act-n">${real.name}</div>
           <div class="act-m">${real.distance_km?real.distance_km.toFixed(1)+' km':fmtD(real.distance_m)} · ${fmtT(real.duration_s)} · ${real.avg_pace_fmt}/km${weatherLine}</div>

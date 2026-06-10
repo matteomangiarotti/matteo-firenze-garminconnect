@@ -725,10 +725,15 @@ def fetch_weather(lat, lon, start_time_local):
         return None, None
     try:
         import urllib.request, json as _json
+        from datetime import date as _date
         date_str = start_time_local[:10]
         hour = int(start_time_local[11:13]) if len(start_time_local) >= 13 else 0
+        # Usa archive per date passate (>5 giorni fa), forecast per recenti/future
+        act_date = _date.fromisoformat(date_str)
+        days_ago = (_date.today() - act_date).days
+        endpoint = "archive" if days_ago > 5 else "forecast"
         url = (
-            f"https://api.open-meteo.com/v1/forecast"
+            f"https://api.open-meteo.com/v1/{endpoint}"
             f"?latitude={lat}&longitude={lon}"
             f"&hourly=temperature_2m,weathercode"
             f"&start_date={date_str}&end_date={date_str}"
