@@ -732,10 +732,11 @@ def fetch_weather(lat, lon, start_time_local):
         act_date = _date.fromisoformat(date_str)
         days_ago = (_date.today() - act_date).days
         endpoint = "archive" if days_ago > 5 else "forecast"
+        hourly_param = "temperature_2m,weather_code" if endpoint == "archive" else "temperature_2m,weathercode"
         url = (
             f"https://api.open-meteo.com/v1/{endpoint}"
             f"?latitude={lat}&longitude={lon}"
-            f"&hourly=temperature_2m,weathercode"
+            f"&hourly={hourly_param}"
             f"&start_date={date_str}&end_date={date_str}"
             f"&timezone=auto"
         )
@@ -744,7 +745,7 @@ def fetch_weather(lat, lon, start_time_local):
         data = _json.loads(resp.read())
         times = data.get("hourly", {}).get("time", [])
         temps = data.get("hourly", {}).get("temperature_2m", [])
-        codes = data.get("hourly", {}).get("weathercode", [])
+        codes = data.get("hourly", {}).get("weather_code", data.get("hourly", {}).get("weathercode", []))
         if not times:
             return None, None
         # Trova l'indice dell'ora più vicina
