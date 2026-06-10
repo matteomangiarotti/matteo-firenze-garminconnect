@@ -715,30 +715,90 @@ def extract_gear(act_detail):
         return name, km
     return None, None
 
+def fetch_weather(lat, lon, start_time_local):
+    """Chiama Open-Meteo per ottenere temperatura e condizione meteo all'ora dell'attività.
+
+    Restituisce (temp_c, condition_str) oppure (None, None) in caso di errore.
+    WMO weather codes: https://open-meteo.com/en/docs#weathervariables
+    """
+    if not lat or not lon or not start_time_local:
+        return None, None
+    try:
+        import urllib.request, json as _json
+        date_str = start_time_local[:10]
+        hour = int(start_time_local[11:13]) if len(start_time_local) >= 13 else 0
+        url = (
+            f"https://api.open-meteo.com/v1/forecast"
+            f"?latitude={lat}&longitude={lon}"
+            f"&hourly=temperature_2m,weathercode"
+            f"&start_date={date_str}&end_date={date_str}"
+            f"&timezone=auto"
+        )
+        req = urllib.request.Request(url, headers={"User-Agent": "garmin-dashboard/1.0"})
+        resp = urllib.request.urlopen(req, timeout=8)
+        data = _json.loads(resp.read())
+        times = data.get("hourly", {}).get("time", [])
+        temps = data.get("hourly", {}).get("temperature_2m", [])
+        codes = data.get("hourly", {}).get("weathercode", [])
+        if not times:
+            return None, None
+        # Trova l'indice dell'ora più vicina
+        target = f"{date_str}T{hour:02d}:00"
+        idx = next((i for i, t in enumerate(times) if t == target), None)
+        if idx is None:
+            idx = min(range(len(times)), key=lambda i: abs(int(times[i][11:13]) - hour))
+        temp = round(temps[idx]) if idx < len(temps) and temps[idx] is not None else None
+        code = codes[idx] if idx < len(codes) and codes[idx] is not None else None
+
+        # WMO weather code → descrizione italiana
+        WMO_IT = {
+            0: "Sereno", 1: "Prevalentemente sereno", 2: "Parzialmente nuvoloso", 3: "Nuvoloso",
+            45: "Nebbia", 48: "Nebbia gelata",
+            51: "Pioviggine leggera", 53: "Pioviggine", 55: "Pioviggine intensa",
+            61: "Pioggia leggera", 63: "Pioggia", 65: "Pioggia intensa",
+            71: "Neve leggera", 73: "Neve", 75: "Neve intensa",
+            80: "Rovesci leggeri", 81: "Rovesci", 82: "Rovesci intensi",
+            95: "Temporale", 96: "Temporale con grandine", 99: "Temporale forte",
+        }
+        condition = WMO_IT.get(code, f"Codice {code}") if code is not None else None
+        return temp, condition
+    except Exception as e:
+        log.warning("    Meteo non disponibile: %s", e)
+        return None, None
+
+
 def build_activity(act, laps_raw, gear_name=None, gear_km=None):
     dist = act.get("distance") or 0
     dur  = act.get("duration") or act.get("movingDuration") or 0
     hr   = act.get("averageHR") or act.get("averageHeartRate")
     pace = (dur/(dist/1000)) if dist > 50 else None
+    lat  = act.get("startLatitude")
+    lon  = act.get("startLongitude")
+    start_local = act.get("startTimeLocal", "")[:19]
+    weather_temp, weather_condition = fetch_weather(lat, lon, start_local)
     return {
-        "garmin_id":      act.get("activityId"),
-        "date":           activity_date(act),
-        "start_time":     act.get("startTimeLocal","")[:19],
-        "name":           act.get("activityName","Corsa"),
-        "type":           act.get("activityType",{}).get("typeKey","running"),
-        "distance_m":     round(dist),
-        "distance_km":    round(dist/1000, 2),
-        "duration_s":     round(dur),
-        "avg_hr":         round(hr) if hr else None,
-        "avg_pace_s_km":  round(pace) if pace else None,
-        "avg_pace_fmt":   fmt_pace(pace),
-        "calories":       act.get("calories"),
-        "elevation_gain": act.get("elevationGain"),
-        "gear_name":      gear_name,
-        "gear_km":        gear_km,
-        "laps":           parse_laps(laps_raw),
-        "fetched_at":     datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "score":          None,
+        "garmin_id":          act.get("activityId"),
+        "date":               activity_date(act),
+        "start_time":         start_local,
+        "name":               act.get("activityName","Corsa"),
+        "type":               act.get("activityType",{}).get("typeKey","running"),
+        "distance_m":         round(dist),
+        "distance_km":        round(dist/1000, 2),
+        "duration_s":         round(dur),
+        "avg_hr":             round(hr) if hr else None,
+        "avg_pace_s_km":      round(pace) if pace else None,
+        "avg_pace_fmt":       fmt_pace(pace),
+        "calories":           act.get("calories"),
+        "elevation_gain":     act.get("elevationGain"),
+        "gear_name":          gear_name,
+        "gear_km":            gear_km,
+        "laps":               parse_laps(laps_raw),
+        "start_lat":          lat,
+        "start_lon":          lon,
+        "weather_temp":       weather_temp,
+        "weather_condition":  weather_condition,
+        "fetched_at":         datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "score":              None,
     }
 
 
@@ -1003,6 +1063,26 @@ def main():
                 except Exception as e:
                     record["score"] = None
                     log.warning("  Errore backfill scoring %s: %s", record.get("date"), e)
+
+    # Backfill meteo per attivita senza weather_temp
+    no_weather = [
+        r for r in data.get("activities", [])
+        if r.get("weather_temp") is None and r.get("start_time") and r.get("date")
+    ]
+    if no_weather:
+        log.info("Backfill meteo per %d attivita...", len(no_weather))
+        for record in no_weather:
+            # Usa le coordinate salvate nel record; fallback a Leuven se assenti
+            # (per attivita pre-aggiornamento che non hanno ancora start_lat/start_lon).
+            lat = record.get("start_lat") or 50.88
+            lon = record.get("start_lon") or 4.70
+            start_time = record.get("start_time", "")
+            temp, cond = fetch_weather(lat, lon, start_time)
+            record["weather_temp"] = temp
+            record["weather_condition"] = cond
+            if temp is not None:
+                log.info("  Meteo %s: %s°C — %s", record.get("date"), temp, cond)
+            time.sleep(0.3)
 
     # Backfill gear da Strava per attivita senza gear
     no_gear = [r for r in data.get("activities", []) if r.get("gear_name") is None]

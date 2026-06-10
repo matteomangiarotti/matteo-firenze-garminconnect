@@ -525,8 +525,12 @@ function buildDashboard(activities){
           }
         }
 
+        const weatherLine = (real.weather_temp != null && real.weather_condition)
+          ? `<div class="act-m" style="color:var(--text3);">${real.weather_temp}°C — ${real.weather_condition}</div>`
+          : '';
         realHtml=`<div class="act-n">${real.name}</div>
           <div class="act-m">${real.distance_km?real.distance_km.toFixed(1)+' km':fmtD(real.distance_m)} · ${fmtT(real.duration_s)} · ${real.avg_pace_fmt}/km</div>
+          ${weatherLine}
           <div style="margin-top:3px;">${hrBadge}</div>
           ${lapHtml}`;
         badge=p.type==='rest'?'<span class="bdg b-bonus">+ bonus</span>':'<span class="bdg b-ok">✓</span>';
