@@ -1102,16 +1102,10 @@ def main():
 
         return False
 
-    # DEBUG 21mag
-    for record in data.get("activities", []):
-        if record.get("date") == "2026-05-21":
-            log.info("21mag laps: %s", [(l["lap_index"], l.get("intensity"), l.get("avg_pace_fmt")) for l in record.get("laps",[])])
-            break
-
     # Backfill lap: riscarica i lap per attivita che non hanno il campo intensity
     for record in data.get("activities", []):
         laps = record.get("laps") or []
-        if laps:
+        if laps and any(l.get("intensity") is None for l in laps):
             act_id = record.get("garmin_id")
             if act_id:
                 try:
