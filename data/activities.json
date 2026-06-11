@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-11T18:34:28Z",
+  "last_updated": "2026-06-11T18:37:28Z",
   "activities": [
     {
       "garmin_id": 23203957625,
@@ -126,7 +126,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "weather_temp": 17,
       "weather_condition": "Prevalentemente sereno"
@@ -247,11 +247,10 @@
       ],
       "fetched_at": "2026-06-09T19:41:27Z",
       "score": {
-        "score": 8.3,
+        "score": 8.6,
         "subscores": {
           "fast_blocks": 7.98,
-          "structure": 8.5,
-          "recoveries": 7.0,
+          "structure": 10.0,
           "wu_cd": 10.0,
           "hr": 9.65,
           "distance": 7.0
@@ -259,7 +258,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "weather_temp": 15,
       "weather_condition": "Pioviggine leggera"
@@ -477,7 +476,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "weather_temp": 18,
       "weather_condition": "Nuvoloso"
@@ -599,7 +598,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "weather_temp": 15,
       "weather_condition": "Pioviggine"
@@ -705,7 +704,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "weather_temp": 17,
       "weather_condition": "Parzialmente nuvoloso"
@@ -874,11 +873,10 @@
       ],
       "fetched_at": "2026-06-04T05:50:25Z",
       "score": {
-        "score": 8.8,
+        "score": 9.2,
         "subscores": {
           "fast_blocks": 8.73,
-          "structure": 8.5,
-          "recoveries": 7.0,
+          "structure": 10.0,
           "wu_cd": 10.0,
           "hr": 9.44,
           "distance": 10
@@ -890,7 +888,7 @@
           "FC 154 bpm sotto target di 7 bpm — controlla le soglie."
         ],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "weather_temp": 15,
       "weather_condition": "Nuvoloso"
@@ -1012,7 +1010,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "weather_temp": 16,
       "weather_condition": "Pioggia leggera"
@@ -1169,7 +1167,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "weather_temp": 18,
       "weather_condition": "Nuvoloso"
@@ -1371,7 +1369,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "weather_temp": 20,
       "weather_condition": "Nuvoloso"
@@ -1491,7 +1489,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -1597,7 +1595,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -1735,7 +1733,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -1861,7 +1859,7 @@
           "FC media 166 bpm supera il target di 11 bpm."
         ],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -2042,7 +2040,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -2234,7 +2232,7 @@
           "Deriva cardiaca di 8 bpm nella seconda meta."
         ],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -2360,7 +2358,7 @@
           "FC media 170 bpm supera il target di 15 bpm."
         ],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -2471,7 +2469,7 @@
           "Cap: Recovery: FC molto sopra il range."
         ],
         "cap_applied": "Recovery: FC molto sopra il range",
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -2608,11 +2606,10 @@
       ],
       "fetched_at": "2026-05-28T13:03:00Z",
       "score": {
-        "score": 7.7,
+        "score": 7.6,
         "subscores": {
           "fast_blocks": 6.27,
-          "structure": 8.5,
-          "recoveries": 7.0,
+          "structure": 10.0,
           "wu_cd": 10.0,
           "hr": 10.0,
           "distance": 7.0
@@ -2620,7 +2617,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -2734,7 +2731,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -2864,7 +2861,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -3034,7 +3031,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -3156,7 +3153,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -3254,7 +3251,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -3409,7 +3406,7 @@
           "FC 150 bpm sotto target di 11 bpm — controlla le soglie."
         ],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "weather_temp": 7,
       "weather_condition": "Parzialmente nuvoloso"
@@ -3513,7 +3510,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -3635,7 +3632,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "gear_name": "Kiprun KS900 light",
       "gear_km": null,
@@ -3781,7 +3778,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "gear_name": "Kiprun KS900 light",
       "gear_km": null,
@@ -3911,7 +3908,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -4001,7 +3998,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -4163,7 +4160,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -4273,7 +4270,7 @@
           "FC media 173 bpm supera il target di 18 bpm."
         ],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "gear_name": "Kiprun KS900 light",
       "gear_km": null,
@@ -4391,7 +4388,7 @@
           "FC media 170 bpm supera il target di 15 bpm."
         ],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "gear_name": "Kiprun KS900 light",
       "gear_km": null,
@@ -4513,7 +4510,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -4651,7 +4648,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -4741,7 +4738,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -4839,7 +4836,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 5
+        "scoring_version": 6
       },
       "gear_name": "Kiprun KS900 light",
       "gear_km": null,
