@@ -512,7 +512,12 @@ function buildDashboard(activities){
         // Lap veloci (se presenti e allenamento di qualità)
         let lapHtml='';
         if(real.laps&&real.laps.length>1&&p.type==='qualita'){
-          const fastLaps=real.laps.filter(l=>l.distance_m>200&&l.avg_pace_s_km&&l.avg_pace_s_km<310);
+          // Se i lap hanno intensity da Garmin, usa ACTIVE per filtrare i blocchi veloci.
+          // Fallback: filtra per passo (<310 s/km = più veloci di ~5:10/km).
+          const hasIntensity=real.laps.some(l=>l.intensity);
+          const fastLaps=hasIntensity
+            ? real.laps.filter(l=>l.intensity==='ACTIVE'&&l.distance_m>100)
+            : real.laps.filter(l=>l.distance_m>200&&l.avg_pace_s_km&&l.avg_pace_s_km<310);
           if(fastLaps.length){
             lapHtml=`<table class="lap-table"><tbody>`+
               fastLaps.map(l=>`<tr>
