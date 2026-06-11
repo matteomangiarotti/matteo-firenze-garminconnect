@@ -150,6 +150,7 @@ def parse_struttura(raw):
     s = raw.strip()
     result = {"raw": s, "reps": 0, "rep_min": None, "rep_km": None,
               "rec_min": None, "rec_km": None, "wu_min": 0.0, "cd_min": 0.0,
+              "wu_km": 0.0, "cd_km": 0.0,
               "is_prog": False}
 
     # WU
@@ -157,18 +158,28 @@ def parse_struttura(raw):
     if m:
         val = float(m.group(1).replace(',', '.'))
         unit = (m.group(2) or "").lower()
-        if unit == "km": result["wu_min"] = val * 5.5
-        elif unit == "m": result["wu_min"] = (val/1000) * 5.5
-        else: result["wu_min"] = val
+        if unit == "km":
+            result["wu_km"] = val
+            result["wu_min"] = val * 5.5
+        elif unit == "m":
+            result["wu_km"] = val / 1000
+            result["wu_min"] = (val/1000) * 5.5
+        else:
+            result["wu_min"] = val
 
     # CD
     m = re.search(r'CD\s*(\d+(?:[\.,]\d+)?)(?:\s*)?(km|m)?', s, re.IGNORECASE)
     if m:
         val = float(m.group(1).replace(',', '.'))
         unit = (m.group(2) or "").lower()
-        if unit == "km": result["cd_min"] = val * 5.5
-        elif unit == "m": result["cd_min"] = (val/1000) * 5.5
-        else: result["cd_min"] = val
+        if unit == "km":
+            result["cd_km"] = val
+            result["cd_min"] = val * 5.5
+        elif unit == "m":
+            result["cd_km"] = val / 1000
+            result["cd_min"] = (val/1000) * 5.5
+        else:
+            result["cd_min"] = val
 
     # PROG
     m = re.search(r'PROG(\d+(?:\.\d+)?)(km|m|\'|min)?', s, re.IGNORECASE)
@@ -614,34 +625,62 @@ def auto_score(plan, activity):
     elif wtype == "qualita":
         fast_laps, slow_laps, wu_l, cd_l = segment_laps(laps, plan)
         s_blocks = score_fast_blocks(fast_laps, plan, st, flags, notes)
-        s_recov  = score_recoveries(slow_laps, plan, st, flags, notes)
         s_hr     = score_hr(activity.get("avg_hr"), plan.get("hr_min") or 161, plan.get("hr_max") or 174, flags, notes)
-        s_dist   = score_distance(activity.get("distance_km",0), plan.get("distance_km"), flags, notes)
 
-        # Per gli allenamenti di qualita vogliamo SEMPRE mostrare gli stessi
-        # 6 sotto-voti nel popup: blocchi veloci, struttura, recuperi, WU+CD, FC, distanza.
-        # Prima, se la Struttura ICS non conteneva WU/CD espliciti, lo script saltava
-        # s_wucd e s_struct: per questo il 02/06 mostrava solo 4 sotto-voti.
-        # Qui invece WU/CD viene sempre valutato usando i lap prima/dopo i blocchi veloci.
+        # Stima distanza attesa se il piano usa blocchi a tempo (rep_min) invece che a km.
+        # Distanza stimata = WU_km + rep_min * pace_medio_target + CD_km
+        target_dist = plan.get("distance_km")
+        if not target_dist and st.get("rep_min") and plan.get("pace_min_s") and plan.get("pace_max_s"):
+            pace_mid_s = (plan["pace_min_s"] + plan["pace_max_s"]) / 2  # s/km
+            block_km   = (st["rep_min"] * 60) / pace_mid_s              # km coperti nel blocco
+            wu_km      = st.get("wu_km") or 0
+            cd_km      = st.get("cd_km") or 0
+            target_dist = round(wu_km + block_km + cd_km, 2)
+
+        s_dist   = score_distance(activity.get("distance_km",0), target_dist, flags, notes)
         s_wucd   = score_wucd(wu_l, cd_l, plan, st, flags, notes)
-        s_struct = (s_recov + s_wucd) / 2
 
-        subscores = {
-            "fast_blocks": s_blocks,
-            "structure":   s_struct,
-            "recoveries":  s_recov,
-            "wu_cd":       s_wucd,
-            "hr":          s_hr,
-            "distance":    s_dist,
-        }
-        weighted = (
-            0.40*s_blocks +
-            0.25*s_struct +
-            0.10*s_recov +
-            0.10*s_wucd +
-            0.10*s_hr +
-            0.05*s_dist
-        )
+        # I recuperi vengono valutati solo se il piano prevede ripetute (reps > 1).
+        # Per allenamenti a tirata unica (tempo continuo, medio, ecc.) il sotto-voto
+        # "Recuperi" non ha senso e viene escluso; il peso viene ridistribuito.
+        has_reps = (st.get("reps") or 0) > 1
+
+        if has_reps:
+            s_recov  = score_recoveries(slow_laps, plan, st, flags, notes)
+            s_struct = (s_recov + s_wucd) / 2
+            subscores = {
+                "fast_blocks": s_blocks,
+                "structure":   s_struct,
+                "recoveries":  s_recov,
+                "wu_cd":       s_wucd,
+                "hr":          s_hr,
+                "distance":    s_dist,
+            }
+            weighted = (
+                0.40*s_blocks +
+                0.25*s_struct +
+                0.10*s_recov +
+                0.10*s_wucd +
+                0.10*s_hr +
+                0.05*s_dist
+            )
+        else:
+            # Nessuna ripetuta prevista: niente sotto-voto recuperi.
+            # Struttura = solo WU+CD. Peso ridistribuito su blocchi, WU+CD, FC, distanza.
+            s_struct = s_wucd
+            subscores = {
+                "fast_blocks": s_blocks,
+                "structure":   s_struct,
+                "wu_cd":       s_wucd,
+                "hr":          s_hr,
+                "distance":    s_dist,
+            }
+            weighted = (
+                0.55*s_blocks +
+                0.25*s_wucd +
+                0.10*s_hr +
+                0.10*s_dist
+            )
     else:
         s_hr   = score_hr(activity.get("avg_hr"), plan.get("hr_min") or 140, plan.get("hr_max") or 165, flags, notes)
         s_pace = score_pace(activity.get("avg_pace_s_km"), plan.get("pace_min_s"), plan.get("pace_max_s"), flags, notes)
@@ -661,7 +700,7 @@ def auto_score(plan, activity):
         "flags":       list(set(flags)),
         "notes":       notes,
         "cap_applied": cap_reason,
-        "scoring_version": 5,
+        "scoring_version": 6,
     }
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -683,6 +722,8 @@ def parse_laps(laps_raw):
         dur  = lap.get("duration") or lap.get("elapsedDuration") or 0
         hr   = lap.get("averageHR") or lap.get("averageHeartRate")
         pace = (dur/(dist/1000)) if dist > 50 else None
+        # intensityType da Garmin: "WARMUP", "ACTIVE", "COOLDOWN", "REST", ecc.
+        intensity = (lap.get("intensityType") or lap.get("lapType") or "").upper() or None
         parsed.append({
             "lap_index":     i,
             "distance_m":    round(dist),
@@ -690,6 +731,7 @@ def parse_laps(laps_raw):
             "avg_pace_s_km": round(pace) if pace else None,
             "avg_pace_fmt":  fmt_pace(pace),
             "avg_hr":        round(hr) if hr else None,
+            "intensity":     intensity,
         })
     return parsed
 
@@ -990,6 +1032,7 @@ def main():
         # Lap
         try:
             laps_raw = client.get_activity_splits(act_id).get("lapDTOs",[])
+            if laps_raw: log.info("Sample lap raw: %s", laps_raw[0])
         except Exception as e:
             log.warning("    Lap non disponibili: %s", e)
             laps_raw = []
@@ -1031,7 +1074,7 @@ def main():
             return set()
         wtype = plan.get("type", "")
         if wtype == "qualita":
-            return {"fast_blocks", "structure", "recoveries", "wu_cd", "hr", "distance"}
+            return {"fast_blocks", "structure", "wu_cd", "hr", "distance"}
         if wtype in ("easy", "recovery"):
             return {"hr", "pace", "distance"}
         if wtype == "lungo":
@@ -1054,10 +1097,30 @@ def main():
         if expected and not expected.issubset(set(subs.keys())):
             return True
 
-        if score_obj.get("scoring_version") != 5:
+        if score_obj.get("scoring_version") != 6:
             return True
 
         return False
+
+    # DEBUG 21mag
+    for record in data.get("activities", []):
+        if record.get("date") == "2026-05-21":
+            log.info("21mag laps: %s", [(l["lap_index"], l.get("intensity"), l.get("avg_pace_fmt")) for l in record.get("laps",[])])
+            break
+
+    # Backfill lap: riscarica i lap per attivita che non hanno il campo intensity
+    for record in data.get("activities", []):
+        laps = record.get("laps") or []
+        if laps:
+            act_id = record.get("garmin_id")
+            if act_id:
+                try:
+                    laps_raw = client.get_activity_splits(act_id).get("lapDTOs", [])
+                    if laps_raw:
+                        record["laps"] = parse_laps(laps_raw)
+                        log.info("  Backfill lap %s: %d lap", record.get("date"), len(record["laps"]))
+                except Exception as e:
+                    log.warning("  Errore backfill lap %s: %s", record.get("date"), e)
 
     for record in data.get("activities", []):
         plan = plan_index.get(record.get("date", ""))
