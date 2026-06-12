@@ -516,7 +516,7 @@ function buildDashboard(activities){
           // Fallback: filtra per passo (<310 s/km = più veloci di ~5:10/km).
           const hasIntensity=real.laps.some(l=>l.intensity);
           const fastLaps=hasIntensity
-            ? real.laps.filter(l=>l.intensity==='ACTIVE'&&l.distance_m>200&&l.avg_pace_s_km)
+            ? real.laps.filter(l=>l.intensity==='ACTIVE'&&l.avg_pace_s_km)
             : real.laps.filter(l=>l.distance_m>=500&&l.avg_pace_s_km&&l.avg_pace_s_km<310);
           if(fastLaps.length){
             lapHtml=`<table class="lap-table"><tbody>`+
