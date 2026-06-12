@@ -1,6 +1,299 @@
 {
-  "last_updated": "2026-06-11T19:20:42Z",
+  "last_updated": "2026-06-12T11:25:35Z",
   "activities": [
+    {
+      "garmin_id": 23221550220,
+      "date": "2026-06-12",
+      "start_time": "2026-06-12 12:23:18",
+      "name": "Leuven Running",
+      "type": "running",
+      "distance_m": 8204,
+      "distance_km": 8.2,
+      "duration_s": 2707,
+      "avg_hr": 148,
+      "avg_pace_s_km": 330,
+      "avg_pace_fmt": "5:29",
+      "calories": 525.0,
+      "elevation_gain": 58.0,
+      "gear_name": "Nike Vomero plus",
+      "gear_km": null,
+      "laps": [
+        {
+          "lap_index": 1,
+          "distance_m": 1000,
+          "duration_s": 318,
+          "avg_pace_s_km": 318,
+          "avg_pace_fmt": "5:17",
+          "avg_hr": 150,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 2,
+          "distance_m": 1000,
+          "duration_s": 332,
+          "avg_pace_s_km": 332,
+          "avg_pace_fmt": "5:32",
+          "avg_hr": 158,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 3,
+          "distance_m": 1000,
+          "duration_s": 317,
+          "avg_pace_s_km": 317,
+          "avg_pace_fmt": "5:17",
+          "avg_hr": 147,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 4,
+          "distance_m": 1000,
+          "duration_s": 334,
+          "avg_pace_s_km": 334,
+          "avg_pace_fmt": "5:34",
+          "avg_hr": 150,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 5,
+          "distance_m": 1000,
+          "duration_s": 339,
+          "avg_pace_s_km": 339,
+          "avg_pace_fmt": "5:38",
+          "avg_hr": 152,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 6,
+          "distance_m": 1000,
+          "duration_s": 334,
+          "avg_pace_s_km": 334,
+          "avg_pace_fmt": "5:34",
+          "avg_hr": 145,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 7,
+          "distance_m": 1000,
+          "duration_s": 329,
+          "avg_pace_s_km": 329,
+          "avg_pace_fmt": "5:29",
+          "avg_hr": 144,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 8,
+          "distance_m": 1000,
+          "duration_s": 334,
+          "avg_pace_s_km": 334,
+          "avg_pace_fmt": "5:33",
+          "avg_hr": 142,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 9,
+          "distance_m": 204,
+          "duration_s": 69,
+          "avg_pace_s_km": 339,
+          "avg_pace_fmt": "5:38",
+          "avg_hr": 148,
+          "intensity": "ACTIVE"
+        }
+      ],
+      "weather_temp": 15,
+      "weather_condition": "Pioviggine leggera",
+      "fetched_at": "2026-06-12T11:25:31Z",
+      "score": {
+        "score": 9.8,
+        "subscores": {
+          "hr": 9.65,
+          "pace": 10.0,
+          "distance": 10
+        },
+        "flags": [],
+        "notes": [],
+        "cap_applied": null,
+        "scoring_version": 6
+      }
+    },
+    {
+      "garmin_id": 23216464454,
+      "date": "2026-06-11",
+      "start_time": "2026-06-11 21:50:47",
+      "name": "Leuven - medio aerobico 14km",
+      "type": "running",
+      "distance_m": 14008,
+      "distance_km": 14.01,
+      "duration_s": 4018,
+      "avg_hr": 155,
+      "avg_pace_s_km": 287,
+      "avg_pace_fmt": "4:46",
+      "calories": 850.0,
+      "elevation_gain": 74.0,
+      "gear_name": "Nike Vomero plus",
+      "gear_km": null,
+      "laps": [
+        {
+          "lap_index": 1,
+          "distance_m": 1000,
+          "duration_s": 285,
+          "avg_pace_s_km": 285,
+          "avg_pace_fmt": "4:45",
+          "avg_hr": 142,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 2,
+          "distance_m": 1000,
+          "duration_s": 287,
+          "avg_pace_s_km": 287,
+          "avg_pace_fmt": "4:46",
+          "avg_hr": 155,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 3,
+          "distance_m": 1000,
+          "duration_s": 285,
+          "avg_pace_s_km": 285,
+          "avg_pace_fmt": "4:45",
+          "avg_hr": 155,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 4,
+          "distance_m": 1000,
+          "duration_s": 284,
+          "avg_pace_s_km": 284,
+          "avg_pace_fmt": "4:44",
+          "avg_hr": 157,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 5,
+          "distance_m": 1000,
+          "duration_s": 290,
+          "avg_pace_s_km": 290,
+          "avg_pace_fmt": "4:49",
+          "avg_hr": 154,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 6,
+          "distance_m": 1000,
+          "duration_s": 287,
+          "avg_pace_s_km": 287,
+          "avg_pace_fmt": "4:47",
+          "avg_hr": 157,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 7,
+          "distance_m": 1000,
+          "duration_s": 291,
+          "avg_pace_s_km": 291,
+          "avg_pace_fmt": "4:51",
+          "avg_hr": 166,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 8,
+          "distance_m": 1000,
+          "duration_s": 289,
+          "avg_pace_s_km": 289,
+          "avg_pace_fmt": "4:49",
+          "avg_hr": 157,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 9,
+          "distance_m": 1000,
+          "duration_s": 285,
+          "avg_pace_s_km": 285,
+          "avg_pace_fmt": "4:44",
+          "avg_hr": 155,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 10,
+          "distance_m": 1000,
+          "duration_s": 289,
+          "avg_pace_s_km": 289,
+          "avg_pace_fmt": "4:49",
+          "avg_hr": 155,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 11,
+          "distance_m": 1000,
+          "duration_s": 291,
+          "avg_pace_s_km": 291,
+          "avg_pace_fmt": "4:50",
+          "avg_hr": 161,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 12,
+          "distance_m": 1000,
+          "duration_s": 285,
+          "avg_pace_s_km": 285,
+          "avg_pace_fmt": "4:44",
+          "avg_hr": 149,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 13,
+          "distance_m": 1000,
+          "duration_s": 285,
+          "avg_pace_s_km": 285,
+          "avg_pace_fmt": "4:44",
+          "avg_hr": 152,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 14,
+          "distance_m": 1000,
+          "duration_s": 284,
+          "avg_pace_s_km": 284,
+          "avg_pace_fmt": "4:43",
+          "avg_hr": 153,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 15,
+          "distance_m": 8,
+          "duration_s": 2,
+          "avg_pace_s_km": null,
+          "avg_pace_fmt": "---",
+          "avg_hr": 158,
+          "intensity": "ACTIVE"
+        }
+      ],
+      "weather_temp": 12,
+      "weather_condition": "Pioviggine",
+      "fetched_at": "2026-06-11T21:43:14Z",
+      "score": {
+        "score": 7.5,
+        "subscores": {
+          "fast_blocks": 9.0,
+          "structure": 2.5,
+          "wu_cd": 2.5,
+          "hr": 9.52,
+          "distance": 10
+        },
+        "flags": [
+          "MISSING_WARMUP",
+          "MISSING_COOLDOWN"
+        ],
+        "notes": [
+          "Warm-up assente o molto breve.",
+          "Cooldown assente o molto breve.",
+          "Cap: Qualita: warm-up e cooldown assenti (previsti nel piano)."
+        ],
+        "cap_applied": "Qualita: warm-up e cooldown assenti (previsti nel piano)",
+        "scoring_version": 6
+      }
+    },
     {
       "garmin_id": 23203957625,
       "date": "2026-06-10",
