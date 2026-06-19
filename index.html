@@ -540,8 +540,18 @@ function buildDashboard(activities){
       const typeLabel=p.type!=='rest'&&TL[p.type]?` <span style="font-family:var(--mono);font-size:10px;font-weight:400;color:var(--text2);">(${TL[p.type]})</span>`:'';
       let fcChip='';
       if(p.fcDesc&&p.type!=='rest'){
-        const label=p.hrMin&&p.hrMax?`${p.hrMin}–${p.hrMax} bpm`:'';
-        if(label){fcChip=`<div style="font-family:var(--mono);font-size:10px;color:var(--text2);margin-top:3px;">FC ${label}</div>`;}
+        const fc=getFcMaxForDate(p.date);
+        let label='';
+        if(p.hrPctMin&&p.hrPctMax){
+          const bpmLo=Math.round(fc*p.hrPctMin);
+          const bpmHi=Math.round(fc*p.hrPctMax);
+          const pctLo=Math.round(p.hrPctMin*100);
+          const pctHi=Math.round(p.hrPctMax*100);
+          label=`${pctLo}–${pctHi}% FCmax ${fc} → ${bpmLo}–${bpmHi} bpm`;
+        }else if(p.hrMin&&p.hrMax){
+          label=`${p.hrMin}–${p.hrMax} bpm`;
+        }
+        if(label){fcChip=`<div style="font-family:var(--mono);font-size:10px;color:var(--text2);margin-top:3px;">FC: ${label}</div>`;}
       }
       const planCell=p.type==='rest'
         ?`<div class="plan-t" style="color:var(--text3);">Riposo</div>${p.desc&&p.desc!=='—'?`<div class="plan-d" style="color:var(--text3);">${p.desc}</div>`:''}`
