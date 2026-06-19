@@ -194,15 +194,9 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);}
 </div>
 </div>
 
-<div class="zone-legend">
-<span style="font-family:var(--mono);font-size:10px;color:var(--text3);white-space:nowrap;padding-top:2px;">FC max 198 bpm →</span>
-<div class="zone-legend-chips">
-<span class="zone-chip" style="background:#dbeafe;color:#1d4ed8;"><span class="zone-chip-name">Z1 Warm Up</span><span class="zone-chip-pct">65-74%</span><span class="zone-chip-bpm">129-147 bpm</span></span>
-<span class="zone-chip" style="background:#d1fae5;color:#15803d;"><span class="zone-chip-name">Z2 Easy</span><span class="zone-chip-pct">74-81%</span><span class="zone-chip-bpm">147-160 bpm</span></span>
-<span class="zone-chip" style="background:#fef9c3;color:#92400e;"><span class="zone-chip-name">Z3 Aerobic</span><span class="zone-chip-pct">81-88%</span><span class="zone-chip-bpm">161-174 bpm</span></span>
-<span class="zone-chip" style="background:#fed7aa;color:#9a3412;"><span class="zone-chip-name">Z4 Threshold</span><span class="zone-chip-pct">88-94%</span><span class="zone-chip-bpm">175-186 bpm</span></span>
-<span class="zone-chip" style="background:#fecaca;color:#b91c1c;"><span class="zone-chip-name">Z5 Maximum</span><span class="zone-chip-pct">94-100%</span><span class="zone-chip-bpm">187-198 bpm</span></span>
-</div>
+<div class="zone-legend" id="zone-legend-wrap">
+<span id="zone-legend-fcmax-label" style="font-family:var(--mono);font-size:10px;color:var(--text3);white-space:nowrap;padding-top:2px;">FC max — bpm →</span>
+<div class="zone-legend-chips" id="zone-legend-chips"></div>
 </div>
 
 <div class="tabs">
@@ -253,15 +247,21 @@ function parseICS(text){
     else if(/lungo/i.test(tipo))type='lungo';
     else if(/qualit|soglia|medio|steady|ripetute|tempo|progressivo|brillante/i.test(tipo))type='qualita';
     else if(/facile|easy/i.test(tipo))type='easy';
-    let hrMin=129,hrMax=198;
-    const fcMatch=fcRaw.match(/(\d{2,3})[^\d]+(\d{2,3})/);
-    if(fcMatch){hrMin=parseInt(fcMatch[1]);hrMax=parseInt(fcMatch[2]);}
+    let hrMin=null,hrMax=null,hrPctMin=null,hrPctMax=null;
+    const fcPctMatch=fcRaw.match(/(\d{2,3}(?:\.\d)?)\s*[-–]\s*(\d{2,3}(?:\.\d)?)\s*%\s*Fmax/i);
+    if(fcPctMatch){
+      hrPctMin=parseFloat(fcPctMatch[1])/100;
+      hrPctMax=parseFloat(fcPctMatch[2])/100;
+    }else{
+      const fcMatch=fcRaw.match(/(\d{2,3})[^\d]+(\d{2,3})/);
+      if(fcMatch){hrMin=parseInt(fcMatch[1]);hrMax=parseInt(fcMatch[2]);}
+    }
     let desc='';
     if(ritmo)desc+='Ritmo: '+ritmo+'.';
     if(dettaglio)desc+=(desc?' ':'')+dettaglio;
     const ritmoStr=ritmo?'Ritmo: '+ritmo+'.':'';
     const dettaglioStr=dettaglio||'';
-    const event={date:dateStr,summary,desc,ritmo:ritmoStr,dettaglio:dettaglioStr,fcDesc:fcRaw?'FC: '+fcRaw:'',type,hrMin,hrMax};
+    const event={date:dateStr,summary,desc,ritmo:ritmoStr,dettaglio:dettaglioStr,fcDesc:fcRaw?'FC: '+fcRaw:'',type,hrMin,hrMax,hrPctMin,hrPctMax};
     if(type==='lungo'&&gelRaw){event._gelNote=gelRaw;event._gelCount=parseInt(gelRaw)||0;}
     events.push(event);
   }
@@ -291,22 +291,68 @@ async function loadActivities(){
     const r=await fetch(ACTIVITIES_JSON,{cache:'no-store'});
     if(!r.ok)throw new Error('activities.json non trovato');
     const data=await r.json();
-    return data.activities||[];
+    return {activities: data.activities||[], hr_history: data.hr_history||[]};
   }catch(e){
     console.warn('activities.json non disponibile:',e);
-    return [];
+    return {activities:[], hr_history:[]};
   }
 }
 
 // ── ZONE FC ──────────────────────────────────────────────────────────────────
-const ZONES=[
-  {name:'Z1',min:129,max:147,bg:'#dbeafe',col:'#1d4ed8'},
-  {name:'Z2',min:147,max:160,bg:'#d1fae5',col:'#15803d'},
-  {name:'Z3',min:161,max:174,bg:'#fef9c3',col:'#92400e'},
-  {name:'Z4',min:175,max:186,bg:'#fed7aa',col:'#9a3412'},
-  {name:'Z5',min:187,max:198,bg:'#fecaca',col:'#b91c1c'},
+// Percentuali Garmin fisse (identiche allo script Python)
+const ZONE_PCT=[
+  {name:'Z1',label:'Z1 Warm Up',  lo:0.652,hi:0.742,bg:'#dbeafe',col:'#1d4ed8'},
+  {name:'Z2',label:'Z2 Easy',     lo:0.742,hi:0.808,bg:'#d1fae5',col:'#15803d'},
+  {name:'Z3',label:'Z3 Aerobic',  lo:0.808,hi:0.884,bg:'#fef9c3',col:'#92400e'},
+  {name:'Z4',label:'Z4 Threshold',lo:0.884,hi:0.939,bg:'#fed7aa',col:'#9a3412'},
+  {name:'Z5',label:'Z5 Maximum',  lo:0.939,hi:1.000,bg:'#fecaca',col:'#b91c1c'},
 ];
-function getZone(hr){return ZONES.find(z=>hr>=z.min&&hr<=z.max)||null;}
+
+let HR_HISTORY=[];  // caricato da activities.json
+
+function getFcMaxForDate(dateStr){
+  // Ritorna la FC max valida per dateStr (YYYY-MM-DD)
+  let fc=198;  // default di sicurezza
+  for(const e of HR_HISTORY){
+    if(e.date<=dateStr) fc=e.fc_max;
+    else break;
+  }
+  return fc;
+}
+
+function buildZones(fc_max){
+  return ZONE_PCT.map(z=>({
+    name:z.name, label:z.label,
+    min:Math.round(fc_max*z.lo), max:Math.round(fc_max*z.hi),
+    bg:z.bg, col:z.col,
+    pctLabel: Math.round(z.lo*100)+'-'+Math.round(z.hi*100)+'%',
+  }));
+}
+
+function getZoneForActivity(hr, dateStr){
+  const fc=getFcMaxForDate(dateStr);
+  const zones=buildZones(fc);
+  return zones.find(z=>hr>=z.min&&hr<=z.max)||null;
+}
+
+function getZone(hr){
+  // Usa la FC max corrente (ultima in HR_HISTORY) — per la legend
+  const fc=HR_HISTORY.length?HR_HISTORY[HR_HISTORY.length-1].fc_max:198;
+  return buildZones(fc).find(z=>hr>=z.min&&hr<=z.max)||null;
+}
+
+function renderZoneLegend(){
+  const fc=HR_HISTORY.length?HR_HISTORY[HR_HISTORY.length-1].fc_max:198;
+  const zones=buildZones(fc);
+  document.getElementById('zone-legend-fcmax-label').textContent=`FC max ${fc} bpm →`;
+  const chips=document.getElementById('zone-legend-chips');
+  if(chips) chips.innerHTML=zones.map(z=>
+    `<span class="zone-chip" style="background:${z.bg};color:${z.col};">` +
+    `<span class="zone-chip-name">${z.label}</span>` +
+    `<span class="zone-chip-pct">${z.pctLabel}</span>` +
+    `<span class="zone-chip-bpm">${z.min}-${z.max} bpm</span></span>`
+  ).join('');
+}
 
 const GEL_MAP={};
 const VOTI={};
@@ -373,8 +419,13 @@ function autoScore(plan,act){
   const spk=act.avg_pace_s_km||0;
   const distKm=act.distance_km||act.distance_m/1000||0;
   const targetKm=plannedKm(plan);
+  const actDate=act.date||'2026-01-01';
+  const fc_max=act.fc_max_at_date||getFcMaxForDate(actDate);
+  // Risolvi target FC: percentuali hanno priorità
+  const resolvedHrMin=plan.hrPctMin?Math.round(fc_max*plan.hrPctMin):(plan.hrMin||Math.round(fc_max*0.742));
+  const resolvedHrMax=plan.hrPctMax?Math.round(fc_max*plan.hrPctMax):(plan.hrMax||Math.round(fc_max*0.808));
   const laps=act.laps||[];
-  const fc=scoreFC(hr,plan.hrMin||129,plan.hrMax||198);
+  const fc=scoreFC(hr,resolvedHrMin,resolvedHrMax);
   const dist=scoreDist(distKm,targetKm);
   const passo=scorePasso(spk,plan);
   let score,breakdown;
@@ -388,7 +439,7 @@ function autoScore(plan,act){
     score=fc*0.3+passo*0.5+dist*0.2;breakdown={fc,passo,dist};
   }
   score=Math.round(Math.max(1,Math.min(10,score)));
-  return{score,fc:hr,hrTarget:[plan.hrMin||129,plan.hrMax||198],breakdown};
+  return{score,fc:hr,hrTarget:[resolvedHrMin,resolvedHrMax],breakdown};
 }
 
 const setStatus=(st,msg)=>{document.getElementById('sdot').className='sdot '+st;document.getElementById('s-txt').textContent=msg;};
@@ -506,7 +557,7 @@ function buildDashboard(activities){
         badge='<span class="bdg b-race">🏁 GARA</span>';
         realHtml='<span class="act-e" style="color:var(--purple);">Firenze Marathon 2026</span>';
       }else if(real){
-        const z=real.avg_hr?getZone(Math.round(real.avg_hr)):null;
+        const z=real.avg_hr?getZoneForActivity(Math.round(real.avg_hr), real.date||'2026-01-01'):null;
         const hrBadge=real.avg_hr?`<span style="background:${z?z.bg:'#f3f4f6'};color:${z?z.col:'#666'};font-family:var(--mono);font-size:10px;padding:1px 6px;border-radius:10px;">${Math.round(real.avg_hr)} bpm</span>`:'';
 
         // Lap veloci (se presenti e allenamento di qualità)
@@ -694,7 +745,13 @@ async function sync(){
   }
 
   document.getElementById('ld-txt').textContent='Caricamento attività Garmin...';
-  const activities=await loadActivities();
+  const {activities, hr_history}=await loadActivities();
+
+  // Aggiorna HR_HISTORY globale (ordinato per data)
+  if(hr_history.length){
+    HR_HISTORY=[...hr_history].sort((a,b)=>a.date.localeCompare(b.date));
+  }
+  renderZoneLegend();
 
   buildDashboard(activities);
   setStatus('ok','Aggiornato');

@@ -33,6 +33,51 @@ log = logging.getLogger(__name__)
 FETCH_LIMIT   = 30
 RUNNING_TYPES = {"running", "trail_running", "treadmill_running"}
 
+# ── FC Max history ─────────────────────────────────────────────────────────────
+# Aggiungere una nuova entry quando Garmin rileva un nuovo FC max.
+# La data è il giorno in cui è stato registrato il nuovo valore.
+# Le attività PRIMA di quella data continuano ad usare il valore precedente.
+FC_MAX_HISTORY = [
+    {"date": "2026-01-01", "fc_max": 198},  # valore iniziale
+    {"date": "2026-06-19", "fc_max": 205},  # aggiornato il 19/06/2026
+]
+
+# Zone Garmin: percentuali fisse (lower bound di ogni zona)
+# Z1: 65%, Z2: 74%, Z3: 81%, Z4: 88%, Z5: 94%, tetto: 100%
+GARMIN_ZONE_PCT = [
+    ("Z1", 0.652, 0.742),
+    ("Z2", 0.742, 0.808),
+    ("Z3", 0.808, 0.884),
+    ("Z4", 0.884, 0.939),
+    ("Z5", 0.939, 1.000),
+]
+
+def get_fc_max_for_date(date_str):
+    """Restituisce la FC max valida per una data (YYYY-MM-DD).
+    Usa l'ultima entry in FC_MAX_HISTORY con date <= date_str."""
+    fc = FC_MAX_HISTORY[0]["fc_max"]
+    for entry in FC_MAX_HISTORY:
+        if entry["date"] <= date_str:
+            fc = entry["fc_max"]
+        else:
+            break
+    return fc
+
+def compute_hr_zones(fc_max):
+    """Calcola i BPM di ogni zona Garmin dato un FC max."""
+    zones = []
+    for name, lo, hi in GARMIN_ZONE_PCT:
+        zones.append({
+            "name": name,
+            "min":  round(fc_max * lo),
+            "max":  round(fc_max * hi),
+        })
+    return zones
+
+def pct_to_bpm(pct_lo, pct_hi, fc_max):
+    """Converte una coppia di percentuali in BPM interi."""
+    return round(fc_max * pct_lo), round(fc_max * pct_hi)
+
 # ══════════════════════════════════════════════════════════════════════════════
 # SEZIONE 1 — CARICA .env
 # ══════════════════════════════════════════════════════════════════════════════
@@ -105,12 +150,20 @@ def parse_ics(path):
             pace_min_s = int(pm.group(1))*60 + int(pm.group(2))
             pace_max_s = int(pm.group(3))*60 + int(pm.group(4))
 
-        # FC target
+        # FC target — supporta sia BPM fissi che percentuali Fmax
+        # Formato percentuale: "65.2-78.3% Fmax" oppure "(65.2-78.3% Fmax)"
         hr_min = hr_max = None
-        hm = re.search(r'(\d{2,3})[–\-](\d{2,3})\s*bpm', fc_raw)
-        if hm:
-            hr_min = int(hm.group(1))
-            hr_max = int(hm.group(2))
+        hr_pct_min = hr_pct_max = None
+        pm_pct = re.search(r'(\d{2,3}(?:\.\d)?)\s*[-–]\s*(\d{2,3}(?:\.\d)?)\s*%\s*Fmax', fc_raw)
+        if pm_pct:
+            hr_pct_min = float(pm_pct.group(1)) / 100
+            hr_pct_max = float(pm_pct.group(2)) / 100
+            # hr_min/hr_max vengono calcolati al momento dello scoring (dipendono dalla data)
+        else:
+            hm = re.search(r'(\d{2,3})[–\-](\d{2,3})\s*bpm', fc_raw)
+            if hm:
+                hr_min = int(hm.group(1))
+                hr_max = int(hm.group(2))
 
         # Distanza dal titolo
         dist_km = None
@@ -118,15 +171,17 @@ def parse_ics(path):
         if dm: dist_km = float(dm.group(1))
 
         events.append({
-            "date":       date_str,
-            "summary":    summary,
-            "type":       wtype,
-            "pace_min_s": pace_min_s,
-            "pace_max_s": pace_max_s,
-            "hr_min":     hr_min,
-            "hr_max":     hr_max,
+            "date":        date_str,
+            "summary":     summary,
+            "type":        wtype,
+            "pace_min_s":  pace_min_s,
+            "pace_max_s":  pace_max_s,
+            "hr_min":      hr_min,
+            "hr_max":      hr_max,
+            "hr_pct_min":  hr_pct_min,
+            "hr_pct_max":  hr_pct_max,
             "distance_km": dist_km,
-            "struttura":  struttura,
+            "struttura":   struttura,
             "dettaglio":   dettaglio,
         })
 
@@ -552,8 +607,12 @@ def apply_caps(score, plan, activity, fast_laps, flags):
     t_dist = plan.get("distance_km") or 0
     t_reps = plan.get("struttura_parsed", {}).get("reps") or 0
     wtype = plan.get("type","")
+    fc_max = activity.get("fc_max_at_date") or get_fc_max_for_date(activity.get("date","2026-01-01"))
+    # Soglie caps calcolate dinamicamente
+    rec_hr_max = plan.get("hr_max") or round(fc_max * 0.742)
+    lungo_hr_max = plan.get("hr_max") or round(fc_max * 0.808)
     if wtype == "recovery":
-        if hr > (plan.get("hr_max") or 147) + 15 and 6.5 < cap:
+        if hr > rec_hr_max + 15 and 6.5 < cap:
             cap, reason = 6.5, "Recovery: FC molto sopra il range"
         if plan.get("pace_min_s") and pace < plan["pace_min_s"] - 20 and 7.0 < cap:
             cap, reason = 7.0, "Recovery corsa troppo veloce"
@@ -563,7 +622,6 @@ def apply_caps(score, plan, activity, fast_laps, flags):
         if t_reps > 0 and len(fast_laps)/t_reps < 0.70 and 7.0 < cap:
             cap, reason = 7.0, "Qualita: meno del 70% delle ripetute"
         if "MISSING_WARMUP" in flags and "MISSING_COOLDOWN" in flags:
-            # Cap solo se WU/CD erano previsti nel piano
             st_check = plan.get("struttura_parsed") or {}
             if (st_check.get("wu_min") or 0) > 0 or (st_check.get("cd_min") or 0) > 0:
                 if 8.5 < cap:
@@ -571,7 +629,7 @@ def apply_caps(score, plan, activity, fast_laps, flags):
     elif wtype == "lungo":
         if t_dist > 0 and dist/t_dist < 0.70 and 6.0 < cap:
             cap, reason = 6.0, "Lungo: meno del 70% della distanza"
-        if hr > (plan.get("hr_max") or 160) + 10 and 7.5 < cap:
+        if hr > lungo_hr_max + 10 and 7.5 < cap:
             cap, reason = 7.5, "Lungo trasformato in medio tirato"
     return round(min(score, cap), 1), reason
 
@@ -584,13 +642,25 @@ def auto_score(plan, activity):
     st    = plan.get("struttura_parsed") or {}
     wtype = plan.get("type","easy")
 
+    # Risolvi FC target: se il piano ha percentuali, convertile con la FC max della data
+    act_date  = activity.get("date", "2026-01-01")
+    fc_max    = get_fc_max_for_date(act_date)
+    activity["fc_max_at_date"] = fc_max   # salva nel record per il frontend
+
+    if plan.get("hr_pct_min") and plan.get("hr_pct_max"):
+        hr_min_eff = round(fc_max * plan["hr_pct_min"])
+        hr_max_eff = round(fc_max * plan["hr_pct_max"])
+    else:
+        hr_min_eff = plan.get("hr_min")
+        hr_max_eff = plan.get("hr_max")
+
     # WU/CD valutati solo se esplicitamente previsti nella Struttura
     has_wu = (st.get("wu_min") or 0) > 0
     has_cd = (st.get("cd_min") or 0) > 0
 
     if wtype == "recovery":
         # Recovery: no WU/CD — solo FC, passo, distanza
-        s_hr   = score_hr(activity.get("avg_hr"), plan.get("hr_min") or 129, plan.get("hr_max") or 147, flags, notes)
+        s_hr   = score_hr(activity.get("avg_hr"), hr_min_eff or 129, hr_max_eff or round(fc_max*0.742), flags, notes)
         s_pace = score_pace(activity.get("avg_pace_s_km"), plan.get("pace_min_s"), plan.get("pace_max_s"), flags, notes, "recovery")
         s_dist = score_distance(activity.get("distance_km",0), plan.get("distance_km"), flags, notes)
         subscores = {"hr": s_hr, "pace": s_pace, "distance": s_dist}
@@ -599,7 +669,7 @@ def auto_score(plan, activity):
 
     elif wtype == "easy":
         # Easy: no WU/CD — FC, passo, distanza
-        s_hr   = score_hr(activity.get("avg_hr"), plan.get("hr_min") or 147, plan.get("hr_max") or 160, flags, notes)
+        s_hr   = score_hr(activity.get("avg_hr"), hr_min_eff or round(fc_max*0.742), hr_max_eff or round(fc_max*0.808), flags, notes)
         s_pace = score_pace(activity.get("avg_pace_s_km"), plan.get("pace_min_s"), plan.get("pace_max_s"), flags, notes, "easy")
         s_dist = score_distance(activity.get("distance_km",0), plan.get("distance_km"), flags, notes)
         subscores = {"hr": s_hr, "pace": s_pace, "distance": s_dist}
@@ -607,7 +677,7 @@ def auto_score(plan, activity):
         fast_laps = []
 
     elif wtype == "lungo":
-        s_hr    = score_hr(activity.get("avg_hr"), plan.get("hr_min") or 147, plan.get("hr_max") or 160, flags, notes)
+        s_hr    = score_hr(activity.get("avg_hr"), hr_min_eff or round(fc_max*0.742), hr_max_eff or round(fc_max*0.808), flags, notes)
         s_pace  = score_pace(activity.get("avg_pace_s_km"), plan.get("pace_min_s"), plan.get("pace_max_s"), flags, notes, "lungo")
         s_dist  = score_distance(activity.get("distance_km",0), plan.get("distance_km"), flags, notes)
         s_drift = score_cardiac_drift(laps, flags, notes)
@@ -625,7 +695,7 @@ def auto_score(plan, activity):
     elif wtype == "qualita":
         fast_laps, slow_laps, wu_l, cd_l = segment_laps(laps, plan)
         s_blocks = score_fast_blocks(fast_laps, plan, st, flags, notes)
-        s_hr     = score_hr(activity.get("avg_hr"), plan.get("hr_min") or 161, plan.get("hr_max") or 174, flags, notes)
+        s_hr     = score_hr(activity.get("avg_hr"), hr_min_eff or round(fc_max*0.808), hr_max_eff or round(fc_max*0.884), flags, notes)
 
         # Stima distanza attesa se il piano usa blocchi a tempo (rep_min) invece che a km.
         # Distanza stimata = WU_km + rep_min * pace_medio_target + CD_km
@@ -682,7 +752,7 @@ def auto_score(plan, activity):
                 0.10*s_dist
             )
     else:
-        s_hr   = score_hr(activity.get("avg_hr"), plan.get("hr_min") or 140, plan.get("hr_max") or 165, flags, notes)
+        s_hr   = score_hr(activity.get("avg_hr"), hr_min_eff or round(fc_max*0.700), hr_max_eff or round(fc_max*0.832), flags, notes)
         s_pace = score_pace(activity.get("avg_pace_s_km"), plan.get("pace_min_s"), plan.get("pace_max_s"), flags, notes)
         s_dist = score_distance(activity.get("distance_km",0), plan.get("distance_km"), flags, notes)
         subscores = {"hr": s_hr, "pace": s_pace, "distance": s_dist}
@@ -700,7 +770,7 @@ def auto_score(plan, activity):
         "flags":       list(set(flags)),
         "notes":       notes,
         "cap_applied": cap_reason,
-        "scoring_version": 6,
+        "scoring_version": 7,
     }
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -965,6 +1035,9 @@ def main():
     else:
         data = {"last_updated": None, "activities": []}
 
+    # Sincronizza hr_history nel JSON con la costante FC_MAX_HISTORY dello script
+    data["hr_history"] = FC_MAX_HISTORY
+
     seen_ids = {a["garmin_id"] for a in data.get("activities",[])}
     log.info("Attivita gia salvate: %d", len(seen_ids))
 
@@ -1097,7 +1170,7 @@ def main():
         if expected and not expected.issubset(set(subs.keys())):
             return True
 
-        if score_obj.get("scoring_version") != 6:
+        if score_obj.get("scoring_version") != 7:
             return True
 
         return False
@@ -1131,6 +1204,11 @@ def main():
                 except Exception as e:
                     record["score"] = None
                     log.warning("  Errore backfill scoring %s: %s", record.get("date"), e)
+
+    # Backfill fc_max_at_date: aggiorna tutte le attivita con la FC max valida alla loro data
+    for record in data.get("activities", []):
+        act_date = record.get("date", "2026-01-01")
+        record["fc_max_at_date"] = get_fc_max_for_date(act_date)
 
     # Backfill meteo per attivita senza weather_temp
     no_weather = [
