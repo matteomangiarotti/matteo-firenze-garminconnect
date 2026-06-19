@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-18T20:53:45Z",
+  "last_updated": "2026-06-19T00:03:07Z",
   "activities": [
     {
       "garmin_id": 23299150853,
@@ -137,8 +137,9 @@
           "FC media 171 bpm supera il target di 11 bpm."
         ],
         "cap_applied": null,
-        "scoring_version": 6
-      }
+        "scoring_version": 7
+      },
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 23287087159,
@@ -252,8 +253,9 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
-      }
+        "scoring_version": 7
+      },
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 23275187302,
@@ -385,8 +387,9 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
-      }
+        "scoring_version": 7
+      },
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 23251308005,
@@ -626,8 +629,9 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
-      }
+        "scoring_version": 7
+      },
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 23238630514,
@@ -759,8 +763,9 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
-      }
+        "scoring_version": 7
+      },
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 23221550220,
@@ -874,8 +879,9 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
-      }
+        "scoring_version": 7
+      },
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 23216464454,
@@ -1043,8 +1049,8 @@
           "distance": 10
         },
         "flags": [
-          "MISSING_WARMUP",
-          "MISSING_COOLDOWN"
+          "MISSING_COOLDOWN",
+          "MISSING_WARMUP"
         ],
         "notes": [
           "Warm-up assente o molto breve.",
@@ -1052,8 +1058,9 @@
           "Cap: Qualita: warm-up e cooldown assenti (previsti nel piano)."
         ],
         "cap_applied": "Qualita: warm-up e cooldown assenti (previsti nel piano)",
-        "scoring_version": 6
-      }
+        "scoring_version": 7
+      },
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 23203957625,
@@ -1192,10 +1199,11 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "weather_temp": 17,
-      "weather_condition": "Prevalentemente sereno"
+      "weather_condition": "Prevalentemente sereno",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 23192078158,
@@ -1325,21 +1333,22 @@
       ],
       "fetched_at": "2026-06-09T19:41:27Z",
       "score": {
-        "score": 8.6,
+        "score": 8.9,
         "subscores": {
           "fast_blocks": 7.98,
           "structure": 10.0,
           "wu_cd": 10.0,
           "hr": 9.65,
-          "distance": 7.0
+          "distance": 10
         },
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "weather_temp": 15,
-      "weather_condition": "Pioviggine leggera"
+      "weather_condition": "Pioviggine leggera",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 23169092602,
@@ -1577,10 +1586,11 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "weather_temp": 18,
-      "weather_condition": "Nuvoloso"
+      "weather_condition": "Nuvoloso",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 23156174061,
@@ -1710,10 +1720,11 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "weather_temp": 15,
-      "weather_condition": "Pioviggine"
+      "weather_condition": "Pioviggine",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 23142891175,
@@ -1825,10 +1836,11 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "weather_temp": 17,
-      "weather_condition": "Parzialmente nuvoloso"
+      "weather_condition": "Parzialmente nuvoloso",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 23123852312,
@@ -2027,10 +2039,11 @@
           "FC 154 bpm sotto target di 7 bpm — controlla le soglie."
         ],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "weather_temp": 15,
-      "weather_condition": "Nuvoloso"
+      "weather_condition": "Nuvoloso",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 23119744106,
@@ -2160,10 +2173,11 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "weather_temp": 16,
-      "weather_condition": "Pioggia leggera"
+      "weather_condition": "Pioggia leggera",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 23108028661,
@@ -2332,10 +2346,11 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "weather_temp": 18,
-      "weather_condition": "Nuvoloso"
+      "weather_condition": "Nuvoloso",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 23084025466,
@@ -2555,10 +2570,11 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "weather_temp": 20,
-      "weather_condition": "Nuvoloso"
+      "weather_condition": "Nuvoloso",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 23072168046,
@@ -2686,12 +2702,13 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
       "weather_temp": 25,
-      "weather_condition": "Nuvoloso"
+      "weather_condition": "Nuvoloso",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 23059810553,
@@ -2801,12 +2818,13 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
       "weather_temp": 25,
-      "weather_condition": "Nuvoloso"
+      "weather_condition": "Nuvoloso",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 23043206188,
@@ -2952,12 +2970,13 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
       "weather_temp": 26,
-      "weather_condition": "Sereno"
+      "weather_condition": "Sereno",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 23032189739,
@@ -3089,12 +3108,13 @@
           "FC media 166 bpm supera il target di 11 bpm."
         ],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
       "weather_temp": 28,
-      "weather_condition": "Sereno"
+      "weather_condition": "Sereno",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 23023745883,
@@ -3276,24 +3296,25 @@
       ],
       "fetched_at": "2026-05-28T13:02:53Z",
       "score": {
-        "score": 7.7,
+        "score": 7.8,
         "subscores": {
           "fast_blocks": 4.77,
           "structure": 9.94,
           "recoveries": 9.88,
           "wu_cd": 10.0,
           "hr": 9.3,
-          "distance": 7.0
+          "distance": 10
         },
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
       "weather_temp": 30,
-      "weather_condition": "Prevalentemente sereno"
+      "weather_condition": "Prevalentemente sereno",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 22994742630,
@@ -3491,20 +3512,21 @@
           "distance": 10
         },
         "flags": [
-          "HR_HIGH",
-          "CARDIAC_DRIFT"
+          "CARDIAC_DRIFT",
+          "HR_HIGH"
         ],
         "notes": [
           "FC media 170 bpm supera il target di 10 bpm.",
           "Deriva cardiaca di 8 bpm nella seconda meta."
         ],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
       "weather_temp": 26,
-      "weather_condition": "Parzialmente nuvoloso"
+      "weather_condition": "Parzialmente nuvoloso",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 22980701407,
@@ -3636,12 +3658,13 @@
           "FC media 170 bpm supera il target di 15 bpm."
         ],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
       "weather_temp": 24,
-      "weather_condition": "Prevalentemente sereno"
+      "weather_condition": "Prevalentemente sereno",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 22972288317,
@@ -3756,12 +3779,13 @@
           "Cap: Recovery: FC molto sopra il range."
         ],
         "cap_applied": "Recovery: FC molto sopra il range",
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
       "weather_temp": 27,
-      "weather_condition": "Sereno"
+      "weather_condition": "Sereno",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 22963569017,
@@ -3918,12 +3942,13 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
       "weather_temp": 20,
-      "weather_condition": "Sereno"
+      "weather_condition": "Sereno",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 22951809683,
@@ -4042,12 +4067,13 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
       "weather_temp": 17,
-      "weather_condition": "Parzialmente nuvoloso"
+      "weather_condition": "Parzialmente nuvoloso",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 22935210022,
@@ -4184,12 +4210,13 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
       "weather_temp": 17,
-      "weather_condition": "Nuvoloso"
+      "weather_condition": "Nuvoloso",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 22917283581,
@@ -4371,12 +4398,13 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
       "weather_temp": 12,
-      "weather_condition": "Pioviggine leggera"
+      "weather_condition": "Pioviggine leggera",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 22904645423,
@@ -4504,12 +4532,13 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
       "weather_temp": 12,
-      "weather_condition": "Pioviggine leggera"
+      "weather_condition": "Pioviggine leggera",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 22893744848,
@@ -4610,12 +4639,13 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
       "weather_temp": 8,
-      "weather_condition": "Nuvoloso"
+      "weather_condition": "Nuvoloso",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 22882998668,
@@ -4763,14 +4793,14 @@
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
       "score": {
-        "score": 7.7,
+        "score": 7.9,
         "subscores": {
           "fast_blocks": 4.91,
           "structure": 10.0,
           "recoveries": 10,
           "wu_cd": 10.0,
           "hr": 9.12,
-          "distance": 7.0
+          "distance": 10
         },
         "flags": [
           "HR_LOW"
@@ -4779,10 +4809,11 @@
           "FC 150 bpm sotto target di 11 bpm — controlla le soglie."
         ],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "weather_temp": 7,
-      "weather_condition": "Parzialmente nuvoloso"
+      "weather_condition": "Parzialmente nuvoloso",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 22863752396,
@@ -4892,12 +4923,13 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
       "weather_temp": 10,
-      "weather_condition": "Nuvoloso"
+      "weather_condition": "Nuvoloso",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 22853108541,
@@ -5025,12 +5057,13 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "gear_name": "Kiprun KS900 light",
       "gear_km": null,
       "weather_temp": 10,
-      "weather_condition": "Nuvoloso"
+      "weather_condition": "Nuvoloso",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 22836842493,
@@ -5185,12 +5218,13 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "gear_name": "Kiprun KS900 light",
       "gear_km": null,
       "weather_temp": 13,
-      "weather_condition": "Pioggia leggera"
+      "weather_condition": "Pioggia leggera",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 22825259463,
@@ -5327,12 +5361,13 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
       "weather_temp": 15,
-      "weather_condition": "Sereno"
+      "weather_condition": "Sereno",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 22800958040,
@@ -5424,12 +5459,13 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
       "weather_temp": 14,
-      "weather_condition": "Parzialmente nuvoloso"
+      "weather_condition": "Parzialmente nuvoloso",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 22789594427,
@@ -5602,12 +5638,13 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
       "weather_temp": 12,
-      "weather_condition": "Nuvoloso"
+      "weather_condition": "Nuvoloso",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 22770609208,
@@ -5721,12 +5758,13 @@
           "FC media 173 bpm supera il target di 18 bpm."
         ],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "gear_name": "Kiprun KS900 light",
       "gear_km": null,
       "weather_temp": 12,
-      "weather_condition": "Nuvoloso"
+      "weather_condition": "Nuvoloso",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 22753305099,
@@ -5849,12 +5887,13 @@
           "FC media 170 bpm supera il target di 15 bpm."
         ],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "gear_name": "Kiprun KS900 light",
       "gear_km": null,
       "weather_temp": 16,
-      "weather_condition": "Pioviggine leggera"
+      "weather_condition": "Pioviggine leggera",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 22735939665,
@@ -5982,12 +6021,13 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
       "weather_temp": 20,
-      "weather_condition": "Nuvoloso"
+      "weather_condition": "Nuvoloso",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 22729308568,
@@ -6133,12 +6173,13 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
       "weather_temp": 23,
-      "weather_condition": "Sereno"
+      "weather_condition": "Sereno",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 22704300855,
@@ -6230,12 +6271,13 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
       "weather_temp": 19,
-      "weather_condition": "Sereno"
+      "weather_condition": "Sereno",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 22694501795,
@@ -6336,12 +6378,13 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 6
+        "scoring_version": 7
       },
       "gear_name": "Kiprun KS900 light",
       "gear_km": null,
       "weather_temp": 17,
-      "weather_condition": "Sereno"
+      "weather_condition": "Sereno",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 22662064953,
@@ -6418,7 +6461,8 @@
       "gear_km": null,
       "score": null,
       "weather_temp": 8,
-      "weather_condition": "Sereno"
+      "weather_condition": "Sereno",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 22646265581,
@@ -6504,7 +6548,8 @@
       "gear_km": null,
       "score": null,
       "weather_temp": 14,
-      "weather_condition": "Sereno"
+      "weather_condition": "Sereno",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 22633929850,
@@ -6581,7 +6626,8 @@
       "gear_km": null,
       "score": null,
       "weather_temp": 18,
-      "weather_condition": "Sereno"
+      "weather_condition": "Sereno",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 22580585917,
@@ -6991,7 +7037,8 @@
       "gear_km": null,
       "score": null,
       "weather_temp": 9,
-      "weather_condition": "Sereno"
+      "weather_condition": "Sereno",
+      "fc_max_at_date": 198
     },
     {
       "garmin_id": 22562769777,
@@ -7077,7 +7124,18 @@
       "gear_km": null,
       "score": null,
       "weather_temp": 17,
-      "weather_condition": "Prevalentemente sereno"
+      "weather_condition": "Prevalentemente sereno",
+      "fc_max_at_date": 198
+    }
+  ],
+  "hr_history": [
+    {
+      "date": "2026-01-01",
+      "fc_max": 198
+    },
+    {
+      "date": "2026-06-19",
+      "fc_max": 205
     }
   ]
 }
