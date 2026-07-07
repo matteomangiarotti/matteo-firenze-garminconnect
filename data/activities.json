@@ -1,6 +1,197 @@
 {
-  "last_updated": "2026-07-05T13:00:11Z",
+  "last_updated": "2026-07-07T09:14:50Z",
   "activities": [
+    {
+      "garmin_id": 23507055302,
+      "date": "2026-07-07",
+      "start_time": "2026-07-07 08:18:30",
+      "name": "Caronno Pertusella - 6 x 1km",
+      "type": "running",
+      "distance_m": 12180,
+      "distance_km": 12.18,
+      "duration_s": 3467,
+      "avg_hr": 165,
+      "avg_pace_s_km": 285,
+      "avg_pace_fmt": "4:44",
+      "calories": 723.0,
+      "elevation_gain": 30.0,
+      "gear_name": null,
+      "gear_km": null,
+      "laps": [
+        {
+          "lap_index": 1,
+          "distance_m": 1000,
+          "duration_s": 330,
+          "avg_pace_s_km": 330,
+          "avg_pace_fmt": "5:29",
+          "avg_hr": 146,
+          "intensity": "WARMUP"
+        },
+        {
+          "lap_index": 2,
+          "distance_m": 1000,
+          "duration_s": 328,
+          "avg_pace_s_km": 328,
+          "avg_pace_fmt": "5:28",
+          "avg_hr": 153,
+          "intensity": "WARMUP"
+        },
+        {
+          "lap_index": 3,
+          "distance_m": 1000,
+          "duration_s": 240,
+          "avg_pace_s_km": 240,
+          "avg_pace_fmt": "3:59",
+          "avg_hr": 167,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 4,
+          "distance_m": 368,
+          "duration_s": 120,
+          "avg_pace_s_km": 326,
+          "avg_pace_fmt": "5:26",
+          "avg_hr": 165,
+          "intensity": "RECOVERY"
+        },
+        {
+          "lap_index": 5,
+          "distance_m": 1000,
+          "duration_s": 236,
+          "avg_pace_s_km": 236,
+          "avg_pace_fmt": "3:55",
+          "avg_hr": 174,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 6,
+          "distance_m": 365,
+          "duration_s": 120,
+          "avg_pace_s_km": 329,
+          "avg_pace_fmt": "5:28",
+          "avg_hr": 170,
+          "intensity": "RECOVERY"
+        },
+        {
+          "lap_index": 7,
+          "distance_m": 1000,
+          "duration_s": 235,
+          "avg_pace_s_km": 235,
+          "avg_pace_fmt": "3:54",
+          "avg_hr": 181,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 8,
+          "distance_m": 348,
+          "duration_s": 120,
+          "avg_pace_s_km": 345,
+          "avg_pace_fmt": "5:45",
+          "avg_hr": 168,
+          "intensity": "RECOVERY"
+        },
+        {
+          "lap_index": 9,
+          "distance_m": 1000,
+          "duration_s": 238,
+          "avg_pace_s_km": 238,
+          "avg_pace_fmt": "3:57",
+          "avg_hr": 160,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 10,
+          "distance_m": 374,
+          "duration_s": 120,
+          "avg_pace_s_km": 321,
+          "avg_pace_fmt": "5:20",
+          "avg_hr": 167,
+          "intensity": "RECOVERY"
+        },
+        {
+          "lap_index": 11,
+          "distance_m": 1000,
+          "duration_s": 239,
+          "avg_pace_s_km": 239,
+          "avg_pace_fmt": "3:58",
+          "avg_hr": 179,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 12,
+          "distance_m": 368,
+          "duration_s": 120,
+          "avg_pace_s_km": 326,
+          "avg_pace_fmt": "5:25",
+          "avg_hr": 171,
+          "intensity": "RECOVERY"
+        },
+        {
+          "lap_index": 13,
+          "distance_m": 1000,
+          "duration_s": 243,
+          "avg_pace_s_km": 243,
+          "avg_pace_fmt": "4:02",
+          "avg_hr": 176,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 14,
+          "distance_m": 354,
+          "duration_s": 120,
+          "avg_pace_s_km": 339,
+          "avg_pace_fmt": "5:39",
+          "avg_hr": 172,
+          "intensity": "RECOVERY"
+        },
+        {
+          "lap_index": 15,
+          "distance_m": 1000,
+          "duration_s": 331,
+          "avg_pace_s_km": 331,
+          "avg_pace_fmt": "5:30",
+          "avg_hr": 159,
+          "intensity": "COOLDOWN"
+        },
+        {
+          "lap_index": 16,
+          "distance_m": 1000,
+          "duration_s": 328,
+          "avg_pace_s_km": 328,
+          "avg_pace_fmt": "5:28",
+          "avg_hr": 158,
+          "intensity": "COOLDOWN"
+        },
+        {
+          "lap_index": 17,
+          "distance_m": 3,
+          "duration_s": 1,
+          "avg_pace_s_km": null,
+          "avg_pace_fmt": "---",
+          "avg_hr": 158,
+          "intensity": "COOLDOWN"
+        }
+      ],
+      "weather_temp": 23,
+      "weather_condition": "Sereno",
+      "fetched_at": "2026-07-07T09:14:48Z",
+      "score": {
+        "score": 9.5,
+        "subscores": {
+          "fast_blocks": 8.81,
+          "structure": 9.93,
+          "recoveries": 9.86,
+          "wu_cd": 10.0,
+          "hr": 10.0,
+          "distance": 10
+        },
+        "flags": [],
+        "notes": [],
+        "cap_applied": null,
+        "scoring_version": 7
+      },
+      "fc_max_at_date": 205
+    },
     {
       "garmin_id": 23485085064,
       "date": "2026-07-05",
