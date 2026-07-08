@@ -1,6 +1,158 @@
 {
-  "last_updated": "2026-07-07T09:14:50Z",
+  "last_updated": "2026-07-08T18:58:35Z",
   "activities": [
+    {
+      "garmin_id": 23527256728,
+      "date": "2026-07-08",
+      "start_time": "2026-07-08 19:44:55",
+      "name": "Caronno Pertusella Running",
+      "type": "running",
+      "distance_m": 12144,
+      "distance_km": 12.14,
+      "duration_s": 3764,
+      "avg_hr": 154,
+      "avg_pace_s_km": 310,
+      "avg_pace_fmt": "5:09",
+      "calories": 728.0,
+      "elevation_gain": 24.0,
+      "gear_name": null,
+      "gear_km": null,
+      "laps": [
+        {
+          "lap_index": 1,
+          "distance_m": 1000,
+          "duration_s": 304,
+          "avg_pace_s_km": 304,
+          "avg_pace_fmt": "5:04",
+          "avg_hr": 142,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 2,
+          "distance_m": 1000,
+          "duration_s": 311,
+          "avg_pace_s_km": 311,
+          "avg_pace_fmt": "5:11",
+          "avg_hr": 156,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 3,
+          "distance_m": 1000,
+          "duration_s": 305,
+          "avg_pace_s_km": 305,
+          "avg_pace_fmt": "5:04",
+          "avg_hr": 154,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 4,
+          "distance_m": 1000,
+          "duration_s": 304,
+          "avg_pace_s_km": 304,
+          "avg_pace_fmt": "5:04",
+          "avg_hr": 157,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 5,
+          "distance_m": 1000,
+          "duration_s": 310,
+          "avg_pace_s_km": 310,
+          "avg_pace_fmt": "5:09",
+          "avg_hr": 154,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 6,
+          "distance_m": 1000,
+          "duration_s": 312,
+          "avg_pace_s_km": 312,
+          "avg_pace_fmt": "5:12",
+          "avg_hr": 152,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 7,
+          "distance_m": 1000,
+          "duration_s": 313,
+          "avg_pace_s_km": 313,
+          "avg_pace_fmt": "5:12",
+          "avg_hr": 155,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 8,
+          "distance_m": 1000,
+          "duration_s": 309,
+          "avg_pace_s_km": 309,
+          "avg_pace_fmt": "5:08",
+          "avg_hr": 156,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 9,
+          "distance_m": 1000,
+          "duration_s": 310,
+          "avg_pace_s_km": 310,
+          "avg_pace_fmt": "5:10",
+          "avg_hr": 158,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 10,
+          "distance_m": 1000,
+          "duration_s": 315,
+          "avg_pace_s_km": 315,
+          "avg_pace_fmt": "5:15",
+          "avg_hr": 156,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 11,
+          "distance_m": 1000,
+          "duration_s": 312,
+          "avg_pace_s_km": 312,
+          "avg_pace_fmt": "5:12",
+          "avg_hr": 156,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 12,
+          "distance_m": 1000,
+          "duration_s": 313,
+          "avg_pace_s_km": 313,
+          "avg_pace_fmt": "5:12",
+          "avg_hr": 156,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 13,
+          "distance_m": 144,
+          "duration_s": 44,
+          "avg_pace_s_km": 307,
+          "avg_pace_fmt": "5:07",
+          "avg_hr": 160,
+          "intensity": "ACTIVE"
+        }
+      ],
+      "weather_temp": 36,
+      "weather_condition": "Sereno",
+      "fetched_at": "2026-07-08T18:58:33Z",
+      "score": {
+        "score": 10.0,
+        "subscores": {
+          "hr": 10.0,
+          "pace": 10.0,
+          "distance": 10
+        },
+        "flags": [],
+        "notes": [],
+        "cap_applied": null,
+        "scoring_version": 7
+      },
+      "fc_max_at_date": 205
+    },
     {
       "garmin_id": 23507055302,
       "date": "2026-07-07",
