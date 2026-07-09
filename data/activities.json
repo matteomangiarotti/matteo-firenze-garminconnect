@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-09T11:33:04Z",
+  "last_updated": "2026-07-09T12:28:53Z",
   "activities": [
     {
       "garmin_id": 23532319820,
@@ -15,7 +15,7 @@
       "avg_pace_fmt": "4:47",
       "calories": 978.0,
       "elevation_gain": 30.0,
-      "gear_name": null,
+      "gear_name": "adidas Adizero EVO SL",
       "gear_km": null,
       "laps": [
         {
@@ -205,7 +205,7 @@
       "avg_pace_fmt": "5:09",
       "calories": 728.0,
       "elevation_gain": 24.0,
-      "gear_name": null,
+      "gear_name": "Nike Vomero",
       "gear_km": null,
       "laps": [
         {
@@ -357,7 +357,7 @@
       "avg_pace_fmt": "4:44",
       "calories": 723.0,
       "elevation_gain": 30.0,
-      "gear_name": null,
+      "gear_name": "adidas Adizero EVO SL",
       "gear_km": null,
       "laps": [
         {
@@ -548,7 +548,7 @@
       "avg_pace_fmt": "4:56",
       "calories": 1455.0,
       "elevation_gain": 119.0,
-      "gear_name": null,
+      "gear_name": "adidas Adizero EVO SL",
       "gear_km": null,
       "laps": [
         {
@@ -812,7 +812,7 @@
       "avg_pace_fmt": "5:12",
       "calories": 638.0,
       "elevation_gain": 38.0,
-      "gear_name": null,
+      "gear_name": "Nike Vomero",
       "gear_km": null,
       "laps": [
         {
@@ -946,7 +946,7 @@
       "avg_pace_fmt": "5:20",
       "calories": 502.0,
       "elevation_gain": 17.0,
-      "gear_name": null,
+      "gear_name": "Nike Vomero",
       "gear_km": null,
       "laps": [
         {
@@ -1062,7 +1062,7 @@
       "avg_pace_fmt": "4:41",
       "calories": 890.0,
       "elevation_gain": 28.0,
-      "gear_name": null,
+      "gear_name": "Nike Vomero",
       "gear_km": null,
       "laps": [
         {
@@ -1250,7 +1250,7 @@
       "avg_pace_fmt": "5:12",
       "calories": 729.0,
       "elevation_gain": 30.0,
-      "gear_name": null,
+      "gear_name": "adidas Adizero EVO SL",
       "gear_km": null,
       "laps": [
         {
@@ -1402,7 +1402,7 @@
       "avg_pace_fmt": "4:30",
       "calories": 665.0,
       "elevation_gain": 35.0,
-      "gear_name": null,
+      "gear_name": "adidas Adizero EVO SL",
       "gear_km": null,
       "laps": [
         {
@@ -1556,7 +1556,7 @@
       "avg_pace_fmt": "5:04",
       "calories": 1425.0,
       "elevation_gain": 81.0,
-      "gear_name": null,
+      "gear_name": "Nike Vomero",
       "gear_km": null,
       "laps": [
         {
@@ -1816,7 +1816,7 @@
       "avg_pace_fmt": "5:19",
       "calories": 547.0,
       "elevation_gain": 66.0,
-      "gear_name": null,
+      "gear_name": "Nike Vomero",
       "gear_km": null,
       "laps": [
         {
@@ -1941,7 +1941,7 @@
       "avg_pace_fmt": "4:49",
       "calories": 868.0,
       "elevation_gain": 42.0,
-      "gear_name": null,
+      "gear_name": "adidas Adizero EVO SL",
       "gear_km": null,
       "laps": [
         {
@@ -2117,7 +2117,7 @@
       "avg_pace_fmt": "5:12",
       "calories": 633.0,
       "elevation_gain": 37.0,
-      "gear_name": null,
+      "gear_name": "Nike Vomero",
       "gear_km": null,
       "laps": [
         {
