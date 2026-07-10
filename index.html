@@ -446,35 +446,33 @@ const setStatus=(st,msg)=>{document.getElementById('sdot').className='sdot '+st;
 
 // ── BUILD DASHBOARD ───────────────────────────────────────────────────────────
 // ── GEAR SNAPSHOT (km totali per scarpa alla data di snapshot) ──
-// Aggiornare quando si aggiunge una scarpa nuova o cambiano i km di riferimento.
 const GEAR_SNAPSHOT_KM={
-  'Nike Vomero plus':      541.7,  // stesso gear, nome Strava vs Garmin
+  'Nike Vomero plus':      541.7,
   'Nike Vomero':           541.7,
   'adidas Adizero EVO SL': 132.4,
-  'Kiprun KS900 light':    229.4,
+  'Kiprun KS900 light':    688.6,
 };
 const GEAR_SNAPSHOT_DATE='2026-07-10';
+// Override per scarpe con data di riferimento diversa
+const GEAR_SNAPSHOT_DATE_OVERRIDE={
+  'Kiprun KS900 light': '2026-06-05',
+};
 
 function buildGearTotals(activities){
-  // Ordina per data crescente
-  const sorted=[...activities].sort((a,b)=>(a.start_time||a.date).localeCompare(b.start_time||b.date));
-
-  // Km per scarpa nelle attivita <= snapshot
+  const sorted=[...activities].sort((a,b)=>(a.date||'').localeCompare(b.date||''));
   const kmInBefore={};
-  sorted.filter(a=>a.date<=GEAR_SNAPSHOT_DATE).forEach(a=>{
-    const g=a.gear_name; if(!g) return;
-    kmInBefore[g]=(kmInBefore[g]||0)+(a.distance_km||0);
-  });
-
-  // Base pre-tracking = snapshot - km registrati fino allo snapshot
   const gearBase={};
-  Object.keys(GEAR_SNAPSHOT_KM).forEach(name=>{
-    gearBase[name]=Math.max(0, GEAR_SNAPSHOT_KM[name]-(kmInBefore[name]||0));
-  });
-
-  // Km cumulativi per ogni attivita in ordine cronologico
   const gearRunning={};
   const actGearKm={};
+
+  Object.keys(GEAR_SNAPSHOT_KM).forEach(name=>{
+    const snapDate=GEAR_SNAPSHOT_DATE_OVERRIDE[name]||GEAR_SNAPSHOT_DATE;
+    const kmBefore=sorted
+      .filter(a=>a.gear_name===name&&a.date<=snapDate)
+      .reduce((s,a)=>s+(a.distance_km||0),0);
+    gearBase[name]=Math.max(0, GEAR_SNAPSHOT_KM[name]-kmBefore);
+  });
+
   sorted.forEach(a=>{
     const g=a.gear_name; if(!g) return;
     if(gearRunning[g]===undefined) gearRunning[g]=gearBase[g]||0;
