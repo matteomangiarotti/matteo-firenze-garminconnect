@@ -446,11 +446,14 @@ const setStatus=(st,msg)=>{document.getElementById('sdot').className='sdot '+st;
 
 // ── BUILD DASHBOARD ───────────────────────────────────────────────────────────
 // ── GEAR SNAPSHOT (km totali per scarpa alla data di snapshot) ──
+// Aggiornare quando si aggiunge una scarpa nuova o cambiano i km di riferimento.
 const GEAR_SNAPSHOT_KM={
-  'Nike Vomero plus': 67.0,
-  'Kiprun KS900 light': 670.6,
+  'Nike Vomero plus':      541.7,  // stesso gear, nome Strava vs Garmin
+  'Nike Vomero':           541.7,
+  'adidas Adizero EVO SL': 132.4,
+  'Kiprun KS900 light':    229.4,
 };
-const GEAR_SNAPSHOT_DATE='2026-05-11';
+const GEAR_SNAPSHOT_DATE='2026-07-10';
 
 function buildGearTotals(activities){
   // Ordina per data crescente
