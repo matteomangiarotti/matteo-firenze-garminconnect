@@ -1,6 +1,274 @@
 {
-  "last_updated": "2026-07-09T12:28:53Z",
+  "last_updated": "2026-07-12T06:00:19Z",
   "activities": [
+    {
+      "garmin_id": 23554779475,
+      "date": "2026-07-11",
+      "start_time": "2026-07-11 08:04:31",
+      "name": "Caronno Pertusella Running",
+      "type": "running",
+      "distance_m": 12004,
+      "distance_km": 12.0,
+      "duration_s": 3754,
+      "avg_hr": 155,
+      "avg_pace_s_km": 313,
+      "avg_pace_fmt": "5:12",
+      "calories": 731.0,
+      "elevation_gain": 21.0,
+      "gear_name": "Nike Vomero",
+      "gear_km": null,
+      "laps": [
+        {
+          "lap_index": 1,
+          "distance_m": 1000,
+          "duration_s": 340,
+          "avg_pace_s_km": 340,
+          "avg_pace_fmt": "5:39",
+          "avg_hr": 146,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 2,
+          "distance_m": 1000,
+          "duration_s": 310,
+          "avg_pace_s_km": 310,
+          "avg_pace_fmt": "5:10",
+          "avg_hr": 158,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 3,
+          "distance_m": 1000,
+          "duration_s": 313,
+          "avg_pace_s_km": 313,
+          "avg_pace_fmt": "5:12",
+          "avg_hr": 154,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 4,
+          "distance_m": 1000,
+          "duration_s": 312,
+          "avg_pace_s_km": 312,
+          "avg_pace_fmt": "5:12",
+          "avg_hr": 154,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 5,
+          "distance_m": 1000,
+          "duration_s": 320,
+          "avg_pace_s_km": 320,
+          "avg_pace_fmt": "5:19",
+          "avg_hr": 156,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 6,
+          "distance_m": 1000,
+          "duration_s": 313,
+          "avg_pace_s_km": 313,
+          "avg_pace_fmt": "5:13",
+          "avg_hr": 157,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 7,
+          "distance_m": 1000,
+          "duration_s": 306,
+          "avg_pace_s_km": 306,
+          "avg_pace_fmt": "5:06",
+          "avg_hr": 160,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 8,
+          "distance_m": 1000,
+          "duration_s": 304,
+          "avg_pace_s_km": 304,
+          "avg_pace_fmt": "5:04",
+          "avg_hr": 159,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 9,
+          "distance_m": 1000,
+          "duration_s": 308,
+          "avg_pace_s_km": 308,
+          "avg_pace_fmt": "5:08",
+          "avg_hr": 159,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 10,
+          "distance_m": 1000,
+          "duration_s": 309,
+          "avg_pace_s_km": 309,
+          "avg_pace_fmt": "5:09",
+          "avg_hr": 152,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 11,
+          "distance_m": 1000,
+          "duration_s": 311,
+          "avg_pace_s_km": 311,
+          "avg_pace_fmt": "5:10",
+          "avg_hr": 153,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 12,
+          "distance_m": 1000,
+          "duration_s": 306,
+          "avg_pace_s_km": 306,
+          "avg_pace_fmt": "5:06",
+          "avg_hr": 153,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 13,
+          "distance_m": 4,
+          "duration_s": 1,
+          "avg_pace_s_km": null,
+          "avg_pace_fmt": "---",
+          "avg_hr": 159,
+          "intensity": "ACTIVE"
+        }
+      ],
+      "weather_temp": 25,
+      "weather_condition": "Prevalentemente sereno",
+      "fetched_at": "2026-07-12T06:00:15Z",
+      "score": {
+        "score": 10.0,
+        "subscores": {
+          "hr": 10.0,
+          "pace": 10.0,
+          "distance": 10
+        },
+        "flags": [],
+        "notes": [],
+        "cap_applied": null,
+        "scoring_version": 7
+      },
+      "fc_max_at_date": 205
+    },
+    {
+      "garmin_id": 23550287571,
+      "date": "2026-07-10",
+      "start_time": "2026-07-10 19:20:42",
+      "name": "Caronno Pertusella Running",
+      "type": "running",
+      "distance_m": 8137,
+      "distance_km": 8.14,
+      "duration_s": 2674,
+      "avg_hr": 154,
+      "avg_pace_s_km": 329,
+      "avg_pace_fmt": "5:28",
+      "calories": 509.0,
+      "elevation_gain": 27.0,
+      "gear_name": "Nike Vomero",
+      "gear_km": null,
+      "laps": [
+        {
+          "lap_index": 1,
+          "distance_m": 1000,
+          "duration_s": 329,
+          "avg_pace_s_km": 329,
+          "avg_pace_fmt": "5:28",
+          "avg_hr": 150,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 2,
+          "distance_m": 1000,
+          "duration_s": 340,
+          "avg_pace_s_km": 340,
+          "avg_pace_fmt": "5:39",
+          "avg_hr": 153,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 3,
+          "distance_m": 1000,
+          "duration_s": 339,
+          "avg_pace_s_km": 339,
+          "avg_pace_fmt": "5:38",
+          "avg_hr": 151,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 4,
+          "distance_m": 1000,
+          "duration_s": 322,
+          "avg_pace_s_km": 322,
+          "avg_pace_fmt": "5:21",
+          "avg_hr": 155,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 5,
+          "distance_m": 1000,
+          "duration_s": 328,
+          "avg_pace_s_km": 328,
+          "avg_pace_fmt": "5:27",
+          "avg_hr": 156,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 6,
+          "distance_m": 1000,
+          "duration_s": 328,
+          "avg_pace_s_km": 328,
+          "avg_pace_fmt": "5:28",
+          "avg_hr": 155,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 7,
+          "distance_m": 1000,
+          "duration_s": 321,
+          "avg_pace_s_km": 321,
+          "avg_pace_fmt": "5:20",
+          "avg_hr": 158,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 8,
+          "distance_m": 1000,
+          "duration_s": 324,
+          "avg_pace_s_km": 324,
+          "avg_pace_fmt": "5:24",
+          "avg_hr": 156,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 9,
+          "distance_m": 137,
+          "duration_s": 45,
+          "avg_pace_s_km": 325,
+          "avg_pace_fmt": "5:25",
+          "avg_hr": 157,
+          "intensity": "ACTIVE"
+        }
+      ],
+      "weather_temp": 33,
+      "weather_condition": "Nuvoloso",
+      "fetched_at": "2026-07-12T06:00:17Z",
+      "score": {
+        "score": 9.7,
+        "subscores": {
+          "hr": 9.3,
+          "pace": 10.0,
+          "distance": 10
+        },
+        "flags": [],
+        "notes": [],
+        "cap_applied": null,
+        "scoring_version": 7
+      },
+      "fc_max_at_date": 205
+    },
     {
       "garmin_id": 23532319820,
       "date": "2026-07-09",
