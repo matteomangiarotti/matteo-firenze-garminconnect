@@ -1,6 +1,767 @@
 {
-  "last_updated": "2026-08-17T07:11:26Z",
+  "last_updated": "2026-08-25T13:38:13Z",
   "activities": [
+    {
+      "garmin_id": 24106168980,
+      "date": "2026-08-25",
+      "start_time": "2026-08-25 08:18:26",
+      "name": "Saint-Florent Running",
+      "type": "running",
+      "distance_m": 10194,
+      "distance_km": 10.19,
+      "duration_s": 3192,
+      "avg_hr": 153,
+      "avg_pace_s_km": 313,
+      "avg_pace_fmt": "5:13",
+      "calories": 590.0,
+      "elevation_gain": 159.0,
+      "gear_name": null,
+      "gear_km": null,
+      "laps": [
+        {
+          "lap_index": 1,
+          "distance_m": 1000,
+          "duration_s": 324,
+          "avg_pace_s_km": 324,
+          "avg_pace_fmt": "5:23",
+          "avg_hr": 138,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 2,
+          "distance_m": 1000,
+          "duration_s": 312,
+          "avg_pace_s_km": 312,
+          "avg_pace_fmt": "5:12",
+          "avg_hr": 156,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 3,
+          "distance_m": 1000,
+          "duration_s": 313,
+          "avg_pace_s_km": 313,
+          "avg_pace_fmt": "5:12",
+          "avg_hr": 167,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 4,
+          "distance_m": 1000,
+          "duration_s": 311,
+          "avg_pace_s_km": 311,
+          "avg_pace_fmt": "5:10",
+          "avg_hr": 168,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 5,
+          "distance_m": 1000,
+          "duration_s": 307,
+          "avg_pace_s_km": 307,
+          "avg_pace_fmt": "5:06",
+          "avg_hr": 173,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 6,
+          "distance_m": 1000,
+          "duration_s": 317,
+          "avg_pace_s_km": 317,
+          "avg_pace_fmt": "5:17",
+          "avg_hr": 151,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 7,
+          "distance_m": 1000,
+          "duration_s": 318,
+          "avg_pace_s_km": 318,
+          "avg_pace_fmt": "5:17",
+          "avg_hr": 141,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 8,
+          "distance_m": 1000,
+          "duration_s": 315,
+          "avg_pace_s_km": 315,
+          "avg_pace_fmt": "5:15",
+          "avg_hr": 140,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 9,
+          "distance_m": 1000,
+          "duration_s": 313,
+          "avg_pace_s_km": 313,
+          "avg_pace_fmt": "5:12",
+          "avg_hr": 140,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 10,
+          "distance_m": 1000,
+          "duration_s": 303,
+          "avg_pace_s_km": 303,
+          "avg_pace_fmt": "5:03",
+          "avg_hr": 155,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 11,
+          "distance_m": 194,
+          "duration_s": 60,
+          "avg_pace_s_km": 310,
+          "avg_pace_fmt": "5:10",
+          "avg_hr": 154,
+          "intensity": "ACTIVE"
+        }
+      ],
+      "weather_temp": 26,
+      "weather_condition": "Prevalentemente sereno",
+      "fetched_at": "2026-08-25T13:38:02Z",
+      "score": null,
+      "fc_max_at_date": 205
+    },
+    {
+      "garmin_id": 24064827199,
+      "date": "2026-08-21",
+      "start_time": "2026-08-21 20:02:01",
+      "name": "Broni Running",
+      "type": "running",
+      "distance_m": 18107,
+      "distance_km": 18.11,
+      "duration_s": 5542,
+      "avg_hr": 146,
+      "avg_pace_s_km": 306,
+      "avg_pace_fmt": "5:06",
+      "calories": 1027.0,
+      "elevation_gain": 52.0,
+      "gear_name": null,
+      "gear_km": null,
+      "laps": [
+        {
+          "lap_index": 1,
+          "distance_m": 1000,
+          "duration_s": 330,
+          "avg_pace_s_km": 330,
+          "avg_pace_fmt": "5:29",
+          "avg_hr": 135,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 2,
+          "distance_m": 1000,
+          "duration_s": 310,
+          "avg_pace_s_km": 310,
+          "avg_pace_fmt": "5:10",
+          "avg_hr": 144,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 3,
+          "distance_m": 1000,
+          "duration_s": 307,
+          "avg_pace_s_km": 307,
+          "avg_pace_fmt": "5:06",
+          "avg_hr": 145,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 4,
+          "distance_m": 1000,
+          "duration_s": 302,
+          "avg_pace_s_km": 302,
+          "avg_pace_fmt": "5:02",
+          "avg_hr": 148,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 5,
+          "distance_m": 1000,
+          "duration_s": 309,
+          "avg_pace_s_km": 309,
+          "avg_pace_fmt": "5:08",
+          "avg_hr": 149,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 6,
+          "distance_m": 1000,
+          "duration_s": 305,
+          "avg_pace_s_km": 305,
+          "avg_pace_fmt": "5:05",
+          "avg_hr": 143,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 7,
+          "distance_m": 1000,
+          "duration_s": 299,
+          "avg_pace_s_km": 299,
+          "avg_pace_fmt": "4:58",
+          "avg_hr": 145,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 8,
+          "distance_m": 1000,
+          "duration_s": 301,
+          "avg_pace_s_km": 301,
+          "avg_pace_fmt": "5:00",
+          "avg_hr": 145,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 9,
+          "distance_m": 1000,
+          "duration_s": 304,
+          "avg_pace_s_km": 304,
+          "avg_pace_fmt": "5:03",
+          "avg_hr": 146,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 10,
+          "distance_m": 1000,
+          "duration_s": 311,
+          "avg_pace_s_km": 311,
+          "avg_pace_fmt": "5:10",
+          "avg_hr": 147,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 11,
+          "distance_m": 1000,
+          "duration_s": 310,
+          "avg_pace_s_km": 310,
+          "avg_pace_fmt": "5:09",
+          "avg_hr": 149,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 12,
+          "distance_m": 1000,
+          "duration_s": 302,
+          "avg_pace_s_km": 302,
+          "avg_pace_fmt": "5:02",
+          "avg_hr": 140,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 13,
+          "distance_m": 1000,
+          "duration_s": 308,
+          "avg_pace_s_km": 308,
+          "avg_pace_fmt": "5:07",
+          "avg_hr": 146,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 14,
+          "distance_m": 1000,
+          "duration_s": 305,
+          "avg_pace_s_km": 305,
+          "avg_pace_fmt": "5:05",
+          "avg_hr": 147,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 15,
+          "distance_m": 1000,
+          "duration_s": 303,
+          "avg_pace_s_km": 303,
+          "avg_pace_fmt": "5:03",
+          "avg_hr": 152,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 16,
+          "distance_m": 1000,
+          "duration_s": 302,
+          "avg_pace_s_km": 302,
+          "avg_pace_fmt": "5:02",
+          "avg_hr": 152,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 17,
+          "distance_m": 1000,
+          "duration_s": 304,
+          "avg_pace_s_km": 304,
+          "avg_pace_fmt": "5:04",
+          "avg_hr": 151,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 18,
+          "distance_m": 1000,
+          "duration_s": 301,
+          "avg_pace_s_km": 301,
+          "avg_pace_fmt": "5:01",
+          "avg_hr": 153,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 19,
+          "distance_m": 107,
+          "duration_s": 30,
+          "avg_pace_s_km": 276,
+          "avg_pace_fmt": "4:35",
+          "avg_hr": 148,
+          "intensity": "ACTIVE"
+        }
+      ],
+      "weather_temp": 23,
+      "weather_condition": "Prevalentemente sereno",
+      "fetched_at": "2026-08-25T13:38:04Z",
+      "score": {
+        "score": 8.9,
+        "subscores": {
+          "hr": 10.0,
+          "pace": 4.3,
+          "distance": 10
+        },
+        "flags": [],
+        "notes": [],
+        "cap_applied": null,
+        "scoring_version": 7
+      },
+      "fc_max_at_date": 205
+    },
+    {
+      "garmin_id": 24052413516,
+      "date": "2026-08-20",
+      "start_time": "2026-08-20 19:22:41",
+      "name": "Stradella Running",
+      "type": "running",
+      "distance_m": 9005,
+      "distance_km": 9.01,
+      "duration_s": 2951,
+      "avg_hr": 139,
+      "avg_pace_s_km": 328,
+      "avg_pace_fmt": "5:27",
+      "calories": 505.0,
+      "elevation_gain": 51.0,
+      "gear_name": null,
+      "gear_km": null,
+      "laps": [
+        {
+          "lap_index": 1,
+          "distance_m": 1000,
+          "duration_s": 317,
+          "avg_pace_s_km": 317,
+          "avg_pace_fmt": "5:17",
+          "avg_hr": 134,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 2,
+          "distance_m": 1000,
+          "duration_s": 327,
+          "avg_pace_s_km": 327,
+          "avg_pace_fmt": "5:26",
+          "avg_hr": 138,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 3,
+          "distance_m": 1000,
+          "duration_s": 333,
+          "avg_pace_s_km": 333,
+          "avg_pace_fmt": "5:33",
+          "avg_hr": 147,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 4,
+          "distance_m": 1000,
+          "duration_s": 325,
+          "avg_pace_s_km": 325,
+          "avg_pace_fmt": "5:25",
+          "avg_hr": 141,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 5,
+          "distance_m": 1000,
+          "duration_s": 326,
+          "avg_pace_s_km": 326,
+          "avg_pace_fmt": "5:25",
+          "avg_hr": 137,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 6,
+          "distance_m": 1000,
+          "duration_s": 325,
+          "avg_pace_s_km": 325,
+          "avg_pace_fmt": "5:24",
+          "avg_hr": 141,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 7,
+          "distance_m": 1000,
+          "duration_s": 330,
+          "avg_pace_s_km": 330,
+          "avg_pace_fmt": "5:30",
+          "avg_hr": 134,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 8,
+          "distance_m": 1000,
+          "duration_s": 332,
+          "avg_pace_s_km": 332,
+          "avg_pace_fmt": "5:32",
+          "avg_hr": 139,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 9,
+          "distance_m": 1000,
+          "duration_s": 334,
+          "avg_pace_s_km": 334,
+          "avg_pace_fmt": "5:34",
+          "avg_hr": 142,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 10,
+          "distance_m": 5,
+          "duration_s": 1,
+          "avg_pace_s_km": null,
+          "avg_pace_fmt": "---",
+          "avg_hr": 138,
+          "intensity": "ACTIVE"
+        }
+      ],
+      "weather_temp": 23,
+      "weather_condition": "Rovesci leggeri",
+      "fetched_at": "2026-08-25T13:38:06Z",
+      "score": {
+        "score": 8.4,
+        "subscores": {
+          "hr": 10.0,
+          "pace": 10.0,
+          "distance": 4.76
+        },
+        "flags": [],
+        "notes": [],
+        "cap_applied": null,
+        "scoring_version": 7
+      },
+      "fc_max_at_date": 205
+    },
+    {
+      "garmin_id": 24032984347,
+      "date": "2026-08-19",
+      "start_time": "2026-08-19 09:48:14",
+      "name": "Montù Beccaria - 5 x 1km",
+      "type": "running",
+      "distance_m": 10939,
+      "distance_km": 10.94,
+      "duration_s": 3055,
+      "avg_hr": 171,
+      "avg_pace_s_km": 279,
+      "avg_pace_fmt": "4:39",
+      "calories": 660.0,
+      "elevation_gain": 57.0,
+      "gear_name": null,
+      "gear_km": null,
+      "laps": [
+        {
+          "lap_index": 1,
+          "distance_m": 1000,
+          "duration_s": 316,
+          "avg_pace_s_km": 316,
+          "avg_pace_fmt": "5:15",
+          "avg_hr": 145,
+          "intensity": "WARMUP"
+        },
+        {
+          "lap_index": 2,
+          "distance_m": 1000,
+          "duration_s": 309,
+          "avg_pace_s_km": 309,
+          "avg_pace_fmt": "5:09",
+          "avg_hr": 154,
+          "intensity": "WARMUP"
+        },
+        {
+          "lap_index": 3,
+          "distance_m": 1000,
+          "duration_s": 243,
+          "avg_pace_s_km": 243,
+          "avg_pace_fmt": "4:02",
+          "avg_hr": 173,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 4,
+          "distance_m": 389,
+          "duration_s": 120,
+          "avg_pace_s_km": 309,
+          "avg_pace_fmt": "5:08",
+          "avg_hr": 165,
+          "intensity": "RECOVERY"
+        },
+        {
+          "lap_index": 5,
+          "distance_m": 1000,
+          "duration_s": 243,
+          "avg_pace_s_km": 243,
+          "avg_pace_fmt": "4:02",
+          "avg_hr": 178,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 6,
+          "distance_m": 404,
+          "duration_s": 120,
+          "avg_pace_s_km": 297,
+          "avg_pace_fmt": "4:57",
+          "avg_hr": 164,
+          "intensity": "RECOVERY"
+        },
+        {
+          "lap_index": 7,
+          "distance_m": 1000,
+          "duration_s": 241,
+          "avg_pace_s_km": 241,
+          "avg_pace_fmt": "4:00",
+          "avg_hr": 178,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 8,
+          "distance_m": 400,
+          "duration_s": 120,
+          "avg_pace_s_km": 300,
+          "avg_pace_fmt": "5:00",
+          "avg_hr": 176,
+          "intensity": "RECOVERY"
+        },
+        {
+          "lap_index": 9,
+          "distance_m": 1000,
+          "duration_s": 240,
+          "avg_pace_s_km": 240,
+          "avg_pace_fmt": "4:00",
+          "avg_hr": 184,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 10,
+          "distance_m": 368,
+          "duration_s": 120,
+          "avg_pace_s_km": 326,
+          "avg_pace_fmt": "5:26",
+          "avg_hr": 177,
+          "intensity": "RECOVERY"
+        },
+        {
+          "lap_index": 11,
+          "distance_m": 1000,
+          "duration_s": 244,
+          "avg_pace_s_km": 244,
+          "avg_pace_fmt": "4:04",
+          "avg_hr": 184,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 12,
+          "distance_m": 375,
+          "duration_s": 120,
+          "avg_pace_s_km": 320,
+          "avg_pace_fmt": "5:19",
+          "avg_hr": 184,
+          "intensity": "RECOVERY"
+        },
+        {
+          "lap_index": 13,
+          "distance_m": 1000,
+          "duration_s": 310,
+          "avg_pace_s_km": 310,
+          "avg_pace_fmt": "5:09",
+          "avg_hr": 177,
+          "intensity": "COOLDOWN"
+        },
+        {
+          "lap_index": 14,
+          "distance_m": 1000,
+          "duration_s": 309,
+          "avg_pace_s_km": 309,
+          "avg_pace_fmt": "5:08",
+          "avg_hr": 174,
+          "intensity": "COOLDOWN"
+        },
+        {
+          "lap_index": 15,
+          "distance_m": 3,
+          "duration_s": 1,
+          "avg_pace_s_km": null,
+          "avg_pace_fmt": "---",
+          "avg_hr": 180,
+          "intensity": "COOLDOWN"
+        }
+      ],
+      "weather_temp": 26,
+      "weather_condition": "Sereno",
+      "fetched_at": "2026-08-25T13:38:09Z",
+      "score": {
+        "score": 9.1,
+        "subscores": {
+          "fast_blocks": 8.71,
+          "structure": 9.56,
+          "recoveries": 9.12,
+          "wu_cd": 10.0,
+          "hr": 8.25,
+          "distance": 10
+        },
+        "flags": [],
+        "notes": [],
+        "cap_applied": null,
+        "scoring_version": 7
+      },
+      "fc_max_at_date": 205
+    },
+    {
+      "garmin_id": 24025848926,
+      "date": "2026-08-18",
+      "start_time": "2026-08-18 18:23:39",
+      "name": "Montù Beccaria Running",
+      "type": "running",
+      "distance_m": 10010,
+      "distance_km": 10.01,
+      "duration_s": 2926,
+      "avg_hr": 158,
+      "avg_pace_s_km": 292,
+      "avg_pace_fmt": "4:52",
+      "calories": 586.0,
+      "elevation_gain": 10.0,
+      "gear_name": null,
+      "gear_km": null,
+      "laps": [
+        {
+          "lap_index": 1,
+          "distance_m": 1000,
+          "duration_s": 295,
+          "avg_pace_s_km": 295,
+          "avg_pace_fmt": "4:55",
+          "avg_hr": 145,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 2,
+          "distance_m": 1000,
+          "duration_s": 290,
+          "avg_pace_s_km": 290,
+          "avg_pace_fmt": "4:50",
+          "avg_hr": 154,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 3,
+          "distance_m": 1000,
+          "duration_s": 293,
+          "avg_pace_s_km": 293,
+          "avg_pace_fmt": "4:53",
+          "avg_hr": 154,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 4,
+          "distance_m": 1000,
+          "duration_s": 296,
+          "avg_pace_s_km": 296,
+          "avg_pace_fmt": "4:55",
+          "avg_hr": 155,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 5,
+          "distance_m": 1000,
+          "duration_s": 292,
+          "avg_pace_s_km": 292,
+          "avg_pace_fmt": "4:51",
+          "avg_hr": 160,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 6,
+          "distance_m": 1000,
+          "duration_s": 288,
+          "avg_pace_s_km": 288,
+          "avg_pace_fmt": "4:47",
+          "avg_hr": 159,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 7,
+          "distance_m": 1000,
+          "duration_s": 291,
+          "avg_pace_s_km": 291,
+          "avg_pace_fmt": "4:50",
+          "avg_hr": 161,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 8,
+          "distance_m": 1000,
+          "duration_s": 295,
+          "avg_pace_s_km": 295,
+          "avg_pace_fmt": "4:55",
+          "avg_hr": 163,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 9,
+          "distance_m": 1000,
+          "duration_s": 289,
+          "avg_pace_s_km": 289,
+          "avg_pace_fmt": "4:48",
+          "avg_hr": 163,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 10,
+          "distance_m": 1000,
+          "duration_s": 295,
+          "avg_pace_s_km": 295,
+          "avg_pace_fmt": "4:54",
+          "avg_hr": 163,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 11,
+          "distance_m": 10,
+          "duration_s": 2,
+          "avg_pace_s_km": null,
+          "avg_pace_fmt": "---",
+          "avg_hr": 165,
+          "intensity": "ACTIVE"
+        }
+      ],
+      "weather_temp": 33,
+      "weather_condition": "Nuvoloso",
+      "fetched_at": "2026-08-25T13:38:11Z",
+      "score": {
+        "score": 8.7,
+        "subscores": {
+          "hr": 10.0,
+          "pace": 6.4,
+          "distance": 10
+        },
+        "flags": [],
+        "notes": [],
+        "cap_applied": null,
+        "scoring_version": 7
+      },
+      "fc_max_at_date": 205
+    },
     {
       "garmin_id": 24000960799,
       "date": "2026-08-16",
