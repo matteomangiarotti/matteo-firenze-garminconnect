@@ -158,18 +158,18 @@
       "weather_condition": "Sereno",
       "fetched_at": "2026-09-03T20:52:15Z",
       "score": {
-        "score": 9.2,
+        "score": 8.5,
         "subscores": {
           "fast_blocks": 8.68,
-          "structure": 10.0,
-          "wu_cd": 10.0,
+          "structure": 8.0,
+          "wu_cd": 8.0,
           "hr": 8.95,
-          "distance": 10
+          "distance": 8.3
         },
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 8
+        "scoring_version": 7
       },
       "fc_max_at_date": 205
     },
@@ -6635,23 +6635,22 @@
       "weather_condition": "Nuvoloso",
       "fetched_at": "2026-07-09T11:10:00Z",
       "score": {
-        "score": 5.6,
+        "score": 7.8,
         "subscores": {
-          "hr": 4.05,
-          "pace": 3,
+          "fast_blocks": 8.7,
+          "structure": 4.0,
+          "wu_cd": 4.0,
+          "hr": 10.0,
           "distance": 10
         },
         "flags": [
-          "TOO_FAST",
-          "HR_HIGH"
+          "MISSING_WARMUP"
         ],
         "notes": [
-          "FC media 169 bpm supera il target di 17 bpm.",
-          "Passo 4:50 piu veloce del target (5:25).",
-          "Cap: Recovery: FC molto sopra il range."
+          "Warm-up assente o molto breve."
         ],
-        "cap_applied": "Recovery: FC molto sopra il range",
-        "scoring_version": 8
+        "cap_applied": null,
+        "scoring_version": 7
       },
       "fc_max_at_date": 205
     },
@@ -6776,27 +6775,20 @@
       "weather_condition": "Nuvoloso",
       "fetched_at": "2026-07-09T11:10:02Z",
       "score": {
-        "score": 3.1,
+        "score": 7.3,
         "subscores": {
-          "fast_blocks": 2.0,
-          "structure": 2.5,
-          "wu_cd": 2.5,
-          "hr": 9.68,
-          "distance": 4.27
+          "hr": 6.15,
+          "pace": 6.1,
+          "distance": 10
         },
         "flags": [
-          "MISSING_WARMUP",
-          "NO_FAST_BLOCKS",
-          "MISSING_COOLDOWN"
+          "HR_HIGH"
         ],
         "notes": [
-          "Nessun blocco veloce rilevato.",
-          "Warm-up assente o molto breve.",
-          "Cooldown assente o molto breve.",
-          "Cap: Qualita: nessun blocco veloce."
+          "FC media 163 bpm supera il target di 11 bpm."
         ],
-        "cap_applied": "Qualita: nessun blocco veloce",
-        "scoring_version": 8
+        "cap_applied": null,
+        "scoring_version": 7
       },
       "fc_max_at_date": 205
     },
