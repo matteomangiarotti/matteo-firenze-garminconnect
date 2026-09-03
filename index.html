@@ -85,7 +85,7 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font
 .tbl td{padding:10px 12px;border-top:1px solid var(--border2);vertical-align:top;font-size:13px;}
 .tbl td:not(:last-child){border-right:1px solid var(--border2);}
 .tbl tr:hover td{background:rgba(0,0,0,.012);}
-.tbl tr.today-row td{background:var(--orange-d);border-top-color:rgba(0,122,255,.15);}
+.tbl tr.today-row td{background:var(--bg3);border-top-color:var(--border);}
 .dn{font-weight:600;font-size:13px;}
 .dd{font-family:var(--mono);font-size:11px;color:var(--text3);margin-top:1px;}
 .plan-t{font-weight:600;font-size:13px;color:var(--blue);}
@@ -99,14 +99,19 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font
 .lap-table{width:100%;border-collapse:collapse;margin-top:6px;}
 .lap-table td{font-family:var(--mono);font-size:11px;padding:3px 4px;border-top:1px solid var(--border2);color:var(--text2);}
 .lap-table td:first-child{color:var(--text3);width:28px;}
-.bdg{display:inline-flex;align-items:center;gap:3px;font-family:var(--font);font-size:11px;padding:3px 9px;border-radius:20px;margin-top:4px;font-weight:600;}
-.b-ok{background:var(--green-d);color:var(--green);}
-.b-miss{background:var(--amber-d);color:var(--amber);}
-.b-rest{background:var(--bg3);color:var(--text3);}
-.b-bonus{background:var(--blue-d);color:var(--blue);}
-.b-today{background:var(--orange-d);color:var(--orange);}
-.b-future{background:var(--bg3);color:var(--text3);}
-.b-race{background:var(--purple-d);color:var(--purple);}
+.bdg{display:inline-flex;align-items:center;gap:4px;font-family:var(--font);font-size:11px;padding:0;margin-top:4px;font-weight:500;color:var(--text2);}
+.bdg::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--text3);flex-shrink:0;}
+.b-ok::before{background:var(--text);}
+.b-ok{color:var(--text);}
+.b-miss::before{background:var(--orange);}
+.b-miss{color:var(--orange);}
+.b-rest{color:var(--text3);}
+.b-bonus{color:var(--text2);}
+.b-today::before{background:var(--orange);}
+.b-today{color:var(--orange);}
+.b-future{color:var(--text3);}
+.b-race{color:var(--text);font-weight:600;}
+.b-race::before{display:none;}
 .sc-wrap{text-align:center;}
 .sc-circle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font);font-size:14px;font-weight:700;margin:0 auto 3px;cursor:pointer;transition:transform .15s;}
 .sc-circle:hover{transform:scale(1.1);}
@@ -303,11 +308,11 @@ async function loadActivities(){
 // ── ZONE FC ──────────────────────────────────────────────────────────────────
 // Percentuali Garmin fisse (identiche allo script Python)
 const ZONE_PCT=[
-  {name:'Z1',label:'Z1 Warm Up',  lo:0.652,hi:0.742,bg:'#dbeafe',col:'#1d4ed8'},
-  {name:'Z2',label:'Z2 Easy',     lo:0.742,hi:0.808,bg:'#d1fae5',col:'#15803d'},
-  {name:'Z3',label:'Z3 Aerobic',  lo:0.808,hi:0.884,bg:'#fef9c3',col:'#92400e'},
-  {name:'Z4',label:'Z4 Threshold',lo:0.884,hi:0.939,bg:'#fed7aa',col:'#9a3412'},
-  {name:'Z5',label:'Z5 Maximum',  lo:0.939,hi:1.000,bg:'#fecaca',col:'#b91c1c'},
+  {name:'Z1',label:'Z1 Warm Up',  lo:0.652,hi:0.742,bg:'#f2f2f7',col:'#8a8a8e'},
+  {name:'Z2',label:'Z2 Easy',     lo:0.742,hi:0.808,bg:'#f2f2f7',col:'#1c1c1e'},
+  {name:'Z3',label:'Z3 Aerobic',  lo:0.808,hi:0.884,bg:'#f2f2f7',col:'#1c1c1e'},
+  {name:'Z4',label:'Z4 Threshold',lo:0.884,hi:0.939,bg:'#f2f2f7',col:'#FF9500'},
+  {name:'Z5',label:'Z5 Maximum',  lo:0.939,hi:1.000,bg:'#f2f2f7',col:'#FF3B30'},
 ];
 
 let HR_HISTORY=[];  // caricato da activities.json
@@ -369,7 +374,7 @@ const getWMon=ds=>{const d=new Date(ds),dy=d.getDay()===0?6:d.getDay()-1,m=new D
 const DN=['Lun','Mar','Mer','Gio','Ven','Sab','Dom'];
 const TC={easy:'#1d4ed8',recovery:'#15803d',lungo:'#b45309',qualita:'#FC4C02',rest:'#a8a29e'};
 const TL={easy:'Facile',recovery:'Recovery',lungo:'Lungo',qualita:'Qualità',rest:'Riposo'};
-const SC=s=>s>=9?'#15803d':s>=7?'#4ade80':s>=5?'#facc15':s>=3?'#f97316':'#dc2626';
+const SC=s=>s>=7?'#1c1c1e':s>=5?'#8a8a8e':s>=3?'#FF9500':'#FF3B30';
 const SL=s=>s>=8?'Ottimo':s>=6?'Buono':s>=4?'Rivedere':'Critico';
 
 function plannedKm(p){
@@ -567,7 +572,7 @@ function buildDashboard(activities){
       // Garmin cell — mostra lap se disponibili
       let badge='',realHtml='';
       if(isRace){
-        badge='<span class="bdg b-race">🏁 GARA</span>';
+        badge='<span class="bdg b-race">GARA</span>';
         realHtml='<span class="act-e" style="color:var(--purple);">Firenze Marathon 2026</span>';
       }else if(real){
         const z=real.avg_hr?getZoneForActivity(Math.round(real.avg_hr), real.date||'2026-01-01'):null;
@@ -601,7 +606,7 @@ function buildDashboard(activities){
           <div class="act-m">${real.start_time?real.start_time.slice(11,16)+' · ':''  }${real.distance_km?real.distance_km.toFixed(1)+' km':fmtD(real.distance_m)} · ${fmtT(real.duration_s)} · ${real.avg_pace_fmt}/km${weatherLine}</div>
           <div style="margin-top:3px;">${hrBadge}</div>
           ${lapHtml}`;
-        badge=p.type==='rest'?'<span class="bdg b-bonus">+ bonus</span>':'<span class="bdg b-ok">✓</span>';
+        badge=p.type==='rest'?'<span class="bdg b-bonus">bonus</span>':'<span class="bdg b-ok">fatto</span>';
       }else if(p.type==='rest'){
         realHtml='<span class="act-e">—</span>';badge='<span class="bdg b-rest">riposo</span>';
       }else if(isToday){
@@ -609,7 +614,7 @@ function buildDashboard(activities){
       }else if(isFut){
         realHtml='<span class="act-e">In programma</span>';
       }else{
-        realHtml='<span class="act-e" style="color:var(--amber);">Non registrata</span>';badge='<span class="bdg b-miss">⚠ manca</span>';
+        realHtml='<span class="act-e" style="color:var(--amber);">Non registrata</span>';badge='<span class="bdg b-miss">manca</span>';
       }
 
       // Score cell
@@ -618,7 +623,7 @@ function buildDashboard(activities){
       else if(sv){
         const c=SC(sv.score);
         const panelId='sp_'+p.date.replace(/-/g,'');
-        scoreCell+=`<div class="sc-wrap" onclick="openScorePanel('${panelId}')"><div class="sc-circle" style="background:${c}18;color:${c};">${sv.score}</div><div class="sc-lbl">${SL(sv.score)}</div></div>`;
+        scoreCell+=`<div class="sc-wrap" onclick="openScorePanel('${panelId}')"><div class="sc-circle" style="background:var(--bg3);color:${c};">${sv.score}</div><div class="sc-lbl">${SL(sv.score)}</div></div>`;
         // Pannello nascosto (creato nel DOM)
         scoreCell+=`<div id="${panelId}" style="display:none" data-score="${encodeURIComponent(JSON.stringify(sv))}" data-type="${p.type}" data-date="${p.date}"></div>`;
       }else if(p.type==='rest'){scoreCell+='<span style="color:var(--text3);font-size:13px;">—</span>';}
