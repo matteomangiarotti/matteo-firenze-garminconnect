@@ -952,43 +952,16 @@ def get_strava_token():
         log.warning("Strava token fallito: %s", e)
         return None
 
-def fetch_strava_gear(token):
-    """Scarica lista attivita Strava con gear_id e abbina per data."""
-    if not token:
-        return {}
+def fetch_garmin_gear(client, activity_id):
+    """Recupera nome scarpa da Garmin Connect per una singola attivita."""
     try:
-        import urllib.request, json as _json
-        url = "https://www.strava.com/api/v3/athlete/activities?per_page=200"
-        req = urllib.request.Request(url, headers={"Authorization": "Bearer "+token})
-        resp = urllib.request.urlopen(req, timeout=15)
-        acts = _json.loads(resp.read())
-        # Indice data -> gear_id
-        gear_by_date = {}
-        gear_names   = {}
-        for a in acts:
-            date = (a.get("start_date_local") or "")[:10]
-            gid  = a.get("gear_id")
-            if date and gid:
-                gear_by_date[date] = gid
-        return gear_by_date, gear_names
+        gear_list = client.get_activity_gear(activity_id)
+        if gear_list:
+            g = gear_list[0]
+            return g.get("customMakeModel") or g.get("displayName") or g.get("gearModelName")
     except Exception as e:
-        log.warning("Strava activities fallito: %s", e)
-        return {}, {}
-
-def fetch_strava_gear_name(token, gear_id):
-    """Recupera nome scarpa da Strava."""
-    if not token or not gear_id:
-        return None
-    try:
-        import urllib.request, json as _json
-        url = f"https://www.strava.com/api/v3/gear/{gear_id}"
-        req = urllib.request.Request(url, headers={"Authorization": "Bearer "+token})
-        resp = urllib.request.urlopen(req, timeout=10)
-        data = _json.loads(resp.read())
-        return data.get("name") or data.get("description")
-    except Exception as e:
-        log.warning("Strava gear name fallito per %s: %s", gear_id, e)
-        return None
+        log.warning("Garmin gear fallito per %s: %s", activity_id, e)
+    return None
 
 # ══════════════════════════════════════════════════════════════════════════════
 # SEZIONE 6 — GIT PUSH
@@ -1230,29 +1203,20 @@ def main():
                 log.info("  Meteo %s: %s°C — %s", record.get("date"), temp, cond)
             time.sleep(0.3)
 
-    # Backfill gear da Strava per attivita senza gear
+    # Backfill gear da Garmin per attivita senza gear
     no_gear = [r for r in data.get("activities", []) if r.get("gear_name") is None]
     if no_gear:
-        log.info("Recupero gear da Strava per %d attivita...", len(no_gear))
-        strava_token = get_strava_token()
-        if strava_token:
-            gear_by_date, _ = fetch_strava_gear(strava_token)
-            gear_name_cache = {}
-            for record in no_gear:
-                date   = record.get("date","")
-                gear_id = gear_by_date.get(date)
-                if gear_id:
-                    if gear_id not in gear_name_cache:
-                        gear_name_cache[gear_id] = fetch_strava_gear_name(strava_token, gear_id)
-                    gear_name = gear_name_cache[gear_id]
-                    record["gear_name"] = gear_name
-                    record["gear_km"]   = None
-                    log.info("  Gear %s: %s", date, gear_name)
-                else:
-                    record["gear_name"] = None
-                    record["gear_km"]   = None
-        else:
-            log.warning("Token Strava non disponibile — gear non recuperato.")
+        log.info("Recupero gear da Garmin per %d attivita...", len(no_gear))
+        for record in no_gear:
+            date   = record.get("date","")
+            act_id = record.get("garmin_id")
+            if act_id:
+                gear_name = fetch_garmin_gear(client, act_id)
+                record["gear_name"] = gear_name
+                record["gear_km"]   = None
+                log.info("  Gear %s: %s", date, gear_name or "nessuno")
+            else:
+                log.info("  Gear %s: nessuno (no activity_id)", date)
 
     data["activities"].sort(key=lambda x: x.get("start_time",""), reverse=True)
     data["last_updated"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
