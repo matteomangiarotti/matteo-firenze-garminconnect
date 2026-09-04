@@ -103,36 +103,32 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font
 .tbl{width:100%;border-collapse:collapse;min-width:520px;}
 .tbl thead th{padding:8px 12px;font-family:var(--font);font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.03em;background:var(--bg3);border-top:1px solid var(--border2);text-align:left;}
 .tbl thead th:not(:last-child){border-right:1px solid var(--border2);}
-.tbl td{padding:10px 12px;border-top:1px solid var(--border2);vertical-align:top;font-size:13px;}
+.tbl td{padding:14px 14px;border-top:1px solid var(--border2);vertical-align:top;font-size:13px;}
 .tbl td:not(:last-child){border-right:1px solid var(--border2);}
 .tbl tr:hover td{background:rgba(0,0,0,.012);}
 .tbl tr.today-row td{background:var(--bg3);border-top-color:var(--border);}
 .dn{font-weight:600;font-size:13px;}
 .dd{font-family:var(--mono);font-size:11px;color:var(--text3);margin-top:1px;}
-.plan-t{font-weight:600;font-size:13px;color:var(--blue);}
-.plan-d{font-family:var(--mono);font-size:11px;color:var(--text2);margin-top:2px;line-height:1.5;}
+.plan-t{font-weight:600;font-size:13px;color:var(--blue);margin-bottom:4px;}
+.plan-d{font-family:var(--mono);font-size:11px;color:var(--text2);margin-top:4px;line-height:1.6;}
+.fc-pill{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--text2);background:var(--bg3);padding:3px 9px;border-radius:8px;margin-top:8px;}
 .fc-target{font-family:var(--mono);font-size:11px;margin-top:4px;padding:2px 8px;border-radius:8px;display:inline-block;font-weight:500;}
-.act-n{font-weight:600;font-size:13px;}
-.act-m{font-family:var(--mono);font-size:11px;color:var(--text2);margin-top:2px;line-height:1.6;}
+.act-n{font-weight:600;font-size:13px;margin-bottom:4px;}
+.act-m{font-family:var(--mono);font-size:11px;color:var(--text2);margin-top:4px;line-height:1.7;}
 .act-e{font-family:var(--mono);font-size:12px;color:var(--text3);}
 .gear-name{font-family:var(--font);font-size:12px;font-weight:500;color:var(--text);}
 .gear-km{font-family:var(--mono);font-size:11px;color:var(--text2);margin-top:2px;}
-.lap-table{width:100%;border-collapse:collapse;margin-top:6px;}
+.lap-table{width:100%;border-collapse:collapse;margin-top:10px;}
 .lap-table td{font-family:var(--mono);font-size:11px;padding:3px 4px;border-top:1px solid var(--border2);color:var(--text2);}
 .lap-table td:first-child{color:var(--text3);width:28px;}
-.bdg{display:inline-flex;align-items:center;gap:4px;font-family:var(--font);font-size:11px;padding:0;margin-top:4px;font-weight:500;color:var(--text2);}
-.bdg::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--text3);flex-shrink:0;}
-.b-ok::before{background:var(--text);}
-.b-ok{color:var(--text);}
-.b-miss::before{background:var(--orange);}
-.b-miss{color:var(--orange);}
+.bdg{display:inline-flex;align-items:center;font-family:var(--font);font-size:11px;padding:2px 8px;margin-top:4px;font-weight:500;color:var(--text2);background:var(--bg3);border-radius:8px;}
+.b-ok{color:var(--text2);}
+.b-miss{color:var(--text2);}
 .b-rest{color:var(--text3);}
 .b-bonus{color:var(--text2);}
-.b-today::before{background:var(--orange);}
-.b-today{color:var(--orange);}
+.b-today{color:var(--text2);}
 .b-future{color:var(--text3);}
 .b-race{color:var(--text);font-weight:600;}
-.b-race::before{display:none;}
 .sc-wrap{text-align:center;}
 .sc-circle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font);font-size:14px;font-weight:700;margin:0 auto 3px;cursor:pointer;transition:transform .15s;}
 .sc-circle:hover{transform:scale(1.1);}
@@ -598,13 +594,15 @@ function buildDashboard(activities){
         }else if(p.hrMin&&p.hrMax){
           label=`${p.hrMin}–${p.hrMax} bpm`;
         }
-        if(label){fcChip=`<div style="font-family:var(--mono);font-size:11px;color:var(--text2);margin-top:3px;">FC: ${label}</div>`;}
+        if(label){fcChip=`<div class="fc-pill">FC ${label}</div>`;}
       }
       const planCell=p.type==='rest'
         ?`<div class="plan-t" style="color:var(--text3);">Riposo</div>${p.desc&&p.desc!=='—'?`<div class="plan-d" style="color:var(--text3);">${p.desc}</div>`:''}`
         :`<div class="plan-t" style="color:var(--text);">${p.summary}${typeLabel}</div>
-          ${p.ritmo?`<div class="plan-d">${p.ritmo}</div>`:''}
-          ${p.dettaglio?`<div class="plan-d">${p.dettaglio}</div>`:''}
+          <div>
+            ${p.ritmo?`<div class="plan-d">${p.ritmo}</div>`:''}
+            ${p.dettaglio?`<div class="plan-d">${p.dettaglio}</div>`:''}
+          </div>
           ${gelText}
           ${fcChip}`;
 
@@ -614,8 +612,7 @@ function buildDashboard(activities){
         badge='<span class="bdg b-race">GARA</span>';
         realHtml='<span class="act-e" style="color:var(--purple);">Firenze Marathon 2026</span>';
       }else if(real){
-        const z=real.avg_hr?getZoneForActivity(Math.round(real.avg_hr), real.date||'2026-01-01'):null;
-        const hrBadge=real.avg_hr?`<span style="background:${z?z.bg:'#f3f4f6'};color:${z?z.col:'#666'};font-family:var(--mono);font-size:11px;padding:2px 8px;border-radius:10px;">${Math.round(real.avg_hr)} bpm</span>`:'';
+        const hrBadge=real.avg_hr?`<span style="background:var(--bg3);color:var(--text2);font-family:var(--mono);font-size:11px;padding:2px 8px;border-radius:8px;">${Math.round(real.avg_hr)} bpm</span>`:'';
 
         // Lap veloci (se presenti e allenamento di qualità)
         let lapHtml='';
@@ -639,11 +636,12 @@ function buildDashboard(activities){
         }
 
         const weatherLine = (real.weather_temp != null && real.weather_condition)
-          ? `<br>${real.weather_temp}°C · ${real.weather_condition}`
+          ? `<div class="plan-d" style="margin-top:2px;">${real.weather_temp}°C · ${real.weather_condition}</div>`
           : '';
         realHtml=`<div class="act-n">${real.name}</div>
-          <div class="act-m">${real.start_time?real.start_time.slice(11,16)+' · ':''  }${real.distance_km?real.distance_km.toFixed(1)+' km':fmtD(real.distance_m)} · ${fmtT(real.duration_s)} · ${real.avg_pace_fmt}/km${weatherLine}</div>
-          <div style="margin-top:3px;">${hrBadge}</div>
+          <div class="act-m">${real.start_time?real.start_time.slice(11,16)+' · ':''  }${real.distance_km?real.distance_km.toFixed(1)+' km':fmtD(real.distance_m)} · ${fmtT(real.duration_s)} · ${real.avg_pace_fmt}/km</div>
+          ${weatherLine}
+          <div style="margin-top:8px;">${hrBadge}</div>
           ${lapHtml}`;
         badge=p.type==='rest'?'<span class="bdg b-bonus">bonus</span>':'<span class="bdg b-ok">fatto</span>';
       }else if(p.type==='rest'){
