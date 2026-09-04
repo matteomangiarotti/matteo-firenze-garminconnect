@@ -111,7 +111,6 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font
 .dd{font-family:var(--mono);font-size:11px;color:var(--text3);margin-top:1px;}
 .plan-t{font-weight:600;font-size:13px;color:var(--blue);margin-bottom:4px;}
 .plan-d{font-family:var(--mono);font-size:11px;color:var(--text2);margin-top:4px;line-height:1.6;}
-.fc-pill{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--text2);background:var(--bg3);padding:3px 9px;border-radius:8px;margin-top:8px;}
 .fc-target{font-family:var(--mono);font-size:11px;margin-top:4px;padding:2px 8px;border-radius:8px;display:inline-block;font-weight:500;}
 .act-n{font-weight:600;font-size:13px;margin-bottom:4px;}
 .act-m{font-family:var(--mono);font-size:11px;color:var(--text2);margin-top:4px;line-height:1.7;}
@@ -401,6 +400,13 @@ const VOTI={};
 
 // ── HELPERS ───────────────────────────────────────────────────────────────────
 const fmtP=s=>{const m=Math.floor(s/60),sc=Math.round(s%60);return m+"'"+String(sc).padStart(2,'0')+'"';};
+// Spezza un testo tipo "Frase uno. Frase due. Frase tre." in righe HTML separate
+const splitSentences=txt=>{
+  if(!txt)return '';
+  return txt.split(/\.\s+(?=[A-ZÀ-Ù0-9])/).map(s=>s.trim()).filter(Boolean)
+    .map(s=>s.endsWith('.')?s:s+'.')
+    .map(s=>`<div class="plan-d">${s}</div>`).join('');
+};
 const fmtD=m=>(m/1000).toFixed(1)+' km';
 const fmtT=s=>{const h=Math.floor(s/3600),m=Math.floor((s%3600)/60);return h?h+'h '+m+'m':m+'m';};
 const fmtDt=ds=>new Date(ds).toLocaleDateString('it-IT',{day:'2-digit',month:'short'});
@@ -594,14 +600,14 @@ function buildDashboard(activities){
         }else if(p.hrMin&&p.hrMax){
           label=`${p.hrMin}–${p.hrMax} bpm`;
         }
-        if(label){fcChip=`<div class="fc-pill">FC ${label}</div>`;}
+        if(label){fcChip=`<div class="plan-d">FC ${label}</div>`;}
       }
       const planCell=p.type==='rest'
         ?`<div class="plan-t" style="color:var(--text3);">Riposo</div>${p.desc&&p.desc!=='—'?`<div class="plan-d" style="color:var(--text3);">${p.desc}</div>`:''}`
         :`<div class="plan-t" style="color:var(--text);">${p.summary}${typeLabel}</div>
           <div>
             ${p.ritmo?`<div class="plan-d">${p.ritmo}</div>`:''}
-            ${p.dettaglio?`<div class="plan-d">${p.dettaglio}</div>`:''}
+            ${p.dettaglio?splitSentences(p.dettaglio):''}
           </div>
           ${gelText}
           ${fcChip}`;
