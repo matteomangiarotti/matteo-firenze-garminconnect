@@ -34,13 +34,33 @@ FETCH_LIMIT   = 30
 RUNNING_TYPES = {"running", "trail_running", "treadmill_running"}
 
 # ── FC Max history ─────────────────────────────────────────────────────────────
-# Aggiungere una nuova entry quando Garmin rileva un nuovo FC max.
-# La data è il giorno in cui è stato registrato il nuovo valore.
-# Le attività PRIMA di quella data continuano ad usare il valore precedente.
-FC_MAX_HISTORY = [
-    {"date": "2026-01-01", "fc_max": 198},  # valore iniziale
-    {"date": "2026-06-19", "fc_max": 205},  # aggiornato il 19/06/2026
+# La fonte di verita' e' il file data/fc_max_history.json (condiviso con la
+# dashboard, che puo' aggiungere nuove entry direttamente da li').
+# Questa lista qui sotto e' solo il FALLBACK usato se il file non esiste.
+#
+# IMPORTANTE sulla data di ogni entry: e' il giorno dell'ALLENAMENTO/GIORNO in
+# cui Garmin ha effettivamente registrato il nuovo valore, NON la data in cui
+# viene salvata la entry. Le attivita' PRIMA di quella data continuano ad
+# usare il valore precedente; quelle DA quella data in poi usano il nuovo.
+FC_MAX_HISTORY_FALLBACK = [
+    {"date": "2026-01-01", "fc_max": 198},
+    {"date": "2026-06-19", "fc_max": 205},
 ]
+
+def load_fc_max_history(repo_path):
+    """Carica FC_MAX_HISTORY da data/fc_max_history.json. Se il file non
+    esiste o e' malformato, usa il fallback qui sopra e lo ricrea."""
+    path = Path(repo_path) / "data" / "fc_max_history.json"
+    try:
+        with open(path, encoding="utf-8") as f:
+            history = json.load(f)
+        if isinstance(history, list) and history:
+            return sorted(history, key=lambda e: e["date"])
+    except Exception as e:
+        log.warning("fc_max_history.json non leggibile (%s), uso il fallback.", e)
+    return list(FC_MAX_HISTORY_FALLBACK)
+
+FC_MAX_HISTORY = list(FC_MAX_HISTORY_FALLBACK)  # sovrascritta in main() da load_fc_max_history()
 
 # Zone Garmin: percentuali fisse (lower bound di ogni zona)
 # Z1: 65%, Z2: 74%, Z3: 81%, Z4: 88%, Z5: 94%, tetto: 100%
@@ -770,7 +790,7 @@ def auto_score(plan, activity):
         "flags":       list(set(flags)),
         "notes":       notes,
         "cap_applied": cap_reason,
-        "scoring_version": 7,
+        "scoring_version": 8,
     }
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -890,10 +910,11 @@ def fetch_weather(lat, lon, start_time_local):
         return None, None
 
 
-def build_activity(act, laps_raw, gear_name=None, gear_km=None):
+
     dist = act.get("distance") or 0
     dur  = act.get("duration") or act.get("movingDuration") or 0
     hr   = act.get("averageHR") or act.get("averageHeartRate")
+    max_hr = act.get("maxHR") or act.get("maxHeartRate")
     pace = (dur/(dist/1000)) if dist > 50 else None
     lat  = act.get("startLatitude")
     lon  = act.get("startLongitude")
@@ -909,6 +930,7 @@ def build_activity(act, laps_raw, gear_name=None, gear_km=None):
         "distance_km":        round(dist/1000, 2),
         "duration_s":         round(dur),
         "avg_hr":             round(hr) if hr else None,
+        "max_hr":             round(max_hr) if max_hr else None,
         "avg_pace_s_km":      round(pace) if pace else None,
         "avg_pace_fmt":       fmt_pace(pace),
         "calories":           act.get("calories"),
@@ -1008,11 +1030,14 @@ def main():
     else:
         data = {"last_updated": None, "activities": []}
 
-    # Sincronizza hr_history nel JSON con la costante FC_MAX_HISTORY dello script
-    data["hr_history"] = FC_MAX_HISTORY
-
     seen_ids = {a["garmin_id"] for a in data.get("activities",[])}
     log.info("Attivita gia salvate: %d", len(seen_ids))
+
+    # Carica FC_MAX_HISTORY da data/fc_max_history.json (fonte di verita',
+    # condivisa con la dashboard)
+    global FC_MAX_HISTORY
+    FC_MAX_HISTORY = load_fc_max_history(repo_path)
+    log.info("FC max history caricata: %s", FC_MAX_HISTORY)
 
     # Carica piano ICS
     ics_path = Path(repo_path) / "piano.ics"
@@ -1110,6 +1135,11 @@ def main():
         added += 1
         time.sleep(1.5)
 
+    # FC max: definito manualmente in FC_MAX_HISTORY (vedi inizio file).
+    # Qui salviamo solo nel JSON per il frontend.
+    data["hr_history"] = FC_MAX_HISTORY
+    log.info("FC max history: %s", FC_MAX_HISTORY)
+
     # Ricalcola scoring per tutte le attivita (forza aggiornamento formato)
     # Nota: non basta controllare se esiste la chiave "subscores".
     # Alcuni record vecchi possono avere un voto finale ma subscores vuoto: in quel caso
@@ -1143,7 +1173,7 @@ def main():
         if expected and not expected.issubset(set(subs.keys())):
             return True
 
-        if score_obj.get("scoring_version") != 7:
+        if score_obj.get("scoring_version") != 8:
             return True
 
         return False

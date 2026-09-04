@@ -66,6 +66,27 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font
 .tab.active{background:var(--bg2);color:var(--text);font-weight:600;}
 .panel{display:none;}.panel.active{display:block;}
 .zone-legend{display:flex;flex-direction:row;align-items:flex-start;gap:12px;margin-bottom:14px;padding:12px 16px;background:var(--bg2);border:none;border-radius:var(--r-sm);box-shadow:var(--sh);}.zone-legend-chips{display:flex;flex-direction:column;gap:5px;}
+.fcmax-edit-btn{margin-left:auto;width:26px;height:26px;border-radius:50%;border:none;background:var(--bg3);color:var(--text2);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;}
+.fcmax-edit-btn:hover{background:var(--orange-d);color:var(--orange);}
+.fcmax-modal-overlay{position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,.2);backdrop-filter:blur(4px);}
+.fcmax-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9999;background:var(--bg2);border-radius:24px;padding:24px;width:320px;max-width:92vw;box-shadow:0 24px 64px rgba(0,0,0,.16);}
+.fcmax-modal h3{font-size:17px;font-weight:700;margin-bottom:4px;letter-spacing:-.01em;}
+.fcmax-modal p{font-size:12px;color:var(--text2);margin-bottom:16px;line-height:1.5;}
+.fcmax-field{margin-bottom:14px;}
+.fcmax-field label{display:block;font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px;}
+.fcmax-field input{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:var(--bg3);font-family:var(--font);font-size:14px;color:var(--text);}
+.fcmax-field input:focus{outline:none;border-color:var(--orange);}
+.fcmax-btn-row{display:flex;gap:8px;margin-top:18px;}
+.fcmax-btn{flex:1;padding:11px;border-radius:12px;border:none;font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;transition:opacity .15s;}
+.fcmax-btn:hover{opacity:.85;}
+.fcmax-btn-primary{background:var(--orange);color:#fff;}
+.fcmax-btn-secondary{background:var(--bg3);color:var(--text2);}
+.fcmax-status{font-size:12px;margin-top:10px;text-align:center;min-height:16px;}
+.fcmax-status.ok{color:var(--green);}
+.fcmax-status.err{color:var(--red);}
+.fcmax-status.loading{color:var(--text2);}
+.fcmax-history-list{margin-top:14px;padding-top:14px;border-top:1px solid var(--border2);max-height:120px;overflow-y:auto;}
+.fcmax-history-row{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--text2);padding:3px 0;}
 .zone-chip{font-family:var(--mono);font-size:11px;padding:3px 10px;border-radius:20px;font-weight:600;display:grid;grid-template-columns:90px 52px 90px;gap:0;}.zone-chip-name{}.zone-chip-pct{}.zone-chip-bpm{padding-left:8px;}
 @media(max-width:480px){
 .zone-legend{flex-direction:column;gap:6px;}
@@ -204,6 +225,7 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font
 <div class="zone-legend" id="zone-legend-wrap">
 <span id="zone-legend-fcmax-label" style="font-family:var(--mono);font-size:11px;color:var(--text2);white-space:nowrap;padding-top:2px;">FC max — bpm →</span>
 <div class="zone-legend-chips" id="zone-legend-chips"></div>
+<button class="fcmax-edit-btn" onclick="openFcMaxModal()" title="Aggiorna FC max">⚙</button>
 </div>
 
 <div class="tabs">
@@ -226,6 +248,10 @@ document.getElementById('days-pill').textContent = Math.ceil((RACE - new Date())
 
 const ICS_LOCAL        = './piano.ics';
 const ACTIVITIES_JSON  = './data/activities.json';
+const FCMAX_JSON        = './data/fc_max_history.json';
+const GH_OWNER          = 'matteo03mangiarotti-lgtm';
+const GH_REPO           = 'matteo-firenze-garminconnect';
+const GH_FILE_PATH      = 'data/fc_max_history.json';
 
 // ── ICS PARSER ──────────────────────────────────────────────────────────────
 function parseICS(text){
@@ -303,6 +329,19 @@ async function loadActivities(){
     console.warn('activities.json non disponibile:',e);
     return {activities:[], hr_history:[]};
   }
+}
+
+// ── CARICA FC_MAX_HISTORY (fonte di verita': data/fc_max_history.json) ──────
+async function loadFcMaxHistory(){
+  try{
+    const r=await fetch(FCMAX_JSON,{cache:'no-store'});
+    if(!r.ok)throw new Error('fc_max_history.json non trovato');
+    const data=await r.json();
+    if(Array.isArray(data)&&data.length)return data;
+  }catch(e){
+    console.warn('fc_max_history.json non disponibile, uso hr_history da activities.json:',e);
+  }
+  return null; // segnala di usare il fallback (hr_history da activities.json)
 }
 
 // ── ZONE FC ──────────────────────────────────────────────────────────────────
@@ -766,9 +805,12 @@ async function sync(){
   document.getElementById('ld-txt').textContent='Caricamento attività Garmin...';
   const {activities, hr_history}=await loadActivities();
 
-  // Aggiorna HR_HISTORY globale (ordinato per data)
-  if(hr_history.length){
-    HR_HISTORY=[...hr_history].sort((a,b)=>a.date.localeCompare(b.date));
+  // FC max: priorita' a data/fc_max_history.json (fonte di verita', modificabile
+  // dalla dashboard), fallback su hr_history dentro activities.json.
+  const fcMaxFromFile=await loadFcMaxHistory();
+  const finalHrHistory=fcMaxFromFile || hr_history;
+  if(finalHrHistory.length){
+    HR_HISTORY=[...finalHrHistory].sort((a,b)=>a.date.localeCompare(b.date));
   }
   renderZoneLegend();
 
@@ -885,6 +927,141 @@ function closeScorePanel(){
 }
 
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeScorePanel();});
+
+// ── MODIFICA FC MAX DALLA DASHBOARD ──────────────────────────────────────────
+// Scrive direttamente su GitHub tramite le Contents API, usando un Personal
+// Access Token salvato SOLO nel localStorage del browser (mai su GitHub,
+// mai visibile ad altri dispositivi/persone).
+const GH_TOKEN_KEY='gh_pat_fcmax';
+
+function getGhToken(){
+  return localStorage.getItem(GH_TOKEN_KEY) || '';
+}
+
+function openFcMaxModal(){
+  const today=new Date().toISOString().slice(0,10);
+  const hasToken=!!getGhToken();
+  const historyRows=(HR_HISTORY||[]).slice().reverse().map(e=>
+    `<div class="fcmax-history-row"><span>${e.date}</span><span>${e.fc_max} bpm</span></div>`
+  ).join('');
+
+  const html=`
+  <div class="fcmax-modal-overlay" onclick="closeFcMaxModal()"></div>
+  <div class="fcmax-modal">
+    <h3>Aggiorna FC max</h3>
+    <p>Inserisci la data in cui Garmin ha registrato il nuovo valore (non necessariamente oggi) e il nuovo FC max. Gli allenamenti precedenti a quella data non verranno toccati.</p>
+
+    ${!hasToken ? `
+    <div class="fcmax-field">
+      <label>Token GitHub (una tantum)</label>
+      <input type="password" id="fcmax-token" placeholder="ghp_xxxxxxxxxxxx">
+    </div>` : ''}
+
+    <div class="fcmax-field">
+      <label>Data</label>
+      <input type="date" id="fcmax-date" value="${today}">
+    </div>
+    <div class="fcmax-field">
+      <label>Nuovo FC max (bpm)</label>
+      <input type="number" id="fcmax-value" placeholder="es. 208" min="100" max="230">
+    </div>
+
+    <div class="fcmax-btn-row">
+      <button class="fcmax-btn fcmax-btn-secondary" onclick="closeFcMaxModal()">Annulla</button>
+      <button class="fcmax-btn fcmax-btn-primary" onclick="saveFcMax()">Salva</button>
+    </div>
+    <div class="fcmax-status" id="fcmax-status"></div>
+
+    ${historyRows ? `<div class="fcmax-history-list">${historyRows}</div>` : ''}
+  </div>`;
+
+  let container=document.getElementById('fcmax-modal-container');
+  if(!container){container=document.createElement('div');container.id='fcmax-modal-container';document.body.appendChild(container);}
+  container.innerHTML=html;
+  document.body.style.overflow='hidden';
+}
+
+function closeFcMaxModal(){
+  const c=document.getElementById('fcmax-modal-container');
+  if(c)c.innerHTML='';
+  document.body.style.overflow='';
+}
+
+function setFcMaxStatus(msg,cls){
+  const el=document.getElementById('fcmax-status');
+  if(el){el.textContent=msg;el.className='fcmax-status '+(cls||'');}
+}
+
+async function saveFcMax(){
+  const tokenInput=document.getElementById('fcmax-token');
+  let token=getGhToken();
+  if(tokenInput&&tokenInput.value.trim()){
+    token=tokenInput.value.trim();
+    localStorage.setItem(GH_TOKEN_KEY, token);
+  }
+  if(!token){
+    setFcMaxStatus('Serve un token GitHub per salvare.','err');
+    return;
+  }
+
+  const date=document.getElementById('fcmax-date').value;
+  const value=parseInt(document.getElementById('fcmax-value').value,10);
+  if(!date){setFcMaxStatus('Inserisci una data valida.','err');return;}
+  if(!value||value<100||value>230){setFcMaxStatus('Inserisci un FC max plausibile (100-230).','err');return;}
+
+  setFcMaxStatus('Salvataggio in corso...','loading');
+
+  const apiUrl=`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE_PATH}`;
+
+  try{
+    // 1) Leggi il file attuale (serve lo sha per poterlo sovrascrivere)
+    const getRes=await fetch(apiUrl,{
+      headers:{'Authorization':'token '+token,'Accept':'application/vnd.github+json'}
+    });
+    if(!getRes.ok){
+      if(getRes.status===401){setFcMaxStatus('Token non valido o scaduto.','err');}
+      else if(getRes.status===404){setFcMaxStatus('File non trovato sul repo (controlla il percorso).','err');}
+      else{setFcMaxStatus('Errore GitHub: '+getRes.status,'err');}
+      return;
+    }
+    const getData=await getRes.json();
+    const currentContent=JSON.parse(decodeURIComponent(escape(atob(getData.content.replace(/\n/g,'')))));
+
+    // 2) Aggiungi/aggiorna la entry per quella data
+    let history=Array.isArray(currentContent)?currentContent:[];
+    history=history.filter(e=>e.date!==date); // evita duplicati sulla stessa data
+    history.push({date, fc_max:value});
+    history.sort((a,b)=>a.date.localeCompare(b.date));
+
+    // 3) Scrivi il file aggiornato
+    const newContent=JSON.stringify(history, null, 2)+'\n';
+    const newContentB64=btoa(unescape(encodeURIComponent(newContent)));
+
+    const putRes=await fetch(apiUrl,{
+      method:'PUT',
+      headers:{'Authorization':'token '+token,'Accept':'application/vnd.github+json','Content-Type':'application/json'},
+      body:JSON.stringify({
+        message:`Aggiorna FC max a ${value} bpm dal ${date} (da dashboard)`,
+        content:newContentB64,
+        sha:getData.sha
+      })
+    });
+
+    if(!putRes.ok){
+      setFcMaxStatus('Errore nel salvataggio: '+putRes.status,'err');
+      return;
+    }
+
+    setFcMaxStatus('Salvato! Ricarico la dashboard...','ok');
+    HR_HISTORY=history;
+    renderZoneLegend();
+    setTimeout(()=>{closeFcMaxModal();location.reload();},1200);
+
+  }catch(e){
+    console.error(e);
+    setFcMaxStatus('Errore: '+e.message,'err');
+  }
+}
 
 sync();
 
