@@ -26,6 +26,11 @@
           "avg_pace_s_km": 349,
           "avg_pace_fmt": "5:49",
           "avg_hr": 138,
+          "max_hr": 147,
+          "avg_cadence": 172,
+          "elevation_gain": 4,
+          "elevation_loss": 2,
+          "avg_power": 250,
           "intensity": "WARMUP"
         },
         {
@@ -35,6 +40,11 @@
           "avg_pace_s_km": 344,
           "avg_pace_fmt": "5:43",
           "avg_hr": 145,
+          "max_hr": 151,
+          "avg_cadence": 171,
+          "elevation_gain": 0,
+          "elevation_loss": 1,
+          "avg_power": 250,
           "intensity": "WARMUP"
         },
         {
@@ -44,6 +54,11 @@
           "avg_pace_s_km": 349,
           "avg_pace_fmt": "5:49",
           "avg_hr": 145,
+          "max_hr": 150,
+          "avg_cadence": 169,
+          "elevation_gain": 1,
+          "elevation_loss": 4,
+          "avg_power": 249,
           "intensity": "WARMUP"
         },
         {
@@ -53,6 +68,11 @@
           "avg_pace_s_km": 337,
           "avg_pace_fmt": "5:37",
           "avg_hr": 148,
+          "max_hr": 152,
+          "avg_cadence": 170,
+          "elevation_gain": 0,
+          "elevation_loss": 6,
+          "avg_power": 252,
           "intensity": "WARMUP"
         },
         {
@@ -62,6 +82,11 @@
           "avg_pace_s_km": 331,
           "avg_pace_fmt": "5:30",
           "avg_hr": 149,
+          "max_hr": 161,
+          "avg_cadence": 171,
+          "elevation_gain": 1,
+          "elevation_loss": 6,
+          "avg_power": 256,
           "intensity": "WARMUP"
         },
         {
@@ -71,6 +96,11 @@
           "avg_pace_s_km": 346,
           "avg_pace_fmt": "5:45",
           "avg_hr": 147,
+          "max_hr": 150,
+          "avg_cadence": 170,
+          "elevation_gain": 2,
+          "elevation_loss": 0,
+          "avg_power": 250,
           "intensity": "WARMUP"
         },
         {
@@ -80,6 +110,11 @@
           "avg_pace_s_km": 350,
           "avg_pace_fmt": "5:50",
           "avg_hr": 148,
+          "max_hr": 152,
+          "avg_cadence": 171,
+          "elevation_gain": 7,
+          "elevation_loss": 0,
+          "avg_power": 255,
           "intensity": "WARMUP"
         },
         {
@@ -89,6 +124,11 @@
           "avg_pace_s_km": 342,
           "avg_pace_fmt": "5:42",
           "avg_hr": 149,
+          "max_hr": 163,
+          "avg_cadence": 171,
+          "elevation_gain": 3,
+          "elevation_loss": 2,
+          "avg_power": 256,
           "intensity": "WARMUP"
         },
         {
@@ -98,6 +138,11 @@
           "avg_pace_s_km": 335,
           "avg_pace_fmt": "5:35",
           "avg_hr": 157,
+          "max_hr": 163,
+          "avg_cadence": 171,
+          "elevation_gain": 1,
+          "elevation_loss": 0,
+          "avg_power": 271,
           "intensity": "WARMUP"
         }
       ],
@@ -116,7 +161,14 @@
         "cap_applied": null,
         "scoring_version": 8
       },
-      "fc_max_at_date": 199
+      "fc_max_at_date": 199,
+      "hr_zones": {
+        "z1": 8,
+        "z2": 71,
+        "z3": 2645,
+        "z4": 65,
+        "z5": 0
+      }
     },
     {
       "garmin_id": 24226960302,
@@ -142,6 +194,11 @@
           "avg_pace_s_km": 299,
           "avg_pace_fmt": "4:58",
           "avg_hr": 151,
+          "max_hr": 160,
+          "avg_cadence": 174,
+          "elevation_gain": 0,
+          "elevation_loss": 2,
+          "avg_power": 285,
           "intensity": "WARMUP"
         },
         {
@@ -151,6 +208,11 @@
           "avg_pace_s_km": 296,
           "avg_pace_fmt": "4:56",
           "avg_hr": 160,
+          "max_hr": 163,
+          "avg_cadence": 175,
+          "elevation_gain": 0,
+          "elevation_loss": 7,
+          "avg_power": 284,
           "intensity": "WARMUP"
         },
         {
@@ -160,6 +222,11 @@
           "avg_pace_s_km": 300,
           "avg_pace_fmt": "5:00",
           "avg_hr": 156,
+          "max_hr": 160,
+          "avg_cadence": 175,
+          "elevation_gain": 0,
+          "elevation_loss": 6,
+          "avg_power": 280,
           "intensity": "WARMUP"
         },
         {
@@ -169,6 +236,11 @@
           "avg_pace_s_km": 274,
           "avg_pace_fmt": "4:34",
           "avg_hr": 166,
+          "max_hr": 170,
+          "avg_cadence": 176,
+          "elevation_gain": 0,
+          "elevation_loss": 2,
+          "avg_power": 312,
           "intensity": "ACTIVE"
         },
         {
@@ -178,6 +250,11 @@
           "avg_pace_s_km": 271,
           "avg_pace_fmt": "4:30",
           "avg_hr": 171,
+          "max_hr": 180,
+          "avg_cadence": 176,
+          "elevation_gain": 4,
+          "elevation_loss": 6,
+          "avg_power": 319,
           "intensity": "ACTIVE"
         },
         {
@@ -187,6 +264,11 @@
           "avg_pace_s_km": 271,
           "avg_pace_fmt": "4:31",
           "avg_hr": 175,
+          "max_hr": 180,
+          "avg_cadence": 177,
+          "elevation_gain": 1,
+          "elevation_loss": 1,
+          "avg_power": 320,
           "intensity": "ACTIVE"
         },
         {
@@ -196,6 +278,11 @@
           "avg_pace_s_km": 273,
           "avg_pace_fmt": "4:33",
           "avg_hr": 173,
+          "max_hr": 177,
+          "avg_cadence": 177,
+          "elevation_gain": 2,
+          "elevation_loss": 3,
+          "avg_power": 317,
           "intensity": "ACTIVE"
         },
         {
@@ -205,6 +292,11 @@
           "avg_pace_s_km": 273,
           "avg_pace_fmt": "4:32",
           "avg_hr": 177,
+          "max_hr": 187,
+          "avg_cadence": 175,
+          "elevation_gain": 0,
+          "elevation_loss": 0,
+          "avg_power": 316,
           "intensity": "ACTIVE"
         },
         {
@@ -214,6 +306,11 @@
           "avg_pace_s_km": 269,
           "avg_pace_fmt": "4:29",
           "avg_hr": 177,
+          "max_hr": 182,
+          "avg_cadence": 176,
+          "elevation_gain": 2,
+          "elevation_loss": 1,
+          "avg_power": 314,
           "intensity": "ACTIVE"
         },
         {
@@ -223,6 +320,11 @@
           "avg_pace_s_km": 272,
           "avg_pace_fmt": "4:31",
           "avg_hr": 175,
+          "max_hr": 181,
+          "avg_cadence": 175,
+          "elevation_gain": 3,
+          "elevation_loss": 3,
+          "avg_power": 317,
           "intensity": "ACTIVE"
         },
         {
@@ -232,6 +334,11 @@
           "avg_pace_s_km": 274,
           "avg_pace_fmt": "4:34",
           "avg_hr": 177,
+          "max_hr": 181,
+          "avg_cadence": 174,
+          "elevation_gain": 2,
+          "elevation_loss": 0,
+          "avg_power": 314,
           "intensity": "ACTIVE"
         },
         {
@@ -241,6 +348,11 @@
           "avg_pace_s_km": 302,
           "avg_pace_fmt": "5:02",
           "avg_hr": 170,
+          "max_hr": 178,
+          "avg_cadence": 174,
+          "elevation_gain": 5,
+          "elevation_loss": 1,
+          "avg_power": 291,
           "intensity": "COOLDOWN"
         },
         {
@@ -250,6 +362,11 @@
           "avg_pace_s_km": 299,
           "avg_pace_fmt": "4:58",
           "avg_hr": 170,
+          "max_hr": 174,
+          "avg_cadence": 176,
+          "elevation_gain": 6,
+          "elevation_loss": 0,
+          "avg_power": 299,
           "intensity": "COOLDOWN"
         },
         {
@@ -259,6 +376,11 @@
           "avg_pace_s_km": 299,
           "avg_pace_fmt": "4:58",
           "avg_hr": 166,
+          "max_hr": 175,
+          "avg_cadence": 174,
+          "elevation_gain": 1,
+          "elevation_loss": 1,
+          "avg_power": 283,
           "intensity": "COOLDOWN"
         },
         {
@@ -268,6 +390,11 @@
           "avg_pace_s_km": 303,
           "avg_pace_fmt": "5:02",
           "avg_hr": 167,
+          "max_hr": 171,
+          "avg_cadence": 173,
+          "elevation_gain": 1,
+          "elevation_loss": 0,
+          "avg_power": 298,
           "intensity": "COOLDOWN"
         }
       ],
@@ -288,7 +415,14 @@
         "cap_applied": null,
         "scoring_version": 8
       },
-      "fc_max_at_date": 205
+      "fc_max_at_date": 205,
+      "hr_zones": {
+        "z1": 21,
+        "z2": 13,
+        "z3": 539,
+        "z4": 3168,
+        "z5": 278
+      }
     },
     {
       "garmin_id": 24214349030,
@@ -314,6 +448,11 @@
           "avg_pace_s_km": 311,
           "avg_pace_fmt": "5:11",
           "avg_hr": 156,
+          "max_hr": 171,
+          "avg_cadence": 169,
+          "elevation_gain": 1,
+          "elevation_loss": 1,
+          "avg_power": 272,
           "intensity": "ACTIVE"
         },
         {
@@ -323,6 +462,11 @@
           "avg_pace_s_km": 308,
           "avg_pace_fmt": "5:07",
           "avg_hr": 161,
+          "max_hr": 166,
+          "avg_cadence": 173,
+          "elevation_gain": 0,
+          "elevation_loss": 6,
+          "avg_power": 265,
           "intensity": "ACTIVE"
         },
         {
@@ -332,6 +476,11 @@
           "avg_pace_s_km": 312,
           "avg_pace_fmt": "5:11",
           "avg_hr": 160,
+          "max_hr": 171,
+          "avg_cadence": 173,
+          "elevation_gain": 0,
+          "elevation_loss": 4,
+          "avg_power": 265,
           "intensity": "ACTIVE"
         },
         {
@@ -341,6 +490,11 @@
           "avg_pace_s_km": 308,
           "avg_pace_fmt": "5:08",
           "avg_hr": 160,
+          "max_hr": 165,
+          "avg_cadence": 173,
+          "elevation_gain": 1,
+          "elevation_loss": 2,
+          "avg_power": 274,
           "intensity": "ACTIVE"
         },
         {
@@ -350,6 +504,11 @@
           "avg_pace_s_km": 301,
           "avg_pace_fmt": "5:00",
           "avg_hr": 165,
+          "max_hr": 170,
+          "avg_cadence": 173,
+          "elevation_gain": 2,
+          "elevation_loss": 7,
+          "avg_power": 280,
           "intensity": "ACTIVE"
         },
         {
@@ -359,6 +518,11 @@
           "avg_pace_s_km": 312,
           "avg_pace_fmt": "5:11",
           "avg_hr": 163,
+          "max_hr": 166,
+          "avg_cadence": 172,
+          "elevation_gain": 0,
+          "elevation_loss": 1,
+          "avg_power": 270,
           "intensity": "ACTIVE"
         },
         {
@@ -368,6 +532,11 @@
           "avg_pace_s_km": 305,
           "avg_pace_fmt": "5:05",
           "avg_hr": 165,
+          "max_hr": 170,
+          "avg_cadence": 171,
+          "elevation_gain": 1,
+          "elevation_loss": 2,
+          "avg_power": 275,
           "intensity": "ACTIVE"
         },
         {
@@ -377,6 +546,11 @@
           "avg_pace_s_km": 302,
           "avg_pace_fmt": "5:02",
           "avg_hr": 165,
+          "max_hr": 173,
+          "avg_cadence": 173,
+          "elevation_gain": 4,
+          "elevation_loss": 3,
+          "avg_power": 275,
           "intensity": "ACTIVE"
         },
         {
@@ -386,6 +560,11 @@
           "avg_pace_s_km": 301,
           "avg_pace_fmt": "5:01",
           "avg_hr": 168,
+          "max_hr": 175,
+          "avg_cadence": 173,
+          "elevation_gain": 2,
+          "elevation_loss": 0,
+          "avg_power": 278,
           "intensity": "ACTIVE"
         },
         {
@@ -395,6 +574,11 @@
           "avg_pace_s_km": 310,
           "avg_pace_fmt": "5:09",
           "avg_hr": 166,
+          "max_hr": 175,
+          "avg_cadence": 171,
+          "elevation_gain": 8,
+          "elevation_loss": 0,
+          "avg_power": 280,
           "intensity": "ACTIVE"
         },
         {
@@ -404,6 +588,11 @@
           "avg_pace_s_km": 315,
           "avg_pace_fmt": "5:14",
           "avg_hr": 164,
+          "max_hr": 171,
+          "avg_cadence": 172,
+          "elevation_gain": 5,
+          "elevation_loss": 1,
+          "avg_power": 276,
           "intensity": "ACTIVE"
         },
         {
@@ -413,6 +602,11 @@
           "avg_pace_s_km": 310,
           "avg_pace_fmt": "5:10",
           "avg_hr": 164,
+          "max_hr": 169,
+          "avg_cadence": 171,
+          "elevation_gain": 0,
+          "elevation_loss": 0,
+          "avg_power": 268,
           "intensity": "ACTIVE"
         },
         {
@@ -422,6 +616,11 @@
           "avg_pace_s_km": 297,
           "avg_pace_fmt": "4:57",
           "avg_hr": 167,
+          "max_hr": 169,
+          "avg_cadence": 172,
+          "elevation_gain": 2,
+          "elevation_loss": 0,
+          "avg_power": 288,
           "intensity": "ACTIVE"
         }
       ],
@@ -440,7 +639,14 @@
         "cap_applied": null,
         "scoring_version": 8
       },
-      "fc_max_at_date": 205
+      "fc_max_at_date": 205,
+      "hr_zones": {
+        "z1": 15,
+        "z2": 12,
+        "z3": 499,
+        "z4": 3227,
+        "z5": 0
+      }
     },
     {
       "garmin_id": 24185055953,
@@ -466,6 +672,11 @@
           "avg_pace_s_km": 305,
           "avg_pace_fmt": "5:04",
           "avg_hr": 154,
+          "max_hr": 167,
+          "avg_cadence": 171,
+          "elevation_gain": 6,
+          "elevation_loss": 8,
+          "avg_power": 269,
           "intensity": "ACTIVE"
         },
         {
@@ -475,6 +686,11 @@
           "avg_pace_s_km": 288,
           "avg_pace_fmt": "4:47",
           "avg_hr": 156,
+          "max_hr": 161,
+          "avg_cadence": 171,
+          "elevation_gain": 0,
+          "elevation_loss": 12,
+          "avg_power": 276,
           "intensity": "ACTIVE"
         },
         {
@@ -484,6 +700,11 @@
           "avg_pace_s_km": 268,
           "avg_pace_fmt": "4:28",
           "avg_hr": 161,
+          "max_hr": 168,
+          "avg_cadence": 173,
+          "elevation_gain": 0,
+          "elevation_loss": 12,
+          "avg_power": 292,
           "intensity": "ACTIVE"
         },
         {
@@ -493,6 +714,11 @@
           "avg_pace_s_km": 277,
           "avg_pace_fmt": "4:36",
           "avg_hr": 158,
+          "max_hr": 168,
+          "avg_cadence": 169,
+          "elevation_gain": 4,
+          "elevation_loss": 4,
+          "avg_power": 308,
           "intensity": "ACTIVE"
         },
         {
@@ -502,6 +728,11 @@
           "avg_pace_s_km": 277,
           "avg_pace_fmt": "4:36",
           "avg_hr": 163,
+          "max_hr": 166,
+          "avg_cadence": 173,
+          "elevation_gain": 5,
+          "elevation_loss": 5,
+          "avg_power": 319,
           "intensity": "ACTIVE"
         },
         {
@@ -511,6 +742,11 @@
           "avg_pace_s_km": 288,
           "avg_pace_fmt": "4:47",
           "avg_hr": 159,
+          "max_hr": 173,
+          "avg_cadence": 170,
+          "elevation_gain": 14,
+          "elevation_loss": 2,
+          "avg_power": 323,
           "intensity": "ACTIVE"
         },
         {
@@ -520,6 +756,11 @@
           "avg_pace_s_km": 277,
           "avg_pace_fmt": "4:36",
           "avg_hr": 159,
+          "max_hr": 166,
+          "avg_cadence": 174,
+          "elevation_gain": 25,
+          "elevation_loss": 8,
+          "avg_power": 348,
           "intensity": "ACTIVE"
         },
         {
@@ -529,6 +770,11 @@
           "avg_pace_s_km": 269,
           "avg_pace_fmt": "4:29",
           "avg_hr": 154,
+          "max_hr": 159,
+          "avg_cadence": 171,
+          "elevation_gain": 2,
+          "elevation_loss": 23,
+          "avg_power": 294,
           "intensity": "ACTIVE"
         },
         {
@@ -538,6 +784,11 @@
           "avg_pace_s_km": 265,
           "avg_pace_fmt": "4:25",
           "avg_hr": 151,
+          "max_hr": 154,
+          "avg_cadence": 173,
+          "elevation_gain": 4,
+          "elevation_loss": 3,
+          "avg_power": 316,
           "intensity": "ACTIVE"
         },
         {
@@ -547,6 +798,11 @@
           "avg_pace_s_km": 282,
           "avg_pace_fmt": "4:41",
           "avg_hr": 154,
+          "max_hr": 158,
+          "avg_cadence": 171,
+          "elevation_gain": 14,
+          "elevation_loss": 1,
+          "avg_power": 310,
           "intensity": "ACTIVE"
         },
         {
@@ -556,6 +812,11 @@
           "avg_pace_s_km": 278,
           "avg_pace_fmt": "4:38",
           "avg_hr": 151,
+          "max_hr": 153,
+          "avg_cadence": 169,
+          "elevation_gain": 3,
+          "elevation_loss": 5,
+          "avg_power": 295,
           "intensity": "ACTIVE"
         }
       ],
@@ -563,7 +824,14 @@
       "weather_condition": "Pioggia leggera",
       "fetched_at": "2026-09-03T20:52:54Z",
       "score": null,
-      "fc_max_at_date": 205
+      "fc_max_at_date": 205,
+      "hr_zones": {
+        "z1": 29,
+        "z2": 48,
+        "z3": 1666,
+        "z4": 1281,
+        "z5": 0
+      }
     },
     {
       "garmin_id": 24106168980,
