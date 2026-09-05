@@ -136,7 +136,7 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font
 .sc-circle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font);font-size:14px;font-weight:700;margin:0 auto 3px;cursor:pointer;transition:transform .15s;}
 .sc-circle:hover{transform:scale(1.1);}
 .sc-lbl{font-family:var(--mono);font-size:10px;color:var(--text3);}
-.detail-btn{width:22px;height:22px;border-radius:50%;background:var(--bg3);color:var(--text3);font-size:11px;display:flex;align-items:center;justify-content:center;margin:6px auto 0;cursor:pointer;transition:all .15s;}
+.detail-btn{width:26px;height:26px;border-radius:50%;background:var(--bg3);color:var(--text);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;margin:8px auto 0;cursor:pointer;transition:all .15s;}
 .detail-btn:hover{background:var(--orange-d);color:var(--orange);}
 
 .act-modal-overlay{position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,.25);backdrop-filter:blur(4px);}
@@ -690,7 +690,7 @@ function buildDashboard(activities){
       }else if(isFut){
         realHtml='<span class="act-e">In programma</span>';
       }else{
-        realHtml='<span class="act-e" style="color:var(--amber);">Non registrata</span>';badge='<span class="bdg b-miss">manca</span>';
+        realHtml='<span class="act-e" style="color:var(--red);">Non registrata</span>';badge='<span class="bdg b-miss">manca</span>';
       }
 
       // Score cell
