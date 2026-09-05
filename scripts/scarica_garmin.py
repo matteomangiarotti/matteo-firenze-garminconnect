@@ -821,9 +821,75 @@ def parse_laps(laps_raw):
             "avg_pace_s_km": round(pace) if pace else None,
             "avg_pace_fmt":  fmt_pace(pace),
             "avg_hr":        round(hr) if hr else None,
+            "max_hr":        round(lap["maxHR"]) if lap.get("maxHR") else None,
+            "avg_cadence":   round(lap["averageRunCadence"]) if lap.get("averageRunCadence") else None,
+            "elevation_gain":round(lap["elevationGain"]) if lap.get("elevationGain") is not None else None,
+            "elevation_loss":round(lap["elevationLoss"]) if lap.get("elevationLoss") is not None else None,
+            "avg_power":     round(lap["averagePower"]) if lap.get("averagePower") else None,
             "intensity":     intensity,
         })
     return parsed
+
+def fetch_gps_polyline(client, activity_id, max_points=150):
+    """Scarica il percorso GPS (lat/lon) di un'attivita, diradato a max_points
+    punti per tenere il JSON leggero. Ritorna [] se non disponibile (es.
+    corsa su tapis roulant)."""
+    try:
+        detail = client.get_activity_details(activity_id, maxpoly=max_points)
+        poly = (detail or {}).get("geoPolylineDTO", {}).get("polyline") or []
+        points = [[p["lat"], p["lon"]] for p in poly if p.get("lat") is not None and p.get("lon") is not None]
+        if len(points) > max_points:
+            step = len(points) / max_points
+            points = [points[round(i*step)] for i in range(max_points)]
+        return points
+    except Exception as e:
+        log.warning("    GPS non disponibile: %s", e)
+        return []
+
+
+def fetch_hr_zone_time(client, activity_id):
+    """DEPRECATA: usava le zone di Garmin (soglie percentuali diverse dalle
+    nostre, causava incoerenza col resto della dashboard). Non piu' usata,
+    lasciata solo per riferimento. Usa compute_hr_zone_time_from_laps() al
+    suo posto, che calcola le zone dai lap con le NOSTRE soglie."""
+    try:
+        zones = client.get_activity_hr_in_timezones(activity_id)
+        result = {}
+        for z in zones or []:
+            idx = z.get("zoneNumber")
+            secs = z.get("secsInZone")
+            if idx and secs is not None:
+                result[f"z{idx}"] = round(secs)
+        return result
+    except Exception as e:
+        log.warning("    Zone FC (Garmin) non disponibili: %s", e)
+        return {}
+
+
+def compute_hr_zone_time_from_laps(laps_raw, fc_max):
+    """Calcola i secondi trascorsi in ciascuna delle NOSTRE zone FC (le stesse
+    percentuali della legenda in dashboard, GARMIN_ZONE_PCT), usando la FC
+    media e la durata di ogni lap. Coerente al 100% con le zone mostrate nel
+    resto della dashboard (a differenza delle zone native di Garmin, che
+    seguono soglie percentuali diverse e causerebbero incoerenza)."""
+    zones = compute_hr_zones(fc_max)  # [{'name':'Z1','min':..,'max':..}, ...]
+    result = {}
+    for lap in laps_raw or []:
+        hr = lap.get("averageHR")
+        dur = lap.get("duration") or lap.get("elapsedDuration") or 0
+        if not hr or not dur:
+            continue
+        matched = None
+        for z in zones:
+            if z["min"] <= hr <= z["max"]:
+                matched = z["name"]
+                break
+        if matched is None:
+            matched = zones[0]["name"] if hr < zones[0]["min"] else zones[-1]["name"]
+        key = matched.lower()
+        result[key] = result.get(key, 0) + dur
+    return {k: round(v) for k, v in result.items()}
+
 
 def extract_gear(act_detail):
     """Estrae nome e km scarpa dai dettagli attivita Garmin."""
@@ -910,7 +976,7 @@ def fetch_weather(lat, lon, start_time_local):
         return None, None
 
 
-
+def build_activity(act, laps_raw, gear_name=None, gear_km=None, gps_polyline=None, hr_zones=None):
     dist = act.get("distance") or 0
     dur  = act.get("duration") or act.get("movingDuration") or 0
     hr   = act.get("averageHR") or act.get("averageHeartRate")
@@ -920,6 +986,7 @@ def fetch_weather(lat, lon, start_time_local):
     lon  = act.get("startLongitude")
     start_local = act.get("startTimeLocal", "")[:19]
     weather_temp, weather_condition = fetch_weather(lat, lon, start_local)
+    cadence = act.get("averageRunningCadenceInStepsPerMinute") or act.get("averageRunCadence")
     return {
         "garmin_id":          act.get("activityId"),
         "date":               activity_date(act),
@@ -934,10 +1001,16 @@ def fetch_weather(lat, lon, start_time_local):
         "avg_pace_s_km":      round(pace) if pace else None,
         "avg_pace_fmt":       fmt_pace(pace),
         "calories":           act.get("calories"),
-        "elevation_gain":     act.get("elevationGain"),
+        "elevation_gain":     round(act["elevationGain"]) if act.get("elevationGain") is not None else None,
+        "elevation_loss":     round(act["elevationLoss"]) if act.get("elevationLoss") is not None else None,
+        "avg_cadence":        round(cadence) if cadence else None,
+        "training_effect_aerobic":   act.get("aerobicTrainingEffect"),
+        "training_effect_anaerobic": act.get("anaerobicTrainingEffect"),
         "gear_name":          gear_name,
         "gear_km":            gear_km,
         "laps":               parse_laps(laps_raw),
+        "gps_polyline":       gps_polyline or [],
+        "hr_zones":           hr_zones or {},
         "start_lat":          lat,
         "start_lon":          lon,
         "weather_temp":       weather_temp,
@@ -1118,7 +1191,20 @@ def main():
         except Exception as e:
             log.warning("    Gear non disponibile: %s", e)
 
-        record = build_activity(act, laps_raw, gear_name, gear_km)
+        # GPS e zone FC (per il pannello di dettaglio nella dashboard)
+        gps_polyline = fetch_gps_polyline(client, act_id)
+        # Fino al 4 settembre 2026 (incluso): le zone di Garmin non erano
+        # ancora corrette, quindi calcoliamo noi dai lap con le nostre soglie.
+        # Dal 5 settembre 2026 in poi: le zone di Garmin sono state sistemate,
+        # quindi usiamo direttamente i suoi dati (piu' precisi, al secondo).
+        if act_date <= "2026-09-04":
+            hr_zones = compute_hr_zone_time_from_laps(laps_raw, get_fc_max_for_date(act_date))
+        else:
+            hr_zones = fetch_hr_zone_time(client, act_id)
+        if gps_polyline:
+            log.info("    GPS: %d punti", len(gps_polyline))
+
+        record = build_activity(act, laps_raw, gear_name, gear_km, gps_polyline, hr_zones)
 
         # Scoring
         plan = plan_index.get(act_date)
