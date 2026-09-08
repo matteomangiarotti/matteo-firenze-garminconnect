@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-08T10:18:37Z",
+  "last_updated": "2026-09-08T10:34:14Z",
   "activities": [
     {
       "garmin_id": 24280314444,
@@ -1237,7 +1237,9 @@
       "hr_zones": {
         "z1": 2076,
         "z2": 728
-      }
+      },
+      "avg_cadence": 171,
+      "training_effect_anaerobic": 0.0
     },
     {
       "garmin_id": 24226960302,
@@ -1489,7 +1491,10 @@
         "z1": 299,
         "z2": 1170,
         "z3": 2551
-      }
+      },
+      "avg_cadence": 175,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 187
     },
     {
       "garmin_id": 24214349030,
@@ -1710,7 +1715,10 @@
       "hr_zones": {
         "z2": 3394,
         "z3": 360
-      }
+      },
+      "avg_cadence": 172,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 175
     },
     {
       "garmin_id": 24185055953,
@@ -1892,7 +1900,10 @@
       "hr_zones": {
         "z2": 2530,
         "z1": 495
-      }
+      },
+      "avg_cadence": 171,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 173
     },
     {
       "garmin_id": 24106168980,
@@ -2075,7 +2086,10 @@
         "z1": 1587,
         "z2": 675,
         "z3": 930
-      }
+      },
+      "avg_cadence": 171,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 179
     },
     {
       "garmin_id": 24064827199,
@@ -2380,7 +2394,10 @@
       "hr_zones": {
         "z1": 5241,
         "z2": 301
-      }
+      },
+      "avg_cadence": 171,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 158
     },
     {
       "garmin_id": 24052413516,
@@ -2558,7 +2575,10 @@
       "fc_max_at_date": 205,
       "hr_zones": {
         "z1": 2951
-      }
+      },
+      "avg_cadence": 171,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 154
     },
     {
       "garmin_id": 24032984347,
@@ -2812,7 +2832,10 @@
         "z2": 549,
         "z3": 1585,
         "z4": 605
-      }
+      },
+      "avg_cadence": 175,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 192
     },
     {
       "garmin_id": 24025848926,
@@ -3005,7 +3028,10 @@
       "hr_zones": {
         "z1": 295,
         "z2": 2631
-      }
+      },
+      "avg_cadence": 171,
+      "training_effect_anaerobic": 0.10000000149011612,
+      "max_hr": 172
     },
     {
       "garmin_id": 24000960799,
@@ -3234,7 +3260,10 @@
         "z2": 300,
         "z3": 2358,
         "z4": 669
-      }
+      },
+      "avg_cadence": 169,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 188
     },
     {
       "garmin_id": 23921149011,
@@ -3385,7 +3414,10 @@
       "hr_zones": {
         "z1": 1817,
         "z2": 550
-      }
+      },
+      "avg_cadence": 170,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 164
     },
     {
       "garmin_id": 23908403533,
@@ -3628,7 +3660,10 @@
         "z2": 1209,
         "z3": 502,
         "z4": 1711
-      }
+      },
+      "avg_cadence": 174,
+      "training_effect_anaerobic": 2.0,
+      "max_hr": 194
     },
     {
       "garmin_id": 23883564013,
@@ -3684,7 +3719,10 @@
       "fc_max_at_date": 205,
       "hr_zones": {
         "z1": 65
-      }
+      },
+      "avg_cadence": 175,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 167
     },
     {
       "garmin_id": 23858767462,
@@ -3808,7 +3846,10 @@
         "z1": 319,
         "z2": 941,
         "z3": 467
-      }
+      },
+      "avg_cadence": 168,
+      "training_effect_anaerobic": 0.10000000149011612,
+      "max_hr": 185
     },
     {
       "garmin_id": 23830384650,
@@ -4033,7 +4074,10 @@
         "z1": 390,
         "z2": 964,
         "z3": 3147
-      }
+      },
+      "avg_cadence": 171,
+      "training_effect_anaerobic": 1.7000000476837158,
+      "max_hr": 183
     },
     {
       "garmin_id": 23817833192,
@@ -4162,7 +4206,10 @@
       "hr_zones": {
         "z1": 1318,
         "z2": 437
-      }
+      },
+      "avg_cadence": 180,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 165
     },
     {
       "garmin_id": 23809705404,
@@ -4313,7 +4360,10 @@
       "hr_zones": {
         "z2": 1240,
         "z3": 892
-      }
+      },
+      "avg_cadence": 172,
+      "training_effect_anaerobic": 0.10000000149011612,
+      "max_hr": 184
     },
     {
       "garmin_id": 23731777071,
@@ -4674,7 +4724,10 @@
       "hr_zones": {
         "z1": 3988,
         "z2": 2680
-      }
+      },
+      "avg_cadence": 172,
+      "training_effect_anaerobic": 0.10000000149011612,
+      "max_hr": 165
     },
     {
       "garmin_id": 23712875361,
@@ -4984,7 +5037,10 @@
       "hr_zones": {
         "z1": 927,
         "z2": 4275
-      }
+      },
+      "avg_cadence": 176,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 169
     },
     {
       "garmin_id": 23705518113,
@@ -5184,7 +5240,10 @@
         "z1": 297,
         "z2": 2008,
         "z3": 637
-      }
+      },
+      "avg_cadence": 175,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 172
     },
     {
       "garmin_id": 23682308183,
@@ -5507,7 +5566,10 @@
         "z1": 1269,
         "z3": 1441,
         "z2": 600
-      }
+      },
+      "avg_cadence": 176,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 184
     },
     {
       "garmin_id": 23658409523,
@@ -5931,7 +5993,10 @@
         "z1": 899,
         "z2": 4335,
         "z3": 2175
-      }
+      },
+      "avg_cadence": 176,
+      "training_effect_anaerobic": 0.10000000149011612,
+      "max_hr": 187
     },
     {
       "garmin_id": 23646246428,
@@ -6124,7 +6189,10 @@
       "hr_zones": {
         "z1": 1272,
         "z2": 2102
-      }
+      },
+      "avg_cadence": 173,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 164
     },
     {
       "garmin_id": 23632562916,
@@ -6289,7 +6357,10 @@
       "hr_zones": {
         "z1": 2496,
         "z2": 328
-      }
+      },
+      "avg_cadence": 174,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 162
     },
     {
       "garmin_id": 23622852566,
@@ -6561,7 +6632,10 @@
       "hr_zones": {
         "z2": 3959,
         "z3": 280
-      }
+      },
+      "avg_cadence": 175,
+      "training_effect_anaerobic": 0.10000000149011612,
+      "max_hr": 175
     },
     {
       "garmin_id": 23603306960,
@@ -6782,7 +6856,10 @@
       "hr_zones": {
         "z1": 2490,
         "z2": 1244
-      }
+      },
+      "avg_cadence": 177,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 161
     },
     {
       "garmin_id": 23590252613,
@@ -7063,7 +7140,10 @@
         "z1": 652,
         "z2": 1409,
         "z3": 1554
-      }
+      },
+      "avg_cadence": 178,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 181
     },
     {
       "garmin_id": 23574951296,
@@ -7480,7 +7560,10 @@
       "hr_zones": {
         "z1": 1253,
         "z2": 6763
-      }
+      },
+      "avg_cadence": 172,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 169
     },
     {
       "garmin_id": 23554779475,
@@ -7701,7 +7784,10 @@
       "hr_zones": {
         "z1": 649,
         "z2": 3105
-      }
+      },
+      "avg_cadence": 173,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 165
     },
     {
       "garmin_id": 23550287571,
@@ -7866,7 +7952,10 @@
       "hr_zones": {
         "z1": 667,
         "z2": 2006
-      }
+      },
+      "avg_cadence": 170,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 166
     },
     {
       "garmin_id": 23532319820,
@@ -8146,7 +8235,10 @@
         "z1": 314,
         "z2": 1846,
         "z3": 2462
-      }
+      },
+      "avg_cadence": 175,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 177
     },
     {
       "garmin_id": 23527256728,
@@ -8367,7 +8459,10 @@
       "hr_zones": {
         "z1": 617,
         "z2": 3147
-      }
+      },
+      "avg_cadence": 171,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 163
     },
     {
       "garmin_id": 23507055302,
@@ -8648,7 +8743,10 @@
         "z1": 330,
         "z2": 1346,
         "z3": 1792
-      }
+      },
+      "avg_cadence": 175,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 188
     },
     {
       "garmin_id": 23485085064,
@@ -9042,7 +9140,10 @@
         "z1": 299,
         "z2": 4825,
         "z3": 2005
-      }
+      },
+      "avg_cadence": 173,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 184
     },
     {
       "garmin_id": 23472618262,
@@ -9235,7 +9336,10 @@
       "hr_zones": {
         "z1": 2199,
         "z2": 1133
-      }
+      },
+      "avg_cadence": 173,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 162
     },
     {
       "garmin_id": 23468003915,
@@ -9401,7 +9505,10 @@
         "z1": 318,
         "z2": 1971,
         "z3": 298
-      }
+      },
+      "avg_cadence": 170,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 173
     },
     {
       "garmin_id": 23450429023,
@@ -9674,7 +9781,10 @@
         "z1": 277,
         "z2": 3101,
         "z3": 844
-      }
+      },
+      "avg_cadence": 176,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 174
     },
     {
       "garmin_id": 23438993947,
@@ -9895,7 +10005,10 @@
       "hr_zones": {
         "z1": 313,
         "z2": 3442
-      }
+      },
+      "avg_cadence": 173,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 168
     },
     {
       "garmin_id": 23428667459,
@@ -10120,7 +10233,10 @@
         "z2": 943,
         "z3": 1303,
         "z4": 497
-      }
+      },
+      "avg_cadence": 176,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 190
     },
     {
       "garmin_id": 23404615259,
@@ -10509,7 +10625,10 @@
       "hr_zones": {
         "z1": 3044,
         "z2": 4260
-      }
+      },
+      "avg_cadence": 173,
+      "training_effect_anaerobic": 0.20000000298023224,
+      "max_hr": 169
     },
     {
       "garmin_id": 23398847832,
@@ -10688,7 +10807,10 @@
       "hr_zones": {
         "z1": 1604,
         "z2": 1271
-      }
+      },
+      "avg_cadence": 171,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 168
     },
     {
       "garmin_id": 23388224816,
@@ -10945,7 +11067,10 @@
         "z1": 283,
         "z2": 568,
         "z3": 3210
-      }
+      },
+      "avg_cadence": 171,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 179
     },
     {
       "garmin_id": 23377653645,
@@ -11149,7 +11274,10 @@
       "hr_zones": {
         "z2": 2194,
         "z3": 945
-      }
+      },
+      "avg_cadence": 172,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 177
     },
     {
       "garmin_id": 23368290911,
@@ -11357,7 +11485,10 @@
         "z1": 316,
         "z2": 2785,
         "z3": 304
-      }
+      },
+      "avg_cadence": 172,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 177
     },
     {
       "garmin_id": 23347993887,
@@ -11638,7 +11769,10 @@
         "z1": 658,
         "z3": 1726,
         "z2": 1345
-      }
+      },
+      "avg_cadence": 175,
+      "training_effect_anaerobic": 0.20000000298023224,
+      "max_hr": 184
     },
     {
       "garmin_id": 23332852626,
@@ -11957,7 +12091,10 @@
       "hr_zones": {
         "z2": 3885,
         "z3": 1825
-      }
+      },
+      "avg_cadence": 171,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 178
     },
     {
       "garmin_id": 23320431519,
@@ -12122,7 +12259,10 @@
       "hr_zones": {
         "z1": 1372,
         "z2": 1408
-      }
+      },
+      "avg_cadence": 172,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 177
     },
     {
       "garmin_id": 23309990711,
@@ -12315,7 +12455,10 @@
       "hr_zones": {
         "z1": 1271,
         "z2": 1904
-      }
+      },
+      "avg_cadence": 170,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 163
     },
     {
       "garmin_id": 23299150853,
@@ -12517,7 +12660,10 @@
         "z3": 304,
         "z4": 214,
         "z5": 894
-      }
+      },
+      "avg_cadence": 170,
+      "training_effect_anaerobic": 2.799999952316284,
+      "max_hr": 205
     },
     {
       "garmin_id": 23287087159,
@@ -12682,7 +12828,10 @@
       "hr_zones": {
         "z1": 2336,
         "z2": 444
-      }
+      },
+      "avg_cadence": 172,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 154
     },
     {
       "garmin_id": 23275187302,
@@ -12875,7 +13024,10 @@
       "hr_zones": {
         "z1": 339,
         "z2": 2955
-      }
+      },
+      "avg_cadence": 170,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 169
     },
     {
       "garmin_id": 23251308005,
@@ -13237,7 +13389,10 @@
         "z1": 1259,
         "z2": 5475,
         "z3": 1
-      }
+      },
+      "avg_cadence": 173,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 167
     },
     {
       "garmin_id": 23238630514,
@@ -13430,7 +13585,10 @@
       "hr_zones": {
         "z1": 2877,
         "z2": 562
-      }
+      },
+      "avg_cadence": 170,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 160
     },
     {
       "garmin_id": 23221550220,
@@ -13595,7 +13753,10 @@
       "hr_zones": {
         "z2": 1392,
         "z1": 1315
-      }
+      },
+      "avg_cadence": 172,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 168
     },
     {
       "garmin_id": 23216464454,
@@ -13854,7 +14015,10 @@
         "z1": 285,
         "z2": 3151,
         "z3": 582
-      }
+      },
+      "avg_cadence": 173,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 172
     },
     {
       "garmin_id": 23203957625,
@@ -14061,7 +14225,10 @@
       "hr_zones": {
         "z1": 2820,
         "z2": 634
-      }
+      },
+      "avg_cadence": 170,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 158
     },
     {
       "garmin_id": 23192078158,
@@ -14272,7 +14439,10 @@
         "z2": 955,
         "z3": 1259,
         "z4": 241
-      }
+      },
+      "avg_cadence": 174,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 182
     },
     {
       "garmin_id": 23169092602,
@@ -14633,7 +14803,10 @@
       "hr_zones": {
         "z1": 4424,
         "z2": 2510
-      }
+      },
+      "avg_cadence": 172,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 158
     },
     {
       "garmin_id": 23156174061,
@@ -14826,7 +14999,10 @@
       "hr_zones": {
         "z1": 2485,
         "z2": 855
-      }
+      },
+      "avg_cadence": 169,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 161
     },
     {
       "garmin_id": 23142891175,
@@ -14991,7 +15167,10 @@
       "hr_zones": {
         "z1": 2345,
         "z2": 321
-      }
+      },
+      "avg_cadence": 168,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 158
     },
     {
       "garmin_id": 23123852312,
@@ -15288,7 +15467,10 @@
       "hr_zones": {
         "z1": 681,
         "z2": 4339
-      }
+      },
+      "avg_cadence": 174,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 165
     },
     {
       "garmin_id": 23119744106,
@@ -15481,7 +15663,10 @@
       "hr_zones": {
         "z1": 1824,
         "z2": 1230
-      }
+      },
+      "avg_cadence": 170,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 167
     },
     {
       "garmin_id": 23108028661,
@@ -15734,7 +15919,10 @@
         "z1": 327,
         "z2": 2645,
         "z3": 120
-      }
+      },
+      "avg_cadence": 173,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 166
     },
     {
       "garmin_id": 23084025466,
@@ -16067,7 +16255,10 @@
       "hr_zones": {
         "z2": 5783,
         "z1": 306
-      }
+      },
+      "avg_cadence": 172,
+      "training_effect_anaerobic": 0.20000000298023224,
+      "max_hr": 162
     },
     {
       "garmin_id": 23072168046,
@@ -16260,7 +16451,10 @@
       "hr_zones": {
         "z2": 3033,
         "z1": 308
-      }
+      },
+      "avg_cadence": 169,
+      "training_effect_anaerobic": 0.20000000298023224,
+      "max_hr": 171
     },
     {
       "garmin_id": 23059810553,
@@ -16424,7 +16618,10 @@
       "fc_max_at_date": 198,
       "hr_zones": {
         "z1": 2740
-      }
+      },
+      "avg_cadence": 169,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 150
     },
     {
       "garmin_id": 23043206188,
@@ -16646,7 +16843,10 @@
         "z1": 296,
         "z3": 3094,
         "z2": 303
-      }
+      },
+      "avg_cadence": 169,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 183
     },
     {
       "garmin_id": 23032189739,
@@ -16843,7 +17043,10 @@
       "hr_zones": {
         "z2": 308,
         "z3": 2730
-      }
+      },
+      "avg_cadence": 170,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 176
     },
     {
       "garmin_id": 23023745883,
@@ -17138,7 +17341,10 @@
         "z1": 330,
         "z2": 1321,
         "z3": 1822
-      }
+      },
+      "avg_cadence": 174,
+      "training_effect_anaerobic": 0.8999999761581421,
+      "max_hr": 188
     },
     {
       "garmin_id": 22994742630,
@@ -17450,7 +17656,10 @@
         "z2": 309,
         "z3": 4762,
         "z4": 293
-      }
+      },
+      "avg_cadence": 173,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 182
     },
     {
       "garmin_id": 22980701407,
@@ -17648,7 +17857,10 @@
         "z2": 310,
         "z3": 1786,
         "z4": 920
-      }
+      },
+      "avg_cadence": 172,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 183
     },
     {
       "garmin_id": 22972288317,
@@ -17818,7 +18030,10 @@
       "hr_zones": {
         "z1": 327,
         "z3": 2255
-      }
+      },
+      "avg_cadence": 170,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 174
     },
     {
       "garmin_id": 22963569017,
@@ -18056,7 +18271,10 @@
         "z1": 1411,
         "z2": 1271,
         "z3": 300
-      }
+      },
+      "avg_cadence": 172,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 173
     },
     {
       "garmin_id": 22951809683,
@@ -18235,7 +18453,10 @@
       "hr_zones": {
         "z1": 317,
         "z2": 2465
-      }
+      },
+      "avg_cadence": 183,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 160
     },
     {
       "garmin_id": 22935210022,
@@ -18443,7 +18664,10 @@
         "z1": 303,
         "z2": 2690,
         "z3": 275
-      }
+      },
+      "avg_cadence": 171,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 169
     },
     {
       "garmin_id": 22917283581,
@@ -18720,7 +18944,10 @@
       "hr_zones": {
         "z1": 4217,
         "z2": 613
-      }
+      },
+      "avg_cadence": 172,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 157
     },
     {
       "garmin_id": 22904645423,
@@ -18913,7 +19140,10 @@
       "hr_zones": {
         "z1": 918,
         "z2": 2443
-      }
+      },
+      "avg_cadence": 171,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 163
     },
     {
       "garmin_id": 22893744848,
@@ -19065,7 +19295,10 @@
         "z1": 340,
         "z3": 381,
         "z2": 1666
-      }
+      },
+      "avg_cadence": 171,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 170
     },
     {
       "garmin_id": 22882998668,
@@ -19308,7 +19541,10 @@
         "z1": 654,
         "z2": 2236,
         "z3": 215
-      }
+      },
+      "avg_cadence": 172,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 164
     },
     {
       "garmin_id": 22863752396,
@@ -19473,7 +19709,10 @@
       "hr_zones": {
         "z1": 942,
         "z2": 1629
-      }
+      },
+      "avg_cadence": 175,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 158
     },
     {
       "garmin_id": 22853108541,
@@ -19667,7 +19906,10 @@
         "z1": 297,
         "z2": 605,
         "z3": 2074
-      }
+      },
+      "avg_cadence": 170,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 171
     },
     {
       "garmin_id": 22836842493,
@@ -19903,7 +20145,10 @@
         "z1": 299,
         "z3": 636,
         "z2": 3266
-      }
+      },
+      "avg_cadence": 168,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 166
     },
     {
       "garmin_id": 22825259463,
@@ -20111,7 +20356,10 @@
         "z1": 303,
         "z2": 2747,
         "z3": 250
-      }
+      },
+      "avg_cadence": 169,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 167
     },
     {
       "garmin_id": 22800958040,
@@ -20247,7 +20495,10 @@
       "fc_max_at_date": 198,
       "hr_zones": {
         "z1": 2224
-      }
+      },
+      "avg_cadence": 174,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 153
     },
     {
       "garmin_id": 22789594427,
@@ -20510,7 +20761,10 @@
       "hr_zones": {
         "z1": 2610,
         "z2": 1100
-      }
+      },
+      "avg_cadence": 172,
+      "training_effect_anaerobic": 0.20000000298023224,
+      "max_hr": 156
     },
     {
       "garmin_id": 22770609208,
@@ -20680,7 +20934,10 @@
         "z2": 297,
         "z3": 1488,
         "z4": 915
-      }
+      },
+      "avg_cadence": 179,
+      "training_effect_anaerobic": 0.10000000149011612,
+      "max_hr": 186
     },
     {
       "garmin_id": 22753305099,
@@ -20864,7 +21121,10 @@
         "z1": 303,
         "z3": 2107,
         "z4": 620
-      }
+      },
+      "avg_cadence": 171,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 182
     },
     {
       "garmin_id": 22735939665,
@@ -21058,7 +21318,10 @@
         "z1": 336,
         "z3": 1000,
         "z2": 1916
-      }
+      },
+      "avg_cadence": 171,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 173
     },
     {
       "garmin_id": 22729308568,
@@ -21280,7 +21543,10 @@
         "z1": 305,
         "z2": 1806,
         "z3": 1000
-      }
+      },
+      "avg_cadence": 169,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 169
     },
     {
       "garmin_id": 22704300855,
@@ -21417,7 +21683,10 @@
       "hr_zones": {
         "z1": 910,
         "z2": 1190
-      }
+      },
+      "avg_cadence": 166,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 163
     },
     {
       "garmin_id": 22694501795,
@@ -21569,7 +21838,10 @@
         "z1": 670,
         "z3": 815,
         "z2": 915
-      }
+      },
+      "avg_cadence": 166,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 176
     },
     {
       "garmin_id": 22662064953,
@@ -21680,7 +21952,10 @@
       "fc_max_at_date": 198,
       "hr_zones": {
         "z1": 1801
-      }
+      },
+      "avg_cadence": 169,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 150
     },
     {
       "garmin_id": 22646265581,
@@ -21805,7 +22080,10 @@
       "fc_max_at_date": 198,
       "hr_zones": {
         "z1": 2165
-      }
+      },
+      "avg_cadence": 165,
+      "training_effect_anaerobic": 0.10000000149011612,
+      "max_hr": 148
     },
     {
       "garmin_id": 22633929850,
@@ -21917,7 +22195,10 @@
       "hr_zones": {
         "z1": 1408,
         "z2": 475
-      }
+      },
+      "avg_cadence": 166,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 160
     },
     {
       "garmin_id": 22580585917,
@@ -22549,7 +22830,10 @@
         "z2": 278,
         "z4": 10685,
         "z3": 272
-      }
+      },
+      "avg_cadence": 179,
+      "training_effect_anaerobic": 2.0999999046325684,
+      "max_hr": 190
     },
     {
       "garmin_id": 22562769777,
@@ -22674,7 +22958,10 @@
       "fc_max_at_date": 198,
       "hr_zones": {
         "z1": 2490
-      }
+      },
+      "avg_cadence": 169,
+      "training_effect_anaerobic": 0.0,
+      "max_hr": 149
     }
   ],
   "hr_history": [
