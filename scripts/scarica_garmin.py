@@ -1036,10 +1036,20 @@ def find_training_effect_anywhere(obj):
 
 def find_sweat_loss_anywhere(obj):
     """Cerca la stima di liquidi persi (sweat loss) ovunque annidata nella
-    risposta di get_activity(): il nome esatto del campo non e' garantito
-    (es. potrebbe essere 'estimatedSweatLoss', 'sweatLoss', o con suffisso
-    di unita' tipo 'estimatedSweatLossInMilliliters')."""
+    risposta di get_activity(): Garmin la chiama "waterEstimated" (non
+    "sweatLoss"/"estimatedSweatLoss" come ci si aspetterebbe — confermato
+    via debug_sweat.py), e il valore puo' arrivare come stringa numerica."""
     found = {"value": None}
+
+    def as_number(v):
+        if isinstance(v, (int, float)):
+            return v
+        if isinstance(v, str):
+            try:
+                return float(v.replace(",", "."))
+            except ValueError:
+                return None
+        return None
 
     def walk(o):
         if found["value"] is not None:
@@ -1047,9 +1057,12 @@ def find_sweat_loss_anywhere(obj):
         if isinstance(o, dict):
             for k, v in o.items():
                 lk = k.lower()
-                if "sweatloss" in lk and isinstance(v, (int, float)) and found["value"] is None:
-                    found["value"] = v
-                elif isinstance(v, (dict, list)):
+                if "sweat" in lk or lk == "waterestimated":
+                    num = as_number(v)
+                    if num is not None and found["value"] is None:
+                        found["value"] = num
+                        continue
+                if isinstance(v, (dict, list)):
                     walk(v)
         elif isinstance(o, list):
             for item in o:
@@ -1155,7 +1168,7 @@ def build_activity(act, laps_raw, gear_name=None, gear_km=None, gps_polyline=Non
     start_local = act.get("startTimeLocal", "")[:19]
     weather_temp, weather_condition = fetch_weather(lat, lon, start_local)
     cadence = act.get("averageRunningCadenceInStepsPerMinute") or act.get("averageRunCadence")
-    sweat_loss = act.get("estimatedSweatLoss") or act.get("sweatLoss") or act.get("estimatedSweatLossInMilliliters")
+    sweat_loss = act.get("waterEstimated") or act.get("estimatedSweatLoss") or act.get("sweatLoss")
     return {
         "garmin_id":          act.get("activityId"),
         "date":               activity_date(act),
@@ -1383,10 +1396,10 @@ def main():
                 if act_merged.get("anaerobicTrainingEffect") is None and anaer is not None:
                     act_merged["anaerobicTrainingEffect"] = anaer
             # Stessa cosa per i liquidi persi (sweat loss), nome campo non garantito.
-            if act_merged.get("estimatedSweatLoss") is None:
+            if act_merged.get("waterEstimated") is None:
                 sw = find_sweat_loss_anywhere(act_detail)
                 if sw is not None:
-                    act_merged["estimatedSweatLoss"] = sw
+                    act_merged["waterEstimated"] = sw
 
         # GPS e zone FC (per il pannello di dettaglio nella dashboard)
         gps_polyline = fetch_gps_polyline(client, act_id)
@@ -1504,7 +1517,7 @@ def main():
             anaerobic = detail_summary.get("anaerobicTrainingEffect")
             if anaerobic is None:
                 anaerobic = anaer_deep
-            sweat = detail_summary.get("estimatedSweatLoss")
+            sweat = detail_summary.get("waterEstimated", detail_summary.get("estimatedSweatLoss"))
             if sweat is None:
                 sweat = find_sweat_loss_anywhere(act_detail)
             changed = []
