@@ -1005,6 +1005,60 @@ def compute_hr_zone_time_from_laps(laps_raw, fc_max):
     return {k: round(v) for k, v in result.items()}
 
 
+def find_training_effect_anywhere(obj):
+    """Cerca aerobicTrainingEffect/anaerobicTrainingEffect ovunque siano annidati
+    nella risposta di get_activity(): a volte non stanno in summaryDTO o hanno
+    nomi diversi dal previsto. In particolare Garmin chiama il valore aerobico
+    semplicemente "trainingEffect" (non "aerobicTrainingEffect" come ci si
+    aspetterebbe, mentre quello anaerobico e' "anaerobicTrainingEffect" —
+    nomenclatura asimmetrica confermata via debug_training_effect.py)."""
+    found = {"aerobic": None, "anaerobic": None}
+
+    def walk(o):
+        if found["aerobic"] is not None and found["anaerobic"] is not None:
+            return
+        if isinstance(o, dict):
+            for k, v in o.items():
+                lk = k.lower()
+                if lk in ("aerobictrainingeffect", "trainingeffect") and isinstance(v, (int, float)) and found["aerobic"] is None:
+                    found["aerobic"] = v
+                elif lk == "anaerobictrainingeffect" and isinstance(v, (int, float)) and found["anaerobic"] is None:
+                    found["anaerobic"] = v
+                elif isinstance(v, (dict, list)):
+                    walk(v)
+        elif isinstance(o, list):
+            for item in o:
+                walk(item)
+
+    walk(obj)
+    return found["aerobic"], found["anaerobic"]
+
+
+def find_sweat_loss_anywhere(obj):
+    """Cerca la stima di liquidi persi (sweat loss) ovunque annidata nella
+    risposta di get_activity(): il nome esatto del campo non e' garantito
+    (es. potrebbe essere 'estimatedSweatLoss', 'sweatLoss', o con suffisso
+    di unita' tipo 'estimatedSweatLossInMilliliters')."""
+    found = {"value": None}
+
+    def walk(o):
+        if found["value"] is not None:
+            return
+        if isinstance(o, dict):
+            for k, v in o.items():
+                lk = k.lower()
+                if "sweatloss" in lk and isinstance(v, (int, float)) and found["value"] is None:
+                    found["value"] = v
+                elif isinstance(v, (dict, list)):
+                    walk(v)
+        elif isinstance(o, list):
+            for item in o:
+                walk(item)
+
+    walk(obj)
+    return found["value"]
+
+
 def extract_gear(act_detail):
     """Estrae nome e km scarpa dai dettagli attivita Garmin."""
     if not act_detail:
@@ -1101,6 +1155,7 @@ def build_activity(act, laps_raw, gear_name=None, gear_km=None, gps_polyline=Non
     start_local = act.get("startTimeLocal", "")[:19]
     weather_temp, weather_condition = fetch_weather(lat, lon, start_local)
     cadence = act.get("averageRunningCadenceInStepsPerMinute") or act.get("averageRunCadence")
+    sweat_loss = act.get("estimatedSweatLoss") or act.get("sweatLoss") or act.get("estimatedSweatLossInMilliliters")
     return {
         "garmin_id":          act.get("activityId"),
         "date":               activity_date(act),
@@ -1115,6 +1170,7 @@ def build_activity(act, laps_raw, gear_name=None, gear_km=None, gps_polyline=Non
         "avg_pace_s_km":      round(pace) if pace else None,
         "avg_pace_fmt":       fmt_pace(pace),
         "calories":           act.get("calories"),
+        "sweat_loss_ml":      round(sweat_loss) if sweat_loss else None,
         "elevation_gain":     round(act["elevationGain"]) if act.get("elevationGain") is not None else None,
         "elevation_loss":     round(act["elevationLoss"]) if act.get("elevationLoss") is not None else None,
         "avg_cadence":        round(cadence) if cadence else None,
@@ -1297,6 +1353,7 @@ def main():
 
         # Gear
         gear_name = gear_km = None
+        act_detail = None
         try:
             act_detail = client.get_activity(act_id)
             gear_name, gear_km = extract_gear(act_detail)
@@ -1304,6 +1361,32 @@ def main():
                 log.info("    Gear: %s (%s km totali)", gear_name, gear_km)
         except Exception as e:
             log.warning("    Gear non disponibile: %s", e)
+
+        # get_activities() (lista) a volte non include cadenza, training effect
+        # e talvolta FC max, che invece ci sono in get_activity() (dettaglio).
+        # Prima si scartava act_detail dopo il solo uso per il gear: qui
+        # riempiamo i buchi di 'act' con i dati del dettaglio completo.
+        act_merged = dict(act)
+        if act_detail:
+            detail_summary = act_detail.get("summaryDTO") or act_detail
+            for k, v in detail_summary.items():
+                if act_merged.get(k) in (None, "") and v not in (None, ""):
+                    act_merged[k] = v
+            # Aerobic/anaerobic training effect a volte non sono in summaryDTO,
+            # e Garmin chiama il valore aerobico "trainingEffect" (non
+            # "aerobicTrainingEffect"): cerca ricorsivamente in tutta la
+            # risposta per essere sicuri di trovarlo comunque si chiami.
+            if act_merged.get("aerobicTrainingEffect") is None or act_merged.get("anaerobicTrainingEffect") is None:
+                aer, anaer = find_training_effect_anywhere(act_detail)
+                if act_merged.get("aerobicTrainingEffect") is None and aer is not None:
+                    act_merged["aerobicTrainingEffect"] = aer
+                if act_merged.get("anaerobicTrainingEffect") is None and anaer is not None:
+                    act_merged["anaerobicTrainingEffect"] = anaer
+            # Stessa cosa per i liquidi persi (sweat loss), nome campo non garantito.
+            if act_merged.get("estimatedSweatLoss") is None:
+                sw = find_sweat_loss_anywhere(act_detail)
+                if sw is not None:
+                    act_merged["estimatedSweatLoss"] = sw
 
         # GPS e zone FC (per il pannello di dettaglio nella dashboard)
         gps_polyline = fetch_gps_polyline(client, act_id)
@@ -1318,7 +1401,7 @@ def main():
         if gps_polyline:
             log.info("    GPS: %d punti", len(gps_polyline))
 
-        record = build_activity(act, laps_raw, gear_name, gear_km, gps_polyline, hr_zones)
+        record = build_activity(act_merged, laps_raw, gear_name, gear_km, gps_polyline, hr_zones)
 
         # Scoring
         plan = plan_index.get(act_date)
@@ -1391,6 +1474,59 @@ def main():
                         log.info("  Backfill lap %s: %d lap", record.get("date"), len(record["laps"]))
                 except Exception as e:
                     log.warning("  Errore backfill lap %s: %s", record.get("date"), e)
+
+    # Backfill cadenza/training effect/FC max: get_activities() (lista) a volte
+    # non li include, mentre get_activity() (dettaglio) si. Prima venivano
+    # richiesti solo per il gear e scartati: qui si tappano i buchi lasciati
+    # nei record gia' salvati, senza toccare il resto del record.
+    for record in data.get("activities", []):
+        missing = (
+            record.get("avg_cadence") is None
+            or record.get("training_effect_aerobic") is None
+            or record.get("training_effect_anaerobic") is None
+            or record.get("max_hr") is None
+            or record.get("sweat_loss_ml") is None
+        )
+        if not missing:
+            continue
+        act_id = record.get("garmin_id")
+        if not act_id:
+            continue
+        try:
+            act_detail = client.get_activity(act_id)
+            detail_summary = act_detail.get("summaryDTO") or act_detail
+            cadence = detail_summary.get("averageRunningCadenceInStepsPerMinute") or detail_summary.get("averageRunCadence")
+            max_hr  = detail_summary.get("maxHR") or detail_summary.get("maxHeartRate")
+            aer_deep, anaer_deep = find_training_effect_anywhere(act_detail)
+            aerobic   = detail_summary.get("trainingEffect", detail_summary.get("aerobicTrainingEffect"))
+            if aerobic is None:
+                aerobic = aer_deep
+            anaerobic = detail_summary.get("anaerobicTrainingEffect")
+            if anaerobic is None:
+                anaerobic = anaer_deep
+            sweat = detail_summary.get("estimatedSweatLoss")
+            if sweat is None:
+                sweat = find_sweat_loss_anywhere(act_detail)
+            changed = []
+            if record.get("avg_cadence") is None and cadence:
+                record["avg_cadence"] = round(cadence)
+                changed.append("cadenza")
+            if record.get("training_effect_aerobic") is None and aerobic is not None:
+                record["training_effect_aerobic"] = aerobic
+                changed.append("effetto aerobico")
+            if record.get("training_effect_anaerobic") is None and anaerobic is not None:
+                record["training_effect_anaerobic"] = anaerobic
+                changed.append("effetto anaerobico")
+            if record.get("max_hr") is None and max_hr:
+                record["max_hr"] = round(max_hr)
+                changed.append("FC max")
+            if record.get("sweat_loss_ml") is None and sweat:
+                record["sweat_loss_ml"] = round(sweat)
+                changed.append("liquidi persi")
+            if changed:
+                log.info("  Backfill dettagli %s: %s", record.get("date"), ", ".join(changed))
+        except Exception as e:
+            log.warning("  Errore backfill dettagli %s: %s", record.get("date"), e)
 
     for record in data.get("activities", []):
         plan = plan_index.get(record.get("date", ""))

@@ -149,7 +149,7 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font
 .act-modal-body{padding:20px 24px 24px;}
 .act-map{width:100%;height:220px;border-radius:16px;overflow:hidden;background:var(--bg3);margin-bottom:18px;}
 .act-map-empty{width:100%;height:120px;border-radius:16px;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--text3);font-family:var(--mono);font-size:12px;margin-bottom:18px;}
-.act-metrics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;margin-bottom:20px;}
+.act-metrics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px;}
 .act-metric-box{background:var(--bg3);border-radius:12px;padding:10px 12px;}
 .act-metric-lbl{font-family:var(--font);font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.03em;margin-bottom:3px;}
 .act-metric-val{font-size:16px;font-weight:700;letter-spacing:-.01em;}
@@ -160,10 +160,17 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font
 .act-hrzone-legend-item{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:10px;color:var(--text2);}
 .act-hrzone-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
 .act-splits-table{width:100%;border-collapse:collapse;}
-.act-splits-table th{font-family:var(--font);font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.03em;padding:6px 8px;text-align:left;border-bottom:1px solid var(--border2);}
-.act-splits-table td{font-family:var(--mono);font-size:12px;padding:7px 8px;border-bottom:1px solid var(--border2);color:var(--text2);}
+.act-splits-table th{font-family:var(--font);font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.03em;padding:6px 8px;text-align:left;border-bottom:1px solid var(--border2);white-space:nowrap;}
+.act-splits-table td{font-family:var(--mono);font-size:12px;padding:7px 8px;border-bottom:1px solid var(--border2);color:var(--text2);white-space:nowrap;}
 .act-splits-table tr:last-child td{border-bottom:none;}
 .act-splits-table td:first-child{color:var(--text3);width:34px;}
+@media (max-width:480px){
+  .act-modal{max-width:98vw;}
+  .act-modal-body{padding:14px 10px 20px;}
+  .act-splits-table th{font-size:8px;padding:5px 3px;letter-spacing:0;}
+  .act-splits-table td{font-size:10px;padding:5px 3px;}
+  .act-splits-table td:first-child{width:16px;}
+}
 
 .score-panel-overlay{position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,.2);backdrop-filter:blur(4px);}
 .score-panel{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9999;background:var(--bg2);border:none;border-radius:24px;padding:22px;width:340px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.16);}
@@ -995,6 +1002,7 @@ function openActivityDetail(detailId){
     {lbl:'Cadenza',           val: act.avg_cadence!=null?Math.round(act.avg_cadence)+' spm':'—'},
     {lbl:'Dislivello +',      val: act.elevation_gain!=null?Math.round(act.elevation_gain)+' m':'—'},
     {lbl:'Calorie',           val: act.calories!=null?Math.round(act.calories)+' kcal':'—'},
+    {lbl:'Liquidi persi',     val: act.sweat_loss_ml!=null?Math.round(act.sweat_loss_ml)+' ml':'—'},
     {lbl:'Effetto aerobico',  val: act.training_effect_aerobic!=null?Number(act.training_effect_aerobic).toFixed(1):'—'},
     {lbl:'Effetto anaerobico',val: act.training_effect_anaerobic!=null?Number(act.training_effect_anaerobic).toFixed(1):'—'},
   ];
