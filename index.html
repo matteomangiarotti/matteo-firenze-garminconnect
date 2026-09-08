@@ -987,17 +987,17 @@ function openActivityDetail(detailId){
   if(!el)return;
   const act=JSON.parse(decodeURIComponent(el.getAttribute('data-activity')));
 
-  // ── Metriche chiave ──
-  const metrics=[];
-  metrics.push({lbl:'Passo medio', val: act.avg_pace_fmt?act.avg_pace_fmt+'/km':'—'});
-  metrics.push({lbl:'FC media', val: act.avg_hr?Math.round(act.avg_hr)+' bpm':'—'});
-  if(act.max_hr) metrics.push({lbl:'FC max', val: Math.round(act.max_hr)+' bpm'});
-  if(act.avg_cadence) metrics.push({lbl:'Cadenza', val: Math.round(act.avg_cadence)+' spm'});
-  if(act.elevation_gain!=null) metrics.push({lbl:'Dislivello +', val: Math.round(act.elevation_gain)+' m'});
-  if(act.elevation_loss!=null) metrics.push({lbl:'Dislivello -', val: Math.round(act.elevation_loss)+' m'});
-  if(act.calories) metrics.push({lbl:'Calorie', val: Math.round(act.calories)+' kcal'});
-  if(act.training_effect_aerobic) metrics.push({lbl:'Effetto aerobico', val: Number(act.training_effect_aerobic).toFixed(1)});
-  if(act.training_effect_anaerobic) metrics.push({lbl:'Effetto anaerobico', val: Number(act.training_effect_anaerobic).toFixed(1)});
+  // ── Metriche chiave (sempre le stesse 8, indipendentemente dall'allenamento) ──
+  const metrics=[
+    {lbl:'Passo medio',       val: act.avg_pace_fmt?act.avg_pace_fmt+'/km':'—'},
+    {lbl:'FC media',          val: act.avg_hr!=null?Math.round(act.avg_hr)+' bpm':'—'},
+    {lbl:'FC max',            val: act.max_hr!=null?Math.round(act.max_hr)+' bpm':'—'},
+    {lbl:'Cadenza',           val: act.avg_cadence!=null?Math.round(act.avg_cadence)+' spm':'—'},
+    {lbl:'Dislivello +',      val: act.elevation_gain!=null?Math.round(act.elevation_gain)+' m':'—'},
+    {lbl:'Calorie',           val: act.calories!=null?Math.round(act.calories)+' kcal':'—'},
+    {lbl:'Effetto aerobico',  val: act.training_effect_aerobic!=null?Number(act.training_effect_aerobic).toFixed(1):'—'},
+    {lbl:'Effetto anaerobico',val: act.training_effect_anaerobic!=null?Number(act.training_effect_anaerobic).toFixed(1):'—'},
+  ];
 
   const metricsHtml=metrics.map(m=>
     `<div class="act-metric-box"><div class="act-metric-lbl">${m.lbl}</div><div class="act-metric-val">${m.val}</div></div>`

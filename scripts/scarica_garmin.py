@@ -330,17 +330,25 @@ def parse_detail_targets(detail):
     #   2 min recupero a 5:30-5:50/km
     rec_candidates = [x.strip() for x in re.split(r'[.;]', d) if re.search(r'\b(jog|recuper\w*|rec\b)', x, re.IGNORECASE)]
     for seg in rec_candidates:
-        m_dur = re.search(r'(\d+(?:[\.,]\d+)?)\s*(?:\'|min(?:uti?)?|m\b)', seg, re.IGNORECASE)
+        # Durata SOLO se espressa con apostrofo o "min": una "m" nuda e' ambigua
+        # (400m di recupero a distanza veniva letto come 400 minuti — bug corretto).
+        m_dur   = re.search(r'(\d+(?:[\.,]\d+)?)\s*(?:\'|min(?:uti?)?)\b', seg, re.IGNORECASE)
+        # Distanza esplicita (km o m) per recuperi a km, es. "recupero 400m" o "0.4 km jog".
+        m_distm = re.search(r'(\d+(?:[\.,]\d+)?)\s*(km|m)\b', seg, re.IGNORECASE)
         pace_ranges = parse_all_pace_ranges_seconds(seg)
         # Nei dettagli tipo "Ripetute a 4:05-4:10/km con 2' jog a 5:30-5:50/km"
         # il range del recupero e' l'ultimo, non quello delle ripetute.
         p_min, p_max = pace_ranges[-1] if pace_ranges else (None, None)
         if m_dur:
             out['rec_min_detail'] = float(m_dur.group(1).replace(',', '.'))
+        elif m_distm:
+            val = float(m_distm.group(1).replace(',', '.'))
+            unit = m_distm.group(2).lower()
+            out['rec_km_detail'] = val / 1000 if unit == 'm' else val
         if p_min and p_max:
             out['rec_pace_min_s'] = p_min
             out['rec_pace_max_s'] = p_max
-        if 'rec_min_detail' in out or 'rec_pace_min_s' in out:
+        if 'rec_min_detail' in out or 'rec_km_detail' in out or 'rec_pace_min_s' in out:
             break
 
     # Warm-up / cooldown dal dettaglio, come fallback se Struttura non li contiene.
@@ -362,6 +370,88 @@ def parse_detail_targets(detail):
     return out
 
 
+def parse_progressive_phases(detail):
+    """Estrae le fasi di un lungo progressivo dal Dettaglio, es.:
+        - 12 km a 5:05-5:20/km
+        - 6 km a 4:45-4:50/km
+        - Ultimi 4 km a 4:30-4:35/km
+    Ogni fase e' un blocco distanza+range di passo. Una fase con "ultim"/"final"
+    nel testo si applica agli ultimi X km della corsa (non ai primi X).
+    """
+    if not detail:
+        return []
+    d = detail.replace('’', "'").replace('–', '-')
+    segs = re.split(r'\n+', d)
+    if len(segs) <= 1:
+        # fallback: bullet separati da " - " sulla stessa riga
+        segs = re.split(r'(?:^|\s)-\s+', d)
+    phases = []
+    for seg in segs:
+        seg = seg.strip().lstrip('-').strip()
+        m_km = re.search(r'(\d+(?:[.,]\d+)?)\s*km', seg, re.IGNORECASE)
+        p_min, p_max = parse_pace_range_seconds(seg)
+        if not m_km or not p_min:
+            continue
+        km = float(m_km.group(1).replace(',', '.'))
+        is_last = bool(re.search(r'ultim|final', seg, re.IGNORECASE))
+        phases.append({'km': km, 'pace_min_s': p_min, 'pace_max_s': p_max, 'from_end': is_last})
+    return phases
+
+
+def _phase_boundaries(phases, total_km):
+    """Converte le fasi in intervalli (km_inizio, km_fine, pace_min, pace_max) lungo la corsa."""
+    normal = [p for p in phases if not p['from_end']]
+    tail   = [p for p in phases if p['from_end']]
+    boundaries = []
+    cum = 0.0
+    for p in normal:
+        boundaries.append((cum, cum + p['km'], p['pace_min_s'], p['pace_max_s']))
+        cum += p['km']
+    if tail:
+        p = tail[0]
+        start = max(total_km - p['km'], cum)
+        boundaries.append((start, total_km, p['pace_min_s'], p['pace_max_s']))
+    return boundaries
+
+
+def score_pace_progressive(laps, phases, wtype, flags, notes):
+    """Valuta il passo lap-per-lap secondo la fase di appartenenza, invece che
+    contro un unico range medio (che penalizzava ingiustamente le fasi finali
+    piu' veloci di un lungo progressivo)."""
+    valid = []
+    for l in laps:
+        dist = l.get("distance_km")
+        if dist is None:
+            dist = (l.get("distance_m") or 0) / 1000
+        if l.get("avg_pace_s_km") and dist > 0:
+            valid.append((dist, l["avg_pace_s_km"]))
+    if not valid:
+        return None
+    total_km = sum(dist for dist, _ in valid)
+    boundaries = _phase_boundaries(phases, total_km)
+    if not boundaries:
+        return None
+
+    scores = []
+    cum = 0.0
+    for dist, pace in valid:
+        mid = cum + dist / 2
+        cum += dist
+        pmin = pmax = None
+        for s, e, pn, px in boundaries:
+            if s - 0.05 <= mid <= e + 0.05:
+                pmin, pmax = pn, px
+                break
+        if pmin is None:
+            pmin, pmax = boundaries[-1][2], boundaries[-1][3]
+        scores.append(score_pace(pace, pmin, pmax, [], [], wtype))
+
+    if not scores:
+        return None
+    notes.append("Passo valutato per fase (lungo progressivo).")
+    return round(clamp(sum(scores) / len(scores), 1, 10), 2)
+
+
 def merge_detail_targets_into_structure(st, detail_targets):
     """Integra nel parser struttura i target letti dal Dettaglio."""
     st = dict(st or {})
@@ -371,6 +461,11 @@ def merge_detail_targets_into_structure(st, detail_targets):
     # Durata recupero: il dettaglio ha priorità, perché rappresenta il testo umano del workout.
     if detail_targets.get('rec_min_detail') is not None:
         st['rec_min'] = detail_targets['rec_min_detail']
+
+    # Distanza recupero dal dettaglio (recupero a km): non sovrascrive una rec_km
+    # già riconosciuta nella Struttura compatta (es. REC400m).
+    if not st.get('rec_km') and detail_targets.get('rec_km_detail') is not None:
+        st['rec_km'] = detail_targets['rec_km_detail']
 
     # Passo recupero: serve allo scoring, non era presente nella Struttura compatta.
     if detail_targets.get('rec_pace_min_s') is not None:
@@ -553,16 +648,27 @@ def score_recoveries(recovery_laps, plan, st, flags, notes):
             return 3.0
         return 7.0
 
-    target_rec_s = (st.get("rec_min") or st.get("rec_min_detail") or 2.0) * 60
+    # Il recupero puo' essere definito a tempo (rec_min) o a distanza (rec_km).
+    # Se e' a distanza, va valutato confrontando i km del lap col target, non i secondi:
+    # usare sempre un target a tempo per un recupero a km falsava il voto (es. REC400m
+    # letto come se dovesse durare un tempo fisso arbitrario).
+    target_rec_km = st.get("rec_km")
+    target_rec_s  = None if target_rec_km else (st.get("rec_min") or st.get("rec_min_detail") or 2.0) * 60
     rec_pace_min = st.get("rec_pace_min_s")  # limite veloce, es. 5:30/km = 330 s/km
     rec_pace_max = st.get("rec_pace_max_s")  # limite lento,  es. 5:50/km = 350 s/km
 
     scores = []
     for lap in recovery_laps:
         dur  = lap.get("duration_s") or 0
+        dist = lap.get("distance_km")
+        if dist is None:
+            dist = (lap.get("distance_m") or 0) / 1000
         pace = lap.get("avg_pace_s_km")
 
-        ratio = dur / target_rec_s if target_rec_s > 0 else 1.0
+        if target_rec_km:
+            ratio = dist / target_rec_km if target_rec_km > 0 else 1.0
+        else:
+            ratio = dur / target_rec_s if target_rec_s > 0 else 1.0
         if ratio >= 0.90:
             s_dur = 10.0
         elif ratio >= 0.80:
@@ -698,7 +804,15 @@ def auto_score(plan, activity):
 
     elif wtype == "lungo":
         s_hr    = score_hr(activity.get("avg_hr"), hr_min_eff or round(fc_max*0.742), hr_max_eff or round(fc_max*0.808), flags, notes)
-        s_pace  = score_pace(activity.get("avg_pace_s_km"), plan.get("pace_min_s"), plan.get("pace_max_s"), flags, notes, "lungo")
+        # Lungo progressivo: se il Dettaglio descrive piu' fasi di passo, valuta
+        # per fase invece che sulla media (altrimenti le fasi finali piu' veloci
+        # venivano penalizzate come "troppo veloci" rispetto al range iniziale).
+        prog_phases = parse_progressive_phases(plan.get("dettaglio", ""))
+        s_pace = None
+        if len(prog_phases) >= 2 and laps:
+            s_pace = score_pace_progressive(laps, prog_phases, "lungo", flags, notes)
+        if s_pace is None:
+            s_pace = score_pace(activity.get("avg_pace_s_km"), plan.get("pace_min_s"), plan.get("pace_max_s"), flags, notes, "lungo")
         s_dist  = score_distance(activity.get("distance_km",0), plan.get("distance_km"), flags, notes)
         s_drift = score_cardiac_drift(laps, flags, notes)
         s_hr_d  = (s_hr + s_drift)/2
@@ -790,7 +904,7 @@ def auto_score(plan, activity):
         "flags":       list(set(flags)),
         "notes":       notes,
         "cap_applied": cap_reason,
-        "scoring_version": 8,
+        "scoring_version": 9,
     }
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -1259,7 +1373,7 @@ def main():
         if expected and not expected.issubset(set(subs.keys())):
             return True
 
-        if score_obj.get("scoring_version") != 8:
+        if score_obj.get("scoring_version") != 9:
             return True
 
         return False
