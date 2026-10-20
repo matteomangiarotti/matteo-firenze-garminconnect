@@ -1,0 +1,13 @@
+# Segreti
+.env
+
+# Python
+__pycache__/
+*.pyc
+
+# Log e backup locali
+*.log
+*_BACKUP.*
+
+# File archiviati, non da pubblicare
+_archivio/
