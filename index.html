@@ -76,8 +76,8 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font
 .fcmax-modal p{font-size:12px;color:var(--text2);margin-bottom:16px;line-height:1.5;}
 .fcmax-field{margin-bottom:14px;}
 .fcmax-field label{display:block;font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px;}
-.fcmax-field input{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:var(--bg3);font-family:var(--font);font-size:14px;color:var(--text);}
-.fcmax-field input:focus{outline:none;border-color:var(--orange);}
+.fcmax-field input,.fcmax-field select{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:var(--bg3);font-family:var(--font);font-size:14px;color:var(--text);}
+.fcmax-field input:focus,.fcmax-field select:focus{outline:none;border-color:var(--orange);}
 .fcmax-btn-row{display:flex;gap:8px;margin-top:18px;}
 .fcmax-btn{flex:1;padding:11px;border-radius:12px;border:none;font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;transition:opacity .15s;}
 .fcmax-btn:hover{opacity:.85;}
@@ -121,6 +121,12 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font
 .act-e{font-family:var(--mono);font-size:12px;color:var(--text3);}
 .gear-name{font-family:var(--font);font-size:12px;font-weight:500;color:var(--text);}
 .gear-km{font-family:var(--mono);font-size:11px;color:var(--text2);margin-top:2px;}
+.gear-row{display:flex;align-items:flex-start;gap:2px;}
+.gear-more{background:none;border:none;padding:0 4px;font-size:14px;line-height:16px;color:var(--text3);cursor:pointer;opacity:0;transition:opacity .15s,color .15s;flex-shrink:0;}
+tr:hover .gear-more,.gear-more:focus-visible{opacity:1;}
+.gear-more:hover{color:var(--orange);}
+@media (hover:none){.gear-more{opacity:.6;}}
+.gear-reset{display:block;width:100%;margin-top:10px;background:none;border:none;font-family:var(--font);font-size:12px;color:var(--text2);cursor:pointer;text-decoration:underline;}
 .lap-table{width:100%;border-collapse:collapse;margin-top:10px;}
 .lap-table td{font-family:var(--mono);font-size:11px;padding:3px 4px;border-top:1px solid var(--border2);color:var(--text2);}
 .lap-table td:first-child{color:var(--text3);width:28px;}
@@ -287,6 +293,8 @@ const FCMAX_JSON        = './data/fc_max_history.json';
 const GH_OWNER          = 'matteomangiarotti';
 const GH_REPO           = 'matteo-firenze-garminconnect';
 const GH_FILE_PATH      = 'data/fc_max_history.json';
+const GEAR_OVERRIDES_JSON = './data/gear_overrides.json';
+const GH_GEAR_PATH      = 'data/gear_overrides.json';
 
 // ── ICS PARSER ──────────────────────────────────────────────────────────────
 function parseICS(text){
@@ -724,7 +732,10 @@ function buildDashboard(activities){
       if(real&&real.gear_name){
         const gt=gearTotals[real.garmin_id];
         const kmTot=gt?gt.km:null;
-        gearHtml2=`<div class="gear-name">${real.gear_name}</div>${kmTot!==null?`<div class="gear-km">${kmTot} km</div>`:''}`;
+        gearHtml2=`<div class="gear-name"${real.gear_manual?' title="Corretta a mano"':''}>${escGear(real.gear_name)}</div>${kmTot!==null?`<div class="gear-km">${kmTot} km</div>`:''}`;
+      }
+      if(real){
+        gearHtml2=`<div class="gear-row"><div>${gearHtml2}</div><button class="gear-more" onclick="openGearModal('${real.garmin_id}')" title="Cambia scarpa" aria-label="Cambia scarpa">⋯</button></div>`;
       }
       const gearCell=`<td style="vertical-align:top;padding:10px 12px;border-top:1px solid var(--border2);border-right:1px solid var(--border2);">${gearHtml2}</td>`;
 
@@ -743,6 +754,7 @@ function buildDashboard(activities){
         </div>
         <div class="m-card-sec"><div class="m-card-lbl">Piano Firenze</div><div>${planCell}</div></div>
         ${real?`<div class="m-card-sec"><div class="m-card-lbl">Garmin</div><div>${realHtml}</div></div>`:''}
+        ${real?`<div class="m-card-sec"><div class="m-card-lbl">Scarpa</div>${gearHtml2}</div>`:''}
         ${scoreCell.replace('<td','<div').replace('</td>','</div>').replace(/style="[^"]*"/,'')}
       </div>`;
 
@@ -853,6 +865,9 @@ async function sync(){
 
   document.getElementById('ld-txt').textContent='Caricamento attività Garmin...';
   const {activities, hr_history}=await loadActivities();
+  GEAR_OVERRIDES=await loadGearOverrides();
+  ALL_ACTIVITIES=activities;
+  applyGearOverrides(activities);
 
   // FC max: priorita' a data/fc_max_history.json (fonte di verita', modificabile
   // dalla dashboard), fallback su hr_history dentro activities.json.
@@ -1098,7 +1113,7 @@ function closeActivityDetail(){
   if(_actMapInstance){_actMapInstance.remove();_actMapInstance=null;}
 }
 
-document.addEventListener('keydown',function(e){if(e.key==='Escape')closeActivityDetail();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeActivityDetail();closeGearModal();}});
 
 // ── MODIFICA FC MAX DALLA DASHBOARD ──────────────────────────────────────────
 // Scrive direttamente su GitHub tramite le Contents API, usando un Personal
@@ -1232,6 +1247,190 @@ async function saveFcMax(){
   }catch(e){
     console.error(e);
     setFcMaxStatus('Errore: '+e.message,'err');
+  }
+}
+
+// ── CORREZIONE MANUALE SCARPA ────────────────────────────────────────────────
+// Le correzioni stanno in data/gear_overrides.json ({garmin_id: scarpa, "" =
+// nessuna}), file che lo script di sync non tocca. GitHub Pages impiega circa
+// un minuto a pubblicare il file salvato: nel frattempo la correzione resta nel
+// localStorage, cosi' ricaricando la pagina non si perde.
+const GEAR_PENDING_KEY='gear_overrides_pending';
+let GEAR_OVERRIDES={};
+let ALL_ACTIVITIES=[];
+let GEAR_EDIT_ID=null;
+
+const escGear=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const hasOwn=(o,k)=>Object.prototype.hasOwnProperty.call(o,k);
+
+function readGearPending(){
+  try{return JSON.parse(localStorage.getItem(GEAR_PENDING_KEY)||'{}')||{};}catch(e){return {};}
+}
+function writeGearPending(p){
+  try{localStorage.setItem(GEAR_PENDING_KEY,JSON.stringify(p));}catch(e){}
+}
+
+async function loadGearOverrides(){
+  let fromFile={};
+  try{
+    const r=await fetch(GEAR_OVERRIDES_JSON,{cache:'no-store'});
+    if(r.ok)fromFile=(await r.json())||{};
+  }catch(e){
+    console.warn('gear_overrides.json non disponibile:',e);
+  }
+  // Correzioni in attesa (null = torna a quella di Garmin): si scartano quando
+  // il file pubblicato le contiene gia'.
+  const pending=readGearPending();
+  Object.keys(pending).forEach(id=>{
+    const published=pending[id]===null?!hasOwn(fromFile,id):fromFile[id]===pending[id];
+    if(published)delete pending[id];
+  });
+  writeGearPending(pending);
+  const merged={...fromFile};
+  Object.keys(pending).forEach(id=>{
+    if(pending[id]===null)delete merged[id];else merged[id]=pending[id];
+  });
+  return merged;
+}
+
+function applyGearOverrides(activities){
+  activities.forEach(a=>{
+    if(a.gear_garmin===undefined)a.gear_garmin=a.gear_name||null;
+    const id=String(a.garmin_id);
+    a.gear_manual=hasOwn(GEAR_OVERRIDES,id);
+    a.gear_name=a.gear_manual?(GEAR_OVERRIDES[id]||null):a.gear_garmin;
+  });
+}
+
+function gearChoices(){
+  const names=new Set(Object.keys(GEAR_SNAPSHOT_KM));
+  ALL_ACTIVITIES.forEach(a=>{if(a.gear_garmin)names.add(a.gear_garmin);});
+  Object.values(GEAR_OVERRIDES).forEach(n=>{if(n)names.add(n);});
+  return [...names].sort((a,b)=>a.localeCompare(b));
+}
+
+function openGearModal(id){
+  const act=ALL_ACTIVITIES.find(a=>String(a.garmin_id)===String(id));
+  if(!act)return;
+  GEAR_EDIT_ID=String(id);
+  const hasToken=!!getGhToken();
+  const current=act.gear_name||'';
+  const options=['<option value="">Nessuna scarpa</option>']
+    .concat(gearChoices().map(n=>`<option value="${escGear(n)}"${n===current?' selected':''}>${escGear(n)}</option>`))
+    .join('');
+  const km=act.distance_km?` · ${act.distance_km.toFixed(1)} km`:'';
+
+  const html=`
+  <div class="fcmax-modal-overlay" onclick="closeGearModal()"></div>
+  <div class="fcmax-modal">
+    <h3>Cambia scarpa</h3>
+    <p>${fmtDt(act.date)}${km}. Su Garmin: <b>${escGear(act.gear_garmin||'nessuna')}</b></p>
+
+    ${!hasToken ? `
+    <div class="fcmax-field">
+      <label>Token GitHub (una tantum)</label>
+      <input type="password" id="gear-token" placeholder="ghp_xxxxxxxxxxxx">
+    </div>` : ''}
+
+    <div class="fcmax-field">
+      <label>Scarpa</label>
+      <select id="gear-select">${options}</select>
+    </div>
+
+    <div class="fcmax-btn-row">
+      <button class="fcmax-btn fcmax-btn-secondary" onclick="closeGearModal()">Annulla</button>
+      <button class="fcmax-btn fcmax-btn-primary" onclick="saveGear(false)">Salva</button>
+    </div>
+    ${act.gear_manual ? '<button class="gear-reset" onclick="saveGear(true)">Torna a quella di Garmin</button>' : ''}
+    <div class="fcmax-status" id="gear-status"></div>
+  </div>`;
+
+  let container=document.getElementById('gear-modal-container');
+  if(!container){container=document.createElement('div');container.id='gear-modal-container';document.body.appendChild(container);}
+  container.innerHTML=html;
+  document.body.style.overflow='hidden';
+}
+
+function closeGearModal(){
+  const c=document.getElementById('gear-modal-container');
+  if(c)c.innerHTML='';
+  document.body.style.overflow='';
+  GEAR_EDIT_ID=null;
+}
+
+function setGearStatus(msg,cls){
+  const el=document.getElementById('gear-status');
+  if(el){el.textContent=msg;el.className='fcmax-status '+(cls||'');}
+}
+
+async function saveGear(reset){
+  const id=GEAR_EDIT_ID;
+  if(!id)return;
+  const tokenInput=document.getElementById('gear-token');
+  let token=getGhToken();
+  if(tokenInput&&tokenInput.value.trim()){
+    token=tokenInput.value.trim();
+    localStorage.setItem(GH_TOKEN_KEY, token);
+  }
+  if(!token){
+    setGearStatus('Serve un token GitHub per salvare.','err');
+    return;
+  }
+
+  // null = togli la correzione e torna alla scarpa letta da Garmin
+  const value=reset?null:document.getElementById('gear-select').value;
+  setGearStatus('Salvataggio in corso...','loading');
+
+  const apiUrl=`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_GEAR_PATH}`;
+  const headers={'Authorization':'token '+token,'Accept':'application/vnd.github+json'};
+
+  try{
+    // 1) Leggi il file attuale (se non esiste ancora verra' creato)
+    let current={}, sha;
+    const getRes=await fetch(apiUrl,{headers, cache:'no-store'});
+    if(getRes.ok){
+      const getData=await getRes.json();
+      sha=getData.sha;
+      current=JSON.parse(decodeURIComponent(escape(atob(getData.content.replace(/\n/g,'')))))||{};
+    }else if(getRes.status===401){
+      setGearStatus('Token non valido o scaduto.','err');return;
+    }else if(getRes.status!==404){
+      setGearStatus('Errore GitHub: '+getRes.status,'err');return;
+    }
+
+    // 2) Aggiorna la correzione per questa attivita'
+    if(value===null)delete current[id];else current[id]=value;
+    const sorted={};
+    Object.keys(current).sort().forEach(k=>{sorted[k]=current[k];});
+
+    // 3) Scrivi il file aggiornato
+    const newContent=JSON.stringify(sorted, null, 2)+'\n';
+    const act=ALL_ACTIVITIES.find(a=>String(a.garmin_id)===id);
+    const what=value===null?'scarpa di Garmin':(value||'nessuna scarpa');
+    const body={message:`Scarpa ${act?act.date:id}: ${what} (da dashboard)`, content:btoa(unescape(encodeURIComponent(newContent)))};
+    if(sha)body.sha=sha;
+    const putRes=await fetch(apiUrl,{
+      method:'PUT',
+      headers:{...headers,'Content-Type':'application/json'},
+      body:JSON.stringify(body)
+    });
+    if(!putRes.ok){
+      setGearStatus('Errore nel salvataggio: '+putRes.status,'err');
+      return;
+    }
+
+    const pending=readGearPending();
+    pending[id]=value;
+    writeGearPending(pending);
+    if(value===null)delete GEAR_OVERRIDES[id];else GEAR_OVERRIDES[id]=value;
+    applyGearOverrides(ALL_ACTIVITIES);
+    buildDashboard(ALL_ACTIVITIES);
+    setGearStatus('Salvato!','ok');
+    setTimeout(closeGearModal,700);
+
+  }catch(e){
+    console.error(e);
+    setGearStatus('Errore: '+e.message,'err');
   }
 }
 

@@ -1,7 +1,7 @@
 {
   "name": "Matteo × Firenze Marathon",
   "short_name": "M×Firenze",
-  "description": "Training dashboard Strava per la Firenze Marathon 2026",
+  "description": "Training dashboard Garmin per la Firenze Marathon 2026",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f7f6f3",

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'matteo-firenze-v18';
+const CACHE_NAME = 'matteo-firenze-v19';
 
 // Install: skip waiting immediately
 self.addEventListener('install', event => {
@@ -18,16 +18,6 @@ self.addEventListener('activate', event => {
 // Fetch: network-first per tutto tranne le risorse esterne pesanti
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
-
-  // Strava API: sempre network
-  if (url.hostname === 'www.strava.com') {
-    event.respondWith(fetch(event.request).catch(() =>
-      new Response(JSON.stringify({ error: 'offline' }), {
-        headers: { 'Content-Type': 'application/json' }
-      })
-    ));
-    return;
-  }
 
   // Font e librerie esterne: cache-first (cambiano raramente)
   if (url.hostname === 'fonts.googleapis.com' ||

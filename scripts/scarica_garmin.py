@@ -11,7 +11,7 @@ scarica_garmin.py — versione completa con scoring integrato
 """
 
 import os, sys, json, time, logging, subprocess, re
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from dataclasses import dataclass, field, asdict
 from typing import Optional
@@ -19,6 +19,7 @@ import math
 
 # ── Logging ───────────────────────────────────────────────────────────────────
 LOG_FILE = Path(__file__).parent / "garmin_sync.log"
+GEAR_RECHECK_DAYS = 3  # giorni in cui il gear viene ricontrollato su Garmin
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s  %(levelname)s  %(message)s",
@@ -1204,31 +1205,8 @@ def build_activity(act, laps_raw, gear_name=None, gear_km=None, gps_polyline=Non
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SEZIONE 5b — STRAVA GEAR
+# SEZIONE 5b — GARMIN GEAR
 # ══════════════════════════════════════════════════════════════════════════════
-
-def get_strava_token():
-    """Ottieni access token Strava tramite refresh token."""
-    import urllib.request, urllib.parse
-    client_id     = os.environ.get("STRAVA_CLIENT_ID","").strip()
-    client_secret = os.environ.get("STRAVA_CLIENT_SECRET","").strip()
-    refresh_token = os.environ.get("STRAVA_REFRESH_TOKEN","").strip()
-    if not all([client_id, client_secret, refresh_token]):
-        return None
-    try:
-        import urllib.request, urllib.parse, json as _json
-        data = urllib.parse.urlencode({
-            "client_id":     client_id,
-            "client_secret": client_secret,
-            "refresh_token": refresh_token,
-            "grant_type":    "refresh_token",
-        }).encode()
-        req  = urllib.request.Request("https://www.strava.com/oauth/token", data=data, method="POST")
-        resp = urllib.request.urlopen(req, timeout=10)
-        return _json.loads(resp.read()).get("access_token")
-    except Exception as e:
-        log.warning("Strava token fallito: %s", e)
-        return None
 
 def fetch_garmin_gear(client, activity_id):
     """Recupera nome scarpa da Garmin Connect per una singola attivita."""
@@ -1596,6 +1574,20 @@ def main():
                 log.info("  Gear %s: %s", date, gear_name or "nessuno")
             else:
                 log.info("  Gear %s: nessuno (no activity_id)", date)
+
+    # Ricontrolla il gear delle attivita recenti: se la scarpa e' stata
+    # corretta su Garmin Connect dopo il primo sync, qui si aggiorna.
+    gear_cutoff = (datetime.now() - timedelta(days=GEAR_RECHECK_DAYS)).strftime("%Y-%m-%d")
+    for record in data.get("activities", []):
+        act_id = record.get("garmin_id")
+        if not act_id or record.get("gear_name") is None or record.get("date","") < gear_cutoff:
+            continue
+        gear_name = fetch_garmin_gear(client, act_id)
+        if gear_name and gear_name != record.get("gear_name"):
+            log.info("  Gear %s cambiato su Garmin: %s -> %s",
+                     record.get("date",""), record.get("gear_name"), gear_name)
+            record["gear_name"] = gear_name
+            record["gear_km"]   = None
 
     data["activities"].sort(key=lambda x: x.get("start_time",""), reverse=True)
     data["last_updated"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
