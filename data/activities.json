@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-08T21:06:48Z",
+  "last_updated": "2026-11-09T07:00:19Z",
   "activities": [
     {
       "garmin_id": 25008748673,
@@ -15,7 +15,7 @@
       "avg_pace_s_km": 285,
       "avg_pace_fmt": "4:45",
       "calories": 2002,
-      "sweat_loss_ml": null,
+      "sweat_loss_ml": 2611,
       "elevation_gain": 85,
       "elevation_loss": null,
       "avg_cadence": 173,
@@ -509,11 +509,27 @@
         "z4": 675,
         "z5": 6
       },
-      "weather_temp": null,
-      "weather_condition": null,
+      "weather_temp": 9,
+      "weather_condition": "Nuvoloso",
       "fetched_at": "2026-11-08T21:06:48Z",
       "fc_max_at_date": 197,
-      "has_gps": false
+      "has_gps": false,
+      "score": {
+        "score": 8.1,
+        "subscores": {
+          "hr_drift": 7.0,
+          "pace": 5.5,
+          "distance": 10
+        },
+        "flags": [
+          "CARDIAC_DRIFT"
+        ],
+        "notes": [
+          "Deriva cardiaca elevata (18 bpm)."
+        ],
+        "cap_applied": null,
+        "scoring_version": 10
+      }
     },
     {
       "garmin_id": 25001657467,
@@ -529,7 +545,7 @@
       "avg_pace_s_km": 319,
       "avg_pace_fmt": "5:19",
       "calories": 359,
-      "sweat_loss_ml": null,
+      "sweat_loss_ml": 449,
       "elevation_gain": 22,
       "elevation_loss": null,
       "avg_cadence": 171,
@@ -645,11 +661,23 @@
         "z4": 0,
         "z5": 0
       },
-      "weather_temp": null,
-      "weather_condition": null,
+      "weather_temp": 8,
+      "weather_condition": "Nuvoloso",
       "fetched_at": "2026-11-08T21:06:48Z",
       "fc_max_at_date": 197,
-      "has_gps": false
+      "has_gps": false,
+      "score": {
+        "score": 10.0,
+        "subscores": {
+          "hr": 10.0,
+          "pace": 10.0,
+          "distance": 10
+        },
+        "flags": [],
+        "notes": [],
+        "cap_applied": null,
+        "scoring_version": 10
+      }
     },
     {
       "garmin_id": 24987143875,
@@ -665,7 +693,7 @@
       "avg_pace_s_km": 317,
       "avg_pace_fmt": "5:17",
       "calories": 524,
-      "sweat_loss_ml": null,
+      "sweat_loss_ml": 640,
       "elevation_gain": 25,
       "elevation_loss": null,
       "avg_cadence": 171,
@@ -809,11 +837,23 @@
         "z4": 0,
         "z5": 0
       },
-      "weather_temp": null,
-      "weather_condition": null,
+      "weather_temp": 9,
+      "weather_condition": "Nuvoloso",
       "fetched_at": "2026-11-08T21:06:48Z",
       "fc_max_at_date": 197,
-      "has_gps": false
+      "has_gps": false,
+      "score": {
+        "score": 9.3,
+        "subscores": {
+          "hr": 9.65,
+          "pace": 7.6,
+          "distance": 10
+        },
+        "flags": [],
+        "notes": [],
+        "cap_applied": null,
+        "scoring_version": 10
+      }
     },
     {
       "garmin_id": 24967919462,
@@ -829,7 +869,7 @@
       "avg_pace_s_km": 320,
       "avg_pace_fmt": "5:20",
       "calories": 609,
-      "sweat_loss_ml": null,
+      "sweat_loss_ml": 773,
       "elevation_gain": 38,
       "elevation_loss": null,
       "avg_cadence": 169,
@@ -1001,11 +1041,23 @@
         "z4": 0,
         "z5": 0
       },
-      "weather_temp": null,
-      "weather_condition": null,
+      "weather_temp": 7,
+      "weather_condition": "Sereno",
       "fetched_at": "2026-11-08T21:06:48Z",
       "fc_max_at_date": 197,
-      "has_gps": false
+      "has_gps": false,
+      "score": {
+        "score": 8.9,
+        "subscores": {
+          "hr": 10.0,
+          "pace": 10.0,
+          "distance": 6.24
+        },
+        "flags": [],
+        "notes": [],
+        "cap_applied": null,
+        "scoring_version": 10
+      }
     },
     {
       "garmin_id": 24956268690,
@@ -1021,7 +1073,7 @@
       "avg_pace_s_km": 280,
       "avg_pace_fmt": "4:40",
       "calories": 829,
-      "sweat_loss_ml": null,
+      "sweat_loss_ml": 1081,
       "elevation_gain": 40,
       "elevation_loss": null,
       "avg_cadence": 171,
@@ -1249,11 +1301,30 @@
         "z4": 0,
         "z5": 0
       },
-      "weather_temp": null,
-      "weather_condition": null,
+      "weather_temp": 5,
+      "weather_condition": "Prevalentemente sereno",
       "fetched_at": "2026-11-08T21:06:48Z",
       "fc_max_at_date": 197,
-      "has_gps": false
+      "has_gps": false,
+      "score": {
+        "score": 9.4,
+        "subscores": {
+          "fast_blocks": 9.47,
+          "structure": 9.4,
+          "recoveries": 8.8,
+          "wu_cd": 10.0,
+          "hr": 8.88,
+          "distance": 10
+        },
+        "flags": [
+          "HR_LOW"
+        ],
+        "notes": [
+          "FC 146 bpm sotto target di 14 bpm — controlla le soglie."
+        ],
+        "cap_applied": null,
+        "scoring_version": 10
+      }
     },
     {
       "garmin_id": 24943947957,
@@ -1269,7 +1340,7 @@
       "avg_pace_s_km": 280,
       "avg_pace_fmt": "4:40",
       "calories": 1425,
-      "sweat_loss_ml": null,
+      "sweat_loss_ml": 1683,
       "elevation_gain": 70,
       "elevation_loss": null,
       "avg_cadence": 171,
@@ -1637,11 +1708,12 @@
         "z4": 329,
         "z5": 0
       },
-      "weather_temp": null,
-      "weather_condition": null,
+      "weather_temp": 9,
+      "weather_condition": "Prevalentemente sereno",
       "fetched_at": "2026-11-08T21:06:48Z",
       "fc_max_at_date": 197,
-      "has_gps": false
+      "has_gps": false,
+      "score": null
     },
     {
       "garmin_id": 24920394688,
