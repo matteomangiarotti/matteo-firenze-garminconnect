@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-09T07:00:19Z",
+  "last_updated": "2026-11-09T09:02:23Z",
   "activities": [
     {
       "garmin_id": 25008748673,
@@ -509,11 +509,11 @@
         "z4": 675,
         "z5": 6
       },
-      "weather_temp": 9,
-      "weather_condition": "Nuvoloso",
+      "weather_temp": 10,
+      "weather_condition": "Parzialmente nuvoloso",
       "fetched_at": "2026-11-08T21:06:48Z",
       "fc_max_at_date": 197,
-      "has_gps": false,
+      "has_gps": true,
       "score": {
         "score": 8.1,
         "subscores": {
@@ -661,11 +661,11 @@
         "z4": 0,
         "z5": 0
       },
-      "weather_temp": 8,
+      "weather_temp": 9,
       "weather_condition": "Nuvoloso",
       "fetched_at": "2026-11-08T21:06:48Z",
       "fc_max_at_date": 197,
-      "has_gps": false,
+      "has_gps": true,
       "score": {
         "score": 10.0,
         "subscores": {
@@ -837,11 +837,11 @@
         "z4": 0,
         "z5": 0
       },
-      "weather_temp": 9,
-      "weather_condition": "Nuvoloso",
+      "weather_temp": 10,
+      "weather_condition": "Pioggia leggera",
       "fetched_at": "2026-11-08T21:06:48Z",
       "fc_max_at_date": 197,
-      "has_gps": false,
+      "has_gps": true,
       "score": {
         "score": 9.3,
         "subscores": {
@@ -1041,11 +1041,11 @@
         "z4": 0,
         "z5": 0
       },
-      "weather_temp": 7,
-      "weather_condition": "Sereno",
+      "weather_temp": 10,
+      "weather_condition": "Pioggia leggera",
       "fetched_at": "2026-11-08T21:06:48Z",
       "fc_max_at_date": 197,
-      "has_gps": false,
+      "has_gps": true,
       "score": {
         "score": 8.9,
         "subscores": {
@@ -1301,11 +1301,11 @@
         "z4": 0,
         "z5": 0
       },
-      "weather_temp": 5,
-      "weather_condition": "Prevalentemente sereno",
+      "weather_temp": 12,
+      "weather_condition": "Nuvoloso",
       "fetched_at": "2026-11-08T21:06:48Z",
       "fc_max_at_date": 197,
-      "has_gps": false,
+      "has_gps": true,
       "score": {
         "score": 9.4,
         "subscores": {
@@ -1708,11 +1708,11 @@
         "z4": 329,
         "z5": 0
       },
-      "weather_temp": 9,
-      "weather_condition": "Prevalentemente sereno",
+      "weather_temp": 10,
+      "weather_condition": "Sereno",
       "fetched_at": "2026-11-08T21:06:48Z",
       "fc_max_at_date": 197,
-      "has_gps": false,
+      "has_gps": true,
       "score": null
     },
     {
