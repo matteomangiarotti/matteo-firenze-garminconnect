@@ -17,6 +17,7 @@ from dataclasses import dataclass, field, asdict
 from typing import Optional
 import math
 
+import garmin_extra
 import gps_vault
 
 # ── Logging ───────────────────────────────────────────────────────────────────
@@ -1208,6 +1209,7 @@ def build_activity(act, laps_raw, gear_name=None, gear_km=None, gps_polyline=Non
     weather_temp, weather_condition = fetch_weather(lat, lon, start_local)
     cadence = act.get("averageRunningCadenceInStepsPerMinute") or act.get("averageRunCadence")
     sweat_loss = act.get("waterEstimated") or act.get("estimatedSweatLoss") or act.get("sweatLoss")
+    te_label = (act.get("trainingEffectLabel") or "").lower()
     return {
         "garmin_id":          act.get("activityId"),
         "date":               activity_date(act),
@@ -1228,6 +1230,7 @@ def build_activity(act, laps_raw, gear_name=None, gear_km=None, gps_polyline=Non
         "avg_cadence":        round(cadence) if cadence else None,
         "training_effect_aerobic":   act.get("aerobicTrainingEffect"),
         "training_effect_anaerobic": act.get("anaerobicTrainingEffect"),
+        "te_label":           te_label if te_label not in ("", "unknown") else None,
         "gear_name":          gear_name,
         "gear_km":            gear_km,
         "laps":               parse_laps(laps_raw),
@@ -1261,19 +1264,30 @@ def fetch_garmin_gear(client, activity_id):
 # SEZIONE 6 — GIT PUSH
 # ══════════════════════════════════════════════════════════════════════════════
 
+SYNCED_PATHS = ["data/activities.json", "data/gps.enc.json", "data/salute.enc.json",
+                "data/gear.json", "data/gear"]
+
 def git_push(repo_path):
+    def git(*args):
+        subprocess.run(["git", "-C", repo_path, *args], check=True)
+
     try:
-        subprocess.run(["git","-C",repo_path,"add","data/activities.json","data/gps.enc.json"], check=True)
+        git("add", *SYNCED_PATHS)
         r = subprocess.run(["git","-C",repo_path,"diff","--cached","--quiet"], capture_output=True)
         if r.returncode == 0:
             log.info("Nessuna modifica da committare.")
-            return
-        subprocess.run(["git","-C",repo_path,"commit","-m",
-                        "chore: aggiorna activities.json [skip ci]"], check=True)
-        subprocess.run(["git","-C",repo_path,"push","origin","main"], check=True)
+        else:
+            git("commit", "-m", "chore: aggiorna dati Garmin [skip ci]")
+        # Il bot del piano aggiorna GitHub ogni ora: senza riallinearsi il push
+        # viene rifiutato. Si prosegue anche senza nuove modifiche, per inviare
+        # un salvataggio rimasto indietro da un giro precedente.
+        git("fetch", "origin", "main")
+        git("rebase", "--autostash", "origin/main")
+        git("push", "origin", "main")
         log.info("Push su GitHub completato.")
     except subprocess.CalledProcessError as e:
         log.error("Errore git: %s", e)
+        subprocess.run(["git","-C",repo_path,"rebase","--abort"], capture_output=True)
 
 # ══════════════════════════════════════════════════════════════════════════════
 # SEZIONE 7 — MAIN
@@ -1588,6 +1602,20 @@ def main():
         act_date = record.get("date", "2026-01-01")
         record["fc_max_at_date"] = get_fc_max_for_date(act_date)
 
+    # Corse importate senza percorso: lo recupera e rifa' il meteo col luogo giusto.
+    recent = {a.get("activityId"): a for a in activities}
+    for record in data.get("activities", []):
+        act = recent.get(record.get("garmin_id"))
+        if not act or record.get("start_lat") is not None or act.get("startLatitude") is None:
+            continue
+        polyline = fetch_gps_polyline(client, record["garmin_id"])
+        if polyline:
+            record["gps_polyline"] = polyline
+            record["start_lat"] = act["startLatitude"]
+            record["start_lon"] = act["startLongitude"]
+            record["weather_temp"] = record["weather_condition"] = None
+            log.info("  Backfill GPS %s: %d punti", record.get("date"), len(polyline))
+
     # Backfill meteo per attivita senza weather_temp
     no_weather = [
         r for r in data.get("activities", [])
@@ -1637,6 +1665,13 @@ def main():
             record["gear_name"] = gear_name
             record["gear_km"]   = None
 
+    # Scarpe, foto e km per corsa: sempre riletti interi, cosi' una correzione
+    # fatta su Garmin arriva qui anche per le corse vecchie.
+    try:
+        garmin_extra.refresh_gear(client, data, repo_path)
+    except Exception as e:
+        log.warning("Scarpe non aggiornate, restano i dati precedenti: %s", e)
+
     data["activities"].sort(key=lambda x: x.get("start_time",""), reverse=True)
     data["last_updated"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
@@ -1646,6 +1681,12 @@ def main():
         json.dump(data, f, ensure_ascii=False, indent=2)
 
     log.info("Aggiunte %d nuove attivita.", added)
+
+    try:
+        garmin_extra.refresh_salute(client, repo_path, map_password)
+    except Exception as e:
+        log.warning("Salute non aggiornata, restano i dati precedenti: %s", e)
+
     git_push(repo_path)
 
 if __name__ == "__main__":

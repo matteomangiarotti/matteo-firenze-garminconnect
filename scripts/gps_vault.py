@@ -69,7 +69,7 @@ def _decrypt(vault, password):
     return json.loads(plaintext.decode("utf-8"))
 
 
-def _load_payload(path, password):
+def load_payload(path, password):
     if not path.exists():
         return None
     try:
@@ -79,9 +79,19 @@ def _load_payload(path, password):
     return _decrypt(vault, password)
 
 
+def write_payload(path, payload, password):
+    """Scrive il file cifrato e controlla che si rilegga uguale."""
+    path.parent.mkdir(exist_ok=True)
+    tmp = path.with_suffix(".tmp")
+    tmp.write_text(json.dumps(_encrypt(payload, password), indent=2), encoding="utf-8")
+    os.replace(tmp, path)
+    if load_payload(path, password) != payload:
+        raise VaultError(f"verifica di {path.name} fallita dopo la scrittura")
+
+
 def restore(data, repo_path, password):
     """Reinserisce in memoria i dati di posizione nelle attivita'."""
-    payload = _load_payload(Path(repo_path) / VAULT_RELATIVE_PATH, password) or {}
+    payload = load_payload(Path(repo_path) / VAULT_RELATIVE_PATH, password) or {}
     for record in data.get("activities", []):
         for field, value in payload.get(str(record["garmin_id"]), {}).items():
             if record.get(field) in (None, []):
@@ -96,7 +106,7 @@ def seal(data, repo_path, password):
     riletto e verificato il file scritto.
     """
     path = Path(repo_path) / VAULT_RELATIVE_PATH
-    previous = _load_payload(path, password)
+    previous = load_payload(path, password)
     payload = dict(previous or {})
     for record in data.get("activities", []):
         entry = {f: record[f] for f in SENSITIVE_FIELDS if record.get(f) not in (None, [])}
@@ -104,13 +114,7 @@ def seal(data, repo_path, password):
             payload[str(record["garmin_id"])] = entry
 
     if payload != previous:
-        path.parent.mkdir(exist_ok=True)
-        tmp = path.with_suffix(".tmp")
-        tmp.write_text(json.dumps(_encrypt(payload, password), indent=2), encoding="utf-8")
-        os.replace(tmp, path)
-
-    if _load_payload(path, password) != payload:
-        raise VaultError("verifica di data/gps.enc.json fallita dopo la scrittura")
+        write_payload(path, payload, password)
 
     for record in data.get("activities", []):
         polyline = payload.get(str(record["garmin_id"]), {}).get("gps_polyline") or []
