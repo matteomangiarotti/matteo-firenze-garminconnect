@@ -1,0 +1,809 @@
+[
+  {
+    "name": "Nike Alphafly",
+    "label": "Nike Alphafly 3 rosa",
+    "km": 33.0,
+    "activities": 1,
+    "max_km": 500,
+    "first_used": "2026-11-08",
+    "last_used": "2026-11-08",
+    "photo": "./data/gear/5e730df0.jpg",
+    "runs": [
+      {
+        "date": "2026-11-08",
+        "name": "Caronno Pertusella - Lungo chiave 32 km con ultimi 12",
+        "km": 33.01
+      }
+    ],
+    "status": "active"
+  },
+  {
+    "name": "adidas Adizero EVO SL",
+    "label": "Adidas Evo SL bianche",
+    "km": 796.3,
+    "activities": 52,
+    "max_km": 800,
+    "first_used": "2026-06-18",
+    "last_used": "2026-11-07",
+    "photo": "./data/gear/5f07cc7e.jpg",
+    "runs": [
+      {
+        "date": "2026-11-07",
+        "name": "Caronno Pertusella Running",
+        "km": 6.08
+      },
+      {
+        "date": "2026-11-04",
+        "name": "Caronno Pertusella Running",
+        "km": 10.19
+      },
+      {
+        "date": "2026-11-03",
+        "name": "Caronno Pertusella - 3 x 2 km a ritmo maratona",
+        "km": 14.09
+      },
+      {
+        "date": "2026-11-02",
+        "name": "Caronno Pertusella - Lungo progressivo specifico 24 k",
+        "km": 24.19
+      },
+      {
+        "date": "2026-10-31",
+        "name": "Caronno Pertusella Running",
+        "km": 10.0
+      },
+      {
+        "date": "2026-10-29",
+        "name": "Caronno Pertusella Running",
+        "km": 11.53
+      },
+      {
+        "date": "2026-10-28",
+        "name": "Caronno Pertusella - 4 x 2 km",
+        "km": 15.14
+      },
+      {
+        "date": "2026-10-25",
+        "name": "Caronno Pertusella - Lungo 28 km con 2 x 6 km a ritmo",
+        "km": 28.01
+      },
+      {
+        "date": "2026-10-22",
+        "name": "Caronno Pertusella - Progressivo marathon-support 14",
+        "km": 14.18
+      },
+      {
+        "date": "2026-10-21",
+        "name": "Lainate Running",
+        "km": 9.12
+      },
+      {
+        "date": "2026-10-19",
+        "name": "Caronno Pertusella Running",
+        "km": 32.15
+      },
+      {
+        "date": "2026-10-17",
+        "name": "Caronno Pertusella Running",
+        "km": 7.64
+      },
+      {
+        "date": "2026-10-13",
+        "name": "Caronno Pertusella - 5 x 1600 m",
+        "km": 15.15
+      },
+      {
+        "date": "2026-10-10",
+        "name": "Caronno Pertusella - Lungo 30 km con 12 km a ritmo ma",
+        "km": 30.09
+      },
+      {
+        "date": "2026-10-07",
+        "name": "Caronno Pertusella - Test 10 km",
+        "km": 15.01
+      },
+      {
+        "date": "2026-10-04",
+        "name": "Caronno Pertusella Running",
+        "km": 30.01
+      },
+      {
+        "date": "2026-10-01",
+        "name": "Caronno Pertusella - Progressivo 12 km",
+        "km": 12.11
+      },
+      {
+        "date": "2026-09-27",
+        "name": "Caronno Pertusella - Lungo variato aerobico 25 km",
+        "km": 25.01
+      },
+      {
+        "date": "2026-09-24",
+        "name": "Caronno Pertusella - 5 x 1 km",
+        "km": 13.0
+      },
+      {
+        "date": "2026-09-20",
+        "name": "Munich - Lungo progressivo 28 km",
+        "km": 29.51
+      },
+      {
+        "date": "2026-09-19",
+        "name": "Munich Running",
+        "km": 8.16
+      },
+      {
+        "date": "2026-09-18",
+        "name": "Munich - 14 km con 8 km a ritmo maratona",
+        "km": 14.13
+      },
+      {
+        "date": "2026-09-15",
+        "name": "Caronno Pertusella - Fartlek lungo 12 km",
+        "km": 14.0
+      },
+      {
+        "date": "2026-09-12",
+        "name": "Caronno Pertusella - Lungo progressivo 25 km",
+        "km": 25.0
+      },
+      {
+        "date": "2026-09-10",
+        "name": "Caronno Pertusella - Progressivo aerobico 12 km",
+        "km": 14.65
+      },
+      {
+        "date": "2026-09-09",
+        "name": "Caronno Pertusella - Corsa facile 10 km",
+        "km": 10.01
+      },
+      {
+        "date": "2026-09-08",
+        "name": "Caronno Pertusella - 8 x 800 m",
+        "km": 14.61
+      },
+      {
+        "date": "2026-09-06",
+        "name": "Caronno Pertusella - Lungo progressivo 22 km",
+        "km": 22.0
+      },
+      {
+        "date": "2026-09-03",
+        "name": "Caronno Pertusella - 14 km con 8 km a 4:35–4:40",
+        "km": 14.15
+      },
+      {
+        "date": "2026-08-31",
+        "name": "Leuven Running",
+        "km": 10.82
+      },
+      {
+        "date": "2026-08-25",
+        "name": "Saint-Florent Running",
+        "km": 10.19
+      },
+      {
+        "date": "2026-08-21",
+        "name": "Broni Running",
+        "km": 18.11
+      },
+      {
+        "date": "2026-08-20",
+        "name": "Stradella Running",
+        "km": 9.01
+      },
+      {
+        "date": "2026-08-19",
+        "name": "Montù Beccaria - 5 x 1km",
+        "km": 10.94
+      },
+      {
+        "date": "2026-08-18",
+        "name": "Montù Beccaria Running",
+        "km": 10.01
+      },
+      {
+        "date": "2026-08-09",
+        "name": "Lombok Utara Running",
+        "km": 13.88
+      },
+      {
+        "date": "2026-08-05",
+        "name": "Manggarai Barat Running",
+        "km": 5.5
+      },
+      {
+        "date": "2026-08-03",
+        "name": "Treadmill Running",
+        "km": 13.55
+      },
+      {
+        "date": "2026-08-01",
+        "name": "Jembrana Running",
+        "km": 7.09
+      },
+      {
+        "date": "2026-07-21",
+        "name": "Caronno Pertusella - 5 x 1200",
+        "km": 11.95
+      },
+      {
+        "date": "2026-07-19",
+        "name": "Caronno Pertusella Running",
+        "km": 26.01
+      },
+      {
+        "date": "2026-07-16",
+        "name": "Caronno Pertusella - steady 15km",
+        "km": 15.0
+      },
+      {
+        "date": "2026-07-14",
+        "name": "Caronno Pertusella - 3 x 10' soglia",
+        "km": 13.02
+      },
+      {
+        "date": "2026-07-09",
+        "name": "Caronno Pertusella - 16km con 10km @ 4:35-4:40/km",
+        "km": 16.09
+      },
+      {
+        "date": "2026-07-07",
+        "name": "Caronno Pertusella - 6 x 1km",
+        "km": 12.18
+      },
+      {
+        "date": "2026-07-05",
+        "name": "Stradella Running",
+        "km": 24.01
+      },
+      {
+        "date": "2026-07-01",
+        "name": "Caronno Pertusella Running",
+        "km": 12.01
+      },
+      {
+        "date": "2026-06-30",
+        "name": "Leuven - tempo continuo 30'",
+        "km": 11.36
+      },
+      {
+        "date": "2026-06-26",
+        "name": "Rotselaar - steady 14km",
+        "km": 14.01
+      },
+      {
+        "date": "2026-06-23",
+        "name": "Leuven - 4 x 2km",
+        "km": 13.48
+      },
+      {
+        "date": "2026-06-21",
+        "name": "Leuven Running",
+        "km": 19.21
+      },
+      {
+        "date": "2026-06-18",
+        "name": "Leuven - test 5km",
+        "km": 10.01
+      }
+    ],
+    "status": "active"
+  },
+  {
+    "name": "Nike Vomero",
+    "label": "Nike Vomero Plus bianche",
+    "km": 863.7,
+    "activities": 79,
+    "max_km": 800,
+    "first_used": "2026-04-23",
+    "last_used": "2026-11-06",
+    "photo": "./data/gear/b0ed86a1.jpg",
+    "runs": [
+      {
+        "date": "2026-11-06",
+        "name": "Caronno Pertusella Running",
+        "km": 8.21
+      },
+      {
+        "date": "2026-10-30",
+        "name": "Caronno Pertusella Running",
+        "km": 8.04
+      },
+      {
+        "date": "2026-10-27",
+        "name": "Caronno Pertusella Running",
+        "km": 10.14
+      },
+      {
+        "date": "2026-10-16",
+        "name": "Caronno Pertusella Running",
+        "km": 8.81
+      },
+      {
+        "date": "2026-10-09",
+        "name": "Caronno Pertusella Running",
+        "km": 8.18
+      },
+      {
+        "date": "2026-10-08",
+        "name": "Caronno Pertusella Running",
+        "km": 12.04
+      },
+      {
+        "date": "2026-10-06",
+        "name": "Caronno Pertusella Running",
+        "km": 10.01
+      },
+      {
+        "date": "2026-10-03",
+        "name": "Caronno Pertusella Running",
+        "km": 8.26
+      },
+      {
+        "date": "2026-10-02",
+        "name": "Caronno Pertusella Running",
+        "km": 9.03
+      },
+      {
+        "date": "2026-09-30",
+        "name": "Caronno Pertusella Running",
+        "km": 10.06
+      },
+      {
+        "date": "2026-09-29",
+        "name": "Caronno Pertusella Running",
+        "km": 8.0
+      },
+      {
+        "date": "2026-09-26",
+        "name": "Caronno Pertusella Running",
+        "km": 8.63
+      },
+      {
+        "date": "2026-09-25",
+        "name": "Caronno Pertusella Running",
+        "km": 8.12
+      },
+      {
+        "date": "2026-09-23",
+        "name": "Caronno Pertusella Running",
+        "km": 8.25
+      },
+      {
+        "date": "2026-09-16",
+        "name": "Caronno Pertusella - Corsa facile 10 km",
+        "km": 10.01
+      },
+      {
+        "date": "2026-09-11",
+        "name": "Caronno Pertusella - Recovery 8 km",
+        "km": 8.0
+      },
+      {
+        "date": "2026-09-05",
+        "name": "Caronno Pertusella - Corsa facile 8 km + allunghi",
+        "km": 9.22
+      },
+      {
+        "date": "2026-09-04",
+        "name": "Caronno Pertusella - Recovery 8 km",
+        "km": 8.16
+      },
+      {
+        "date": "2026-09-02",
+        "name": "Caronno Pertusella Running",
+        "km": 12.2
+      },
+      {
+        "date": "2026-08-16",
+        "name": "Caronno Pertusella Running",
+        "km": 12.31
+      },
+      {
+        "date": "2026-08-10",
+        "name": "Lombok Utara Running",
+        "km": 7.88
+      },
+      {
+        "date": "2026-08-07",
+        "name": "Manggarai Running",
+        "km": 0.62
+      },
+      {
+        "date": "2026-07-25",
+        "name": "Caronno Pertusella Running",
+        "km": 22.01
+      },
+      {
+        "date": "2026-07-24",
+        "name": "Caronno Pertusella - medio aerobico 14km",
+        "km": 18.0
+      },
+      {
+        "date": "2026-07-23",
+        "name": "Caronno Pertusella Running",
+        "km": 10.24
+      },
+      {
+        "date": "2026-07-18",
+        "name": "Caronno Pertusella Running",
+        "km": 10.73
+      },
+      {
+        "date": "2026-07-17",
+        "name": "Caronno Pertusella Running",
+        "km": 8.67
+      },
+      {
+        "date": "2026-07-15",
+        "name": "Caronno Pertusella Running",
+        "km": 12.04
+      },
+      {
+        "date": "2026-07-12",
+        "name": "Caronno Pertusella Running",
+        "km": 26.01
+      },
+      {
+        "date": "2026-07-11",
+        "name": "Caronno Pertusella Running",
+        "km": 12.0
+      },
+      {
+        "date": "2026-07-10",
+        "name": "Caronno Pertusella Running",
+        "km": 8.14
+      },
+      {
+        "date": "2026-07-08",
+        "name": "Caronno Pertusella Running",
+        "km": 12.14
+      },
+      {
+        "date": "2026-07-04",
+        "name": "Caronno Pertusella Running",
+        "km": 10.68
+      },
+      {
+        "date": "2026-07-03",
+        "name": "Caronno Pertusella Running",
+        "km": 8.07
+      },
+      {
+        "date": "2026-07-02",
+        "name": "Caronno Pertusella - medio aerobico 15km",
+        "km": 15.0
+      },
+      {
+        "date": "2026-06-28",
+        "name": "Leuven Running",
+        "km": 24.01
+      },
+      {
+        "date": "2026-06-27",
+        "name": "Leuven Running",
+        "km": 9.0
+      },
+      {
+        "date": "2026-06-25",
+        "name": "Leuven Running",
+        "km": 10.05
+      },
+      {
+        "date": "2026-06-24",
+        "name": "Leuven Running",
+        "km": 11.01
+      },
+      {
+        "date": "2026-06-20",
+        "name": "Leuven Running",
+        "km": 8.15
+      },
+      {
+        "date": "2026-06-19",
+        "name": "Leuven Running",
+        "km": 10.0
+      },
+      {
+        "date": "2026-06-17",
+        "name": "Leuven Running",
+        "km": 8.34
+      },
+      {
+        "date": "2026-06-16",
+        "name": "Leuven Running",
+        "km": 10.43
+      },
+      {
+        "date": "2026-06-14",
+        "name": "Leuven Running",
+        "km": 22.01
+      },
+      {
+        "date": "2026-06-13",
+        "name": "Leuven Running",
+        "km": 10.87
+      },
+      {
+        "date": "2026-06-12",
+        "name": "Leuven Running",
+        "km": 8.2
+      },
+      {
+        "date": "2026-06-11",
+        "name": "Leuven - medio aerobico 14km",
+        "km": 14.01
+      },
+      {
+        "date": "2026-06-10",
+        "name": "Leuven Running",
+        "km": 11.0
+      },
+      {
+        "date": "2026-06-09",
+        "name": "Leuven - tempo continuo 25'",
+        "km": 10.15
+      },
+      {
+        "date": "2026-06-07",
+        "name": "Leuven Running",
+        "km": 22.01
+      },
+      {
+        "date": "2026-06-06",
+        "name": "Leuven Running",
+        "km": 10.7
+      },
+      {
+        "date": "2026-06-04",
+        "name": "Leuven - steady 13km",
+        "km": 17.01
+      },
+      {
+        "date": "2026-06-03",
+        "name": "Leuven Running",
+        "km": 10.01
+      },
+      {
+        "date": "2026-06-02",
+        "name": "Leuven - 5 x 1km",
+        "km": 10.83
+      },
+      {
+        "date": "2026-05-31",
+        "name": "Leuven Running",
+        "km": 20.01
+      },
+      {
+        "date": "2026-05-30",
+        "name": "Leuven Running",
+        "km": 10.76
+      },
+      {
+        "date": "2026-05-29",
+        "name": "Leuven Running",
+        "km": 8.01
+      },
+      {
+        "date": "2026-05-28",
+        "name": "Leuven Running",
+        "km": 12.01
+      },
+      {
+        "date": "2026-05-27",
+        "name": "Leuven Running",
+        "km": 10.01
+      },
+      {
+        "date": "2026-05-26",
+        "name": "Leuven - 6 X 3' soglia bassa",
+        "km": 11.87
+      },
+      {
+        "date": "2026-05-24",
+        "name": "Leuven Running",
+        "km": 18.0
+      },
+      {
+        "date": "2026-05-23",
+        "name": "Leuven Running",
+        "km": 10.1
+      },
+      {
+        "date": "2026-05-22",
+        "name": "Leuven Running",
+        "km": 8.0
+      },
+      {
+        "date": "2026-05-21",
+        "name": "Leuven - 20' progressivo easy",
+        "km": 9.56
+      },
+      {
+        "date": "2026-05-20",
+        "name": "Leuven Running",
+        "km": 9.0
+      },
+      {
+        "date": "2026-05-19",
+        "name": "Leuven Running",
+        "km": 11.01
+      },
+      {
+        "date": "2026-05-17",
+        "name": "Leuven Running",
+        "km": 16.01
+      },
+      {
+        "date": "2026-05-16",
+        "name": "Leuven Running",
+        "km": 10.8
+      },
+      {
+        "date": "2026-05-15",
+        "name": "Leuven Running",
+        "km": 7.12
+      },
+      {
+        "date": "2026-05-14",
+        "name": "Leuven - 3 x 8' medio aerobico",
+        "km": 10.43
+      },
+      {
+        "date": "2026-05-13",
+        "name": "Leuven Running",
+        "km": 8.24
+      },
+      {
+        "date": "2026-05-09",
+        "name": "Leuven Running",
+        "km": 10.67
+      },
+      {
+        "date": "2026-05-07",
+        "name": "Leuven Running",
+        "km": 6.66
+      },
+      {
+        "date": "2026-05-06",
+        "name": "Leuven Running",
+        "km": 11.56
+      },
+      {
+        "date": "2026-05-02",
+        "name": "Leuven Running",
+        "km": 10.01
+      },
+      {
+        "date": "2026-05-01",
+        "name": "Leuven Running",
+        "km": 10.0
+      },
+      {
+        "date": "2026-04-29",
+        "name": "Leuven Running",
+        "km": 6.81
+      },
+      {
+        "date": "2026-04-24",
+        "name": "Leuven Running",
+        "km": 6.0
+      },
+      {
+        "date": "2026-04-23",
+        "name": "Leuven Running",
+        "km": 5.31
+      }
+    ],
+    "status": "active"
+  },
+  {
+    "name": "Kiprun KS900 light",
+    "label": null,
+    "km": 229.4,
+    "activities": 19,
+    "max_km": 650,
+    "first_used": "2026-03-30",
+    "last_used": "2026-06-05",
+    "photo": "./data/gear/f96e3444.jpg",
+    "runs": [
+      {
+        "date": "2026-06-05",
+        "name": "Aachen Running",
+        "km": 8.0
+      },
+      {
+        "date": "2026-05-12",
+        "name": "Leuven Running",
+        "km": 10.01
+      },
+      {
+        "date": "2026-05-10",
+        "name": "Leuven Running",
+        "km": 13.32
+      },
+      {
+        "date": "2026-05-05",
+        "name": "Leuven Running",
+        "km": 8.83
+      },
+      {
+        "date": "2026-05-03",
+        "name": "Leuven Running",
+        "km": 9.58
+      },
+      {
+        "date": "2026-04-28",
+        "name": "Leuven Running",
+        "km": 7.0
+      },
+      {
+        "date": "2026-04-26",
+        "name": "Delft Running",
+        "km": 5.73
+      },
+      {
+        "date": "2026-04-19",
+        "name": "Leuven - Leuven Marathon",
+        "km": 42.58
+      },
+      {
+        "date": "2026-04-17",
+        "name": "Leuven Running",
+        "km": 6.5
+      },
+      {
+        "date": "2026-04-15",
+        "name": "Leuven - Fartlek 15x1'",
+        "km": 8.17
+      },
+      {
+        "date": "2026-04-13",
+        "name": "Leuven - Corsa facile 8 km",
+        "km": 8.0
+      },
+      {
+        "date": "2026-04-12",
+        "name": "Leuven Running",
+        "km": 16.5
+      },
+      {
+        "date": "2026-04-10",
+        "name": "Leuven Running",
+        "km": 8.56
+      },
+      {
+        "date": "2026-04-08",
+        "name": "Leuven Running",
+        "km": 10.3
+      },
+      {
+        "date": "2026-04-06",
+        "name": "Leuven Running",
+        "km": 7.76
+      },
+      {
+        "date": "2026-04-05",
+        "name": "Leuven Running",
+        "km": 30.01
+      },
+      {
+        "date": "2026-04-03",
+        "name": "Leuven Running",
+        "km": 8.01
+      },
+      {
+        "date": "2026-04-01",
+        "name": "Leuven Running",
+        "km": 12.51
+      },
+      {
+        "date": "2026-03-30",
+        "name": "Leuven Running",
+        "km": 8.0
+      }
+    ],
+    "status": "active"
+  }
+]

@@ -17,6 +17,8 @@ from dataclasses import dataclass, field, asdict
 from typing import Optional
 import math
 
+import gps_vault
+
 # ── Logging ───────────────────────────────────────────────────────────────────
 LOG_FILE = Path(__file__).parent / "garmin_sync.log"
 GEAR_RECHECK_DAYS = 3  # giorni in cui il gear viene ricontrollato su Garmin
@@ -843,7 +845,7 @@ def auto_score(plan, activity):
             target_dist = round(wu_km + block_km + cd_km, 2)
 
         s_dist   = score_distance(activity.get("distance_km",0), target_dist, flags, notes)
-        s_wucd   = score_wucd(wu_l, cd_l, plan, st, flags, notes)
+        s_wucd   = score_wucd(wu_l, cd_l, plan, st, flags, notes) if (has_wu or has_cd) else None
 
         # I recuperi vengono valutati solo se il piano prevede ripetute (reps > 1).
         # Per allenamenti a tirata unica (tempo continuo, medio, ecc.) il sotto-voto
@@ -852,40 +854,76 @@ def auto_score(plan, activity):
 
         if has_reps:
             s_recov  = score_recoveries(slow_laps, plan, st, flags, notes)
-            s_struct = (s_recov + s_wucd) / 2
-            subscores = {
-                "fast_blocks": s_blocks,
-                "structure":   s_struct,
-                "recoveries":  s_recov,
-                "wu_cd":       s_wucd,
-                "hr":          s_hr,
-                "distance":    s_dist,
-            }
-            weighted = (
-                0.40*s_blocks +
-                0.25*s_struct +
-                0.10*s_recov +
-                0.10*s_wucd +
-                0.10*s_hr +
-                0.05*s_dist
-            )
+            if has_wu or has_cd:
+                s_struct = (s_recov + s_wucd) / 2
+                subscores = {
+                    "fast_blocks": s_blocks,
+                    "structure":   s_struct,
+                    "recoveries":  s_recov,
+                    "wu_cd":       s_wucd,
+                    "hr":          s_hr,
+                    "distance":    s_dist,
+                }
+                weighted = (
+                    0.40*s_blocks +
+                    0.25*s_struct +
+                    0.10*s_recov +
+                    0.10*s_wucd +
+                    0.10*s_hr +
+                    0.05*s_dist
+                )
+            else:
+                # WU/CD non previsti dal piano: non penalizzare per la loro
+                # assenza. Il peso che sarebbe andato a "wu_cd" (0.10) va
+                # ridistribuito proporzionalmente sulle altre componenti.
+                s_struct = s_recov
+                subscores = {
+                    "fast_blocks": s_blocks,
+                    "structure":   s_struct,
+                    "recoveries":  s_recov,
+                    "hr":          s_hr,
+                    "distance":    s_dist,
+                }
+                weighted = (
+                    0.40*s_blocks +
+                    0.25*s_struct +
+                    0.10*s_recov +
+                    0.10*s_hr +
+                    0.05*s_dist
+                ) / 0.90
         else:
             # Nessuna ripetuta prevista: niente sotto-voto recuperi.
-            # Struttura = solo WU+CD. Peso ridistribuito su blocchi, WU+CD, FC, distanza.
-            s_struct = s_wucd
-            subscores = {
-                "fast_blocks": s_blocks,
-                "structure":   s_struct,
-                "wu_cd":       s_wucd,
-                "hr":          s_hr,
-                "distance":    s_dist,
-            }
-            weighted = (
-                0.55*s_blocks +
-                0.25*s_wucd +
-                0.10*s_hr +
-                0.10*s_dist
-            )
+            if has_wu or has_cd:
+                # Struttura = solo WU+CD. Peso ridistribuito su blocchi, WU+CD, FC, distanza.
+                s_struct = s_wucd
+                subscores = {
+                    "fast_blocks": s_blocks,
+                    "structure":   s_struct,
+                    "wu_cd":       s_wucd,
+                    "hr":          s_hr,
+                    "distance":    s_dist,
+                }
+                weighted = (
+                    0.55*s_blocks +
+                    0.25*s_wucd +
+                    0.10*s_hr +
+                    0.10*s_dist
+                )
+            else:
+                # WU/CD non previsti (es. un progressivo che parte gia' al
+                # ritmo target, senza fase di riscaldamento dedicata): non
+                # ha senso valutarli ne' penalizzare la loro assenza.
+                # Peso "wu_cd" (0.25) ridistribuito proporzionalmente.
+                subscores = {
+                    "fast_blocks": s_blocks,
+                    "hr":          s_hr,
+                    "distance":    s_dist,
+                }
+                weighted = (
+                    0.55*s_blocks +
+                    0.10*s_hr +
+                    0.10*s_dist
+                ) / 0.75
     else:
         s_hr   = score_hr(activity.get("avg_hr"), hr_min_eff or round(fc_max*0.700), hr_max_eff or round(fc_max*0.832), flags, notes)
         s_pace = score_pace(activity.get("avg_pace_s_km"), plan.get("pace_min_s"), plan.get("pace_max_s"), flags, notes)
@@ -905,7 +943,7 @@ def auto_score(plan, activity):
         "flags":       list(set(flags)),
         "notes":       notes,
         "cap_applied": cap_reason,
-        "scoring_version": 9,
+        "scoring_version": 10,
     }
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -1225,7 +1263,7 @@ def fetch_garmin_gear(client, activity_id):
 
 def git_push(repo_path):
     try:
-        subprocess.run(["git","-C",repo_path,"add","data/activities.json"], check=True)
+        subprocess.run(["git","-C",repo_path,"add","data/activities.json","data/gps.enc.json"], check=True)
         r = subprocess.run(["git","-C",repo_path,"diff","--cached","--quiet"], capture_output=True)
         if r.returncode == 0:
             log.info("Nessuna modifica da committare.")
@@ -1253,6 +1291,10 @@ def main():
     if not repo_path or not Path(repo_path).exists():
         log.error("REPO_PATH non valido: %s", repo_path)
         sys.exit(1)
+    map_password = os.environ.get("MAP_PASSWORD","")
+    if not map_password:
+        log.error("MAP_PASSWORD manca nel .env: serve per cifrare i dati GPS")
+        sys.exit(1)
 
     output_file = Path(repo_path) / "data" / "activities.json"
     output_file.parent.mkdir(exist_ok=True)
@@ -1264,7 +1306,13 @@ def main():
     else:
         data = {"last_updated": None, "activities": []}
 
-    seen_ids = {a["garmin_id"] for a in data.get("activities",[])}
+    try:
+        gps_vault.restore(data, repo_path, map_password)
+    except gps_vault.VaultError as e:
+        log.error("Dati GPS non leggibili: %s", e)
+        sys.exit(1)
+
+    seen_ids ={a["garmin_id"] for a in data.get("activities",[])}
     log.info("Attivita gia salvate: %d", len(seen_ids))
 
     # Carica FC_MAX_HISTORY da data/fc_max_history.json (fonte di verita',
@@ -1447,7 +1495,7 @@ def main():
         if expected and not expected.issubset(set(subs.keys())):
             return True
 
-        if score_obj.get("scoring_version") != 9:
+        if score_obj.get("scoring_version") != 10:
             return True
 
         return False
@@ -1591,6 +1639,8 @@ def main():
 
     data["activities"].sort(key=lambda x: x.get("start_time",""), reverse=True)
     data["last_updated"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+    gps_vault.seal(data, repo_path, map_password)
 
     with open(output_file,"w",encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)

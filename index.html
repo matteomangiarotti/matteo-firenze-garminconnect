@@ -62,8 +62,8 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font
 .rc-name{font-size:16px;font-weight:600;margin-bottom:3px;letter-spacing:-.01em;}
 .rc-meta{font-family:var(--mono);font-size:12px;color:var(--text2);}
 .days-pill{position:absolute;top:14px;right:14px;background:var(--orange);color:#fff;font-family:var(--font);font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;}
-.tabs{display:flex;gap:2px;margin-bottom:18px;background:var(--bg3);padding:3px;border-radius:14px;border:none;width:fit-content;}
-.tab{padding:8px 18px;border-radius:11px;font-family:var(--font);font-size:13px;font-weight:500;cursor:pointer;color:var(--text2);background:none;border:none;transition:all .2s;}
+.tabs{display:flex;gap:2px;margin-bottom:18px;background:var(--bg3);padding:3px;border-radius:14px;border:none;width:fit-content;max-width:100%;overflow-x:auto;}
+.tab{padding:8px 18px;border-radius:11px;font-family:var(--font);font-size:13px;font-weight:500;cursor:pointer;color:var(--text2);background:none;border:none;transition:all .2s;white-space:nowrap;}
 .tab:hover{color:var(--text);}
 .tab.active{background:var(--bg2);color:var(--text);font-weight:600;}
 .panel{display:none;}.panel.active{display:block;}
@@ -138,10 +138,6 @@ tr:hover .gear-more,.gear-more:focus-visible{opacity:1;}
 .b-today{color:var(--text2);}
 .b-future{color:var(--text3);}
 .b-race{color:var(--text);font-weight:600;}
-.sc-wrap{text-align:center;}
-.sc-circle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font);font-size:14px;font-weight:700;margin:0 auto 3px;cursor:pointer;transition:transform .15s;}
-.sc-circle:hover{transform:scale(1.1);}
-.sc-lbl{font-family:var(--mono);font-size:10px;color:var(--text3);}
 .detail-btn{width:26px;height:26px;border-radius:50%;background:var(--bg3);color:var(--text);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;margin:8px auto 0;cursor:pointer;transition:all .15s;}
 .detail-btn:hover{background:var(--orange-d);color:var(--orange);}
 
@@ -155,6 +151,14 @@ tr:hover .gear-more,.gear-more:focus-visible{opacity:1;}
 .act-modal-body{padding:20px 24px 24px;}
 .act-map{width:100%;height:220px;border-radius:16px;overflow:hidden;background:var(--bg3);margin-bottom:18px;}
 .act-map-empty{width:100%;height:120px;border-radius:16px;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--text3);font-family:var(--mono);font-size:12px;margin-bottom:18px;}
+.act-map-lock{width:100%;min-height:120px;border-radius:16px;background:var(--bg3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:18px;margin-bottom:18px;}
+.act-map-lock-title{font-size:13px;font-weight:600;color:var(--text2);}
+.act-map-lock-row{display:flex;gap:8px;width:100%;max-width:300px;}
+.act-map-lock input{flex:1;min-width:0;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:var(--bg2);font-family:var(--font);font-size:16px;color:var(--text);}
+.act-map-lock input:focus{outline:none;border-color:var(--orange);}
+.act-map-lock button{padding:10px 14px;border-radius:10px;border:none;background:var(--orange);color:#fff;font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;}
+.act-map-lock button:disabled{opacity:.6;cursor:default;}
+.act-map-lock-err{font-size:12px;color:var(--red);min-height:16px;}
 .act-metrics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px;}
 .act-metric-box{background:var(--bg3);border-radius:12px;padding:10px 12px;}
 .act-metric-lbl{font-family:var(--font);font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.03em;margin-bottom:3px;}
@@ -171,6 +175,7 @@ tr:hover .gear-more,.gear-more:focus-visible{opacity:1;}
 .act-splits-table tr:last-child td{border-bottom:none;}
 .act-splits-table td:first-child{color:var(--text3);width:34px;}
 @media (max-width:480px){
+  .tab{padding:8px 9px;}
   .act-modal{max-width:98vw;}
   .act-modal-body{padding:14px 10px 20px;}
   .act-splits-table th{font-size:8px;padding:5px 3px;letter-spacing:0;}
@@ -178,29 +183,6 @@ tr:hover .gear-more,.gear-more:focus-visible{opacity:1;}
   .act-splits-table td:first-child{width:16px;}
 }
 
-.score-panel-overlay{position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,.2);backdrop-filter:blur(4px);}
-.score-panel{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9999;background:var(--bg2);border:none;border-radius:24px;padding:22px;width:340px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.16);}
-.sp-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
-.sp-circle{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font);font-size:20px;font-weight:700;flex-shrink:0;}
-.sp-title{font-size:24px;font-weight:700;line-height:1;letter-spacing:-.02em;}
-.sp-sub{font-family:var(--mono);font-size:12px;color:var(--text2);margin-top:4px;}
-.sp-section{font-family:var(--font);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);margin:16px 0 10px;}
-.sp-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
-.sp-bar-label{font-size:12px;color:var(--text2);width:100px;flex-shrink:0;}
-.sp-bar-wrap{flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;}
-.sp-bar{height:100%;border-radius:3px;}
-.sp-bar-val{font-family:var(--mono);font-size:12px;font-weight:600;width:28px;text-align:right;flex-shrink:0;}
-.sp-bar-w{font-family:var(--mono);font-size:11px;color:var(--text3);width:28px;text-align:right;flex-shrink:0;}
-.sp-flag{display:inline-flex;align-items:center;gap:3px;font-family:var(--font);font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;margin:2px 4px 2px 0;}
-.sp-flag-err{background:var(--red-d);color:var(--red);}
-.sp-flag-warn{background:var(--amber-d);color:var(--amber);}
-.sp-flag-diag{background:var(--green-d);color:var(--green);}
-.sp-note{font-size:12px;color:var(--text2);line-height:1.6;padding:10px 0;border-top:1px solid var(--border2);margin-top:8px;}
-.sp-close{position:absolute;top:16px;right:16px;background:var(--bg3);border:none;width:28px;height:28px;border-radius:50%;font-size:15px;cursor:pointer;color:var(--text2);line-height:1;display:flex;align-items:center;justify-content:center;}
-.sp-close:hover{background:var(--border);color:var(--text);}
-.sp-legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;padding-top:10px;border-top:1px solid var(--border2);}
-.sp-leg-item{display:flex;align-items:center;gap:4px;font-family:var(--mono);font-size:10px;color:var(--text3);}
-.sp-leg-dot{width:7px;height:7px;border-radius:50%;}
 .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:18px;}
 .stat-box{background:var(--bg2);border:none;border-radius:var(--r);padding:14px 16px;box-shadow:var(--sh);}
 .st-lbl{font-family:var(--font);font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.03em;margin-bottom:4px;font-weight:600;}
@@ -209,6 +191,49 @@ tr:hover .gear-more,.gear-more:focus-visible{opacity:1;}
 .chart-wrap{background:var(--bg2);border:none;border-radius:var(--r);padding:18px;margin-bottom:12px;box-shadow:var(--sh);}
 .chart-title{font-family:var(--font);font-size:12px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.03em;margin-bottom:14px;}
 .chart-c{position:relative;height:200px;}
+.chart-c.tall{height:270px;}
+.data-note{font-family:var(--mono);font-size:11px;color:var(--text2);margin-top:12px;line-height:1.6;}
+.zone-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.zone-tbl{width:100%;border-collapse:collapse;min-width:520px;}
+.zone-tbl th{font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.03em;text-align:left;padding:0 10px 8px;border-bottom:1px solid var(--border2);white-space:nowrap;}
+.zone-tbl td{font-size:12px;color:var(--text2);padding:9px 10px;border-bottom:1px solid var(--border2);white-space:nowrap;}
+.zone-tbl tr:last-child td{border-bottom:none;}
+.zone-tag{display:inline-block;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;}
+.zone-share{display:flex;align-items:center;gap:8px;min-width:120px;}
+.zone-share-bar{height:6px;border-radius:3px;}
+.zone-share-val{color:var(--text);font-weight:600;}
+.gear-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;}
+.gear-card{background:var(--bg2);border-radius:var(--r);padding:16px 18px;box-shadow:var(--sh);cursor:pointer;}
+.gear-card:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.gear-card-top{display:flex;align-items:center;gap:12px;}
+.gear-thumb{width:56px;height:56px;border-radius:12px;object-fit:cover;background:#fff;flex-shrink:0;}
+.gear-photo{display:block;width:100%;height:280px;object-fit:contain;background:#fff;border-radius:16px;margin-bottom:16px;}
+.gear-section{margin-bottom:20px;}
+.gear-section-empty{font-size:13px;color:var(--text2);}
+.gear-move{display:block;width:100%;margin-top:12px;padding:9px;border:none;border-radius:10px;background:var(--bg3);color:var(--text);font-family:var(--font);font-size:12px;font-weight:600;cursor:pointer;}
+.gear-move-status{font-size:12px;color:var(--text2);margin:8px 0;}
+.gear-run{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border2);}
+.gear-run-name{font-size:13px;font-weight:500;}
+.gear-run-sub{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2);margin-top:2px;}
+.gear-run-km{font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.gear-card-name{font-size:15px;font-weight:600;letter-spacing:-.01em;}
+.gear-card-sub{font-size:11px;color:var(--text2);margin-top:2px;min-height:14px;}
+.gear-card-km{font-size:26px;font-weight:700;letter-spacing:-.02em;margin-top:12px;font-variant-numeric:tabular-nums;}
+.gear-card-km span{font-size:13px;font-weight:500;color:var(--text2);letter-spacing:0;}
+.gear-track{height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;margin-top:10px;}
+.gear-fill{height:100%;background:var(--blue);border-radius:3px;}
+.gear-card-meta{display:flex;justify-content:space-between;gap:8px;font-size:11px;color:var(--text2);margin-top:6px;}
+.block-title{font-size:17px;font-weight:700;letter-spacing:-.01em;margin:26px 0 12px;}
+.panel>.block-title:first-child{margin-top:6px;}
+.next-workout{margin-bottom:14px;}
+.unlock{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;padding:36px 0 8px;}
+.unlock input{width:190px;padding:10px 16px;border:none;border-radius:999px;background:var(--bg3);font-family:var(--font);font-size:16px;color:var(--text);}
+.unlock input:focus{outline:2px solid var(--blue);}
+.unlock button{width:40px;height:40px;border:none;border-radius:50%;background:var(--blue);color:#fff;font-size:18px;cursor:pointer;}
+.unlock button:disabled{opacity:.5;cursor:default;}
+.unlock-err{flex-basis:100%;text-align:center;font-size:12px;color:var(--red);min-height:16px;}
+.lock-link{display:block;margin:4px auto 0;background:none;border:none;font-family:var(--font);font-size:12px;color:var(--text2);cursor:pointer;text-decoration:underline;}
+.salute-empty{background:var(--bg2);border-radius:var(--r);padding:36px 18px;text-align:center;color:var(--text2);font-size:13px;box-shadow:var(--sh);}
 #loading{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:14px;transition:opacity .4s;}
 #loading.hidden{opacity:0;pointer-events:none;}
 .ld-logo{font-size:26px;font-weight:700;color:var(--orange);letter-spacing:-.02em;}
@@ -259,26 +284,48 @@ tr:hover .gear-more,.gear-more:focus-visible{opacity:1;}
 <div class="days-pill" id="days-pill">— giorni</div>
 <div class="rc-ey">Obiettivo →</div>
 <div class="rc-name">Firenze Marathon</div>
-<div class="rc-meta">29 nov 2026 · Target sub 3h05 · 4:22/km</div>
+<div class="rc-meta">29 nov 2026 · Target sub 3h00 · 4:16/km</div>
 </div>
 </div>
 
 <div class="zone-legend" id="zone-legend-wrap">
 <span id="zone-legend-fcmax-label" style="font-family:var(--mono);font-size:11px;color:var(--text2);white-space:nowrap;padding-top:2px;">FC max — bpm →</span>
 <div class="zone-legend-chips" id="zone-legend-chips"></div>
-<button class="fcmax-edit-btn" onclick="openFcMaxModal()" title="Aggiorna FC max">⚙</button>
 </div>
 
 <div class="tabs">
-<button class="tab active" onclick="showTab('piano')">Piano settimane</button>
-<button class="tab" onclick="showTab('compliance')">Compliance</button>
+<button class="tab active" onclick="showTab('piano')">Piano di allenamento</button>
+<button class="tab" onclick="showTab('allenamento')">Allenamento</button>
+<button class="tab" onclick="showTab('lifestyle')">Lifestyle</button>
 </div>
-<div id="panel-piano" class="panel active"><div id="weeks-wrap"></div></div>
-<div id="panel-compliance" class="panel">
+<div id="panel-piano" class="panel active"><div id="next-workout"></div><div id="weeks-wrap"></div></div>
+<div id="panel-allenamento" class="panel">
+<div class="block-title">Piano e reale</div>
 <div class="stat-grid" id="comp-stats"></div>
 <div class="chart-wrap"><div class="chart-title">Km piano vs reale (passato + futuro)</div><div class="chart-c"><canvas id="cKm"></canvas></div></div>
 <div class="chart-wrap"><div class="chart-title">Compliance settimanale (%)</div><div class="chart-c"><canvas id="cComp"></canvas></div></div>
-<div class="chart-wrap"><div class="chart-title">Voto medio per settimana</div><div class="chart-c"><canvas id="cScore"></canvas></div></div>
+<div class="block-title">Forma</div>
+<div class="stat-grid" id="forma-stats"></div>
+<div class="chart-wrap"><div class="chart-title">Zone di corsa · ultime 4 settimane</div><div class="zone-scroll" id="forma-zones"></div><div class="data-note" id="forma-zones-note"></div></div>
+<div class="chart-wrap"><div class="chart-title">Tempo in zona per settimana (%)</div><div class="chart-c"><canvas id="cZoneW"></canvas></div></div>
+<div class="chart-wrap"><div class="chart-title">Training effect · ultime 8 settimane</div><div class="chart-c"><canvas id="cTE"></canvas></div><div class="act-hrzone-legend" id="te-legend" style="margin-top:12px;"></div></div>
+<div class="block-title">Scarpe</div>
+<div><div id="scarpe-list"></div><div class="gear-move-status" id="gear-move-status" role="status"></div><div class="data-note">Km e numero di attività da Garmin Connect. La barra indica la durata impostata su Garmin. Tocca una scarpa per foto e attività.</div></div>
+</div>
+<div id="panel-lifestyle" class="panel">
+<form class="unlock" id="recupero-empty" style="display:none;" onsubmit="submitPrivatePassword(event)">
+<input type="password" placeholder="Password" aria-label="Password" autocomplete="current-password" required>
+<button type="submit" aria-label="Sblocca">→</button>
+<div class="unlock-err" role="alert"></div>
+</form>
+<div id="recupero-body">
+<div class="stat-grid" id="recupero-stats"></div>
+<div class="chart-wrap"><div class="chart-title">Ore dormite e fabbisogno</div><div class="chart-c"><canvas id="cSleep"></canvas></div></div>
+<div class="chart-wrap"><div class="chart-title">HRV notturna</div><div class="chart-c"><canvas id="cHrv"></canvas></div></div>
+<div class="chart-wrap"><div class="chart-title">Orari di sonno</div><div class="chart-c tall"><canvas id="cBed"></canvas></div><div class="data-note" id="recupero-note"></div></div>
+<div class="chart-wrap"><div class="chart-title">Passi al giorno</div><div class="chart-c"><canvas id="cSteps"></canvas></div></div>
+<button class="lock-link" onclick="lockPrivateData()">Blocca su questo dispositivo</button>
+</div>
 </div>
 </div>
 
@@ -290,6 +337,7 @@ document.getElementById('days-pill').textContent = Math.ceil((RACE - new Date())
 const ICS_LOCAL        = './piano.ics';
 const ACTIVITIES_JSON  = './data/activities.json';
 const FCMAX_JSON        = './data/fc_max_history.json';
+const GPS_VAULT_JSON    = './data/gps.enc.json';
 const GH_OWNER          = 'matteomangiarotti';
 const GH_REPO           = 'matteo-firenze-garminconnect';
 const GH_FILE_PATH      = 'data/fc_max_history.json';
@@ -388,51 +436,32 @@ async function loadFcMaxHistory(){
 }
 
 // ── ZONE FC ──────────────────────────────────────────────────────────────────
-// Percentuali Garmin fisse (identiche allo script Python)
-const ZONE_PCT=[
-  {name:'Z1',label:'Z1 Warm Up',  lo:0.652,hi:0.742,bg:'#dbeafe',col:'#1d4ed8'},
-  {name:'Z2',label:'Z2 Easy',     lo:0.742,hi:0.808,bg:'#d1fae5',col:'#15803d'},
-  {name:'Z3',label:'Z3 Aerobic',  lo:0.808,hi:0.884,bg:'#fef9c3',col:'#92400e'},
-  {name:'Z4',label:'Z4 Threshold',lo:0.884,hi:0.939,bg:'#fed7aa',col:'#9a3412'},
-  {name:'Z5',label:'Z5 Maximum',  lo:0.939,hi:1.000,bg:'#fecaca',col:'#b91c1c'},
+// FC max e soglie impostate sull'orologio: unica fonte per FC e zone.
+// Vengono aggiornate da data/salute.json quando il file e' disponibile.
+let WATCH_ZONES={fcMax:196,rest:54,floors:[127,137,151,172,184]};
+// Prima di questa data il tempo in zona era calcolato dai lap con altre soglie.
+const WATCH_DATA_FROM='2026-09-05';
+const ZONE_STYLE=[
+  {name:'Z1',label:'Z1 Warm Up',  bg:'#dbeafe',col:'#1d4ed8'},
+  {name:'Z2',label:'Z2 Easy',     bg:'#d1fae5',col:'#15803d'},
+  {name:'Z3',label:'Z3 Aerobic',  bg:'#fef9c3',col:'#92400e'},
+  {name:'Z4',label:'Z4 Threshold',bg:'#fed7aa',col:'#9a3412'},
+  {name:'Z5',label:'Z5 Maximum',  bg:'#fecaca',col:'#b91c1c'},
 ];
 
-let HR_HISTORY=[];  // caricato da activities.json
+let HR_HISTORY=[];  // usato solo dal pannello storico FC max
 
-function getFcMaxForDate(dateStr){
-  // Ritorna la FC max valida per dateStr (YYYY-MM-DD)
-  let fc=198;  // default di sicurezza
-  for(const e of HR_HISTORY){
-    if(e.date<=dateStr) fc=e.fc_max;
-    else break;
-  }
-  return fc;
-}
-
-function buildZones(fc_max){
-  return ZONE_PCT.map(z=>({
-    name:z.name, label:z.label,
-    min:Math.round(fc_max*z.lo), max:Math.round(fc_max*z.hi),
-    bg:z.bg, col:z.col,
-    pctLabel: Math.round(z.lo*100)+'-'+Math.round(z.hi*100)+'%',
-  }));
-}
-
-function getZoneForActivity(hr, dateStr){
-  const fc=getFcMaxForDate(dateStr);
-  const zones=buildZones(fc);
-  return zones.find(z=>hr>=z.min&&hr<=z.max)||null;
-}
-
-function getZone(hr){
-  // Usa la FC max corrente (ultima in HR_HISTORY) — per la legend
-  const fc=HR_HISTORY.length?HR_HISTORY[HR_HISTORY.length-1].fc_max:198;
-  return buildZones(fc).find(z=>hr>=z.min&&hr<=z.max)||null;
+function buildZones(){
+  const {floors,fcMax}=WATCH_ZONES;
+  return ZONE_STYLE.map((z,i)=>{
+    const min=floors[i],max=i<4?floors[i+1]-1:fcMax;
+    return {...z,min,max,pctLabel:Math.round(min/fcMax*100)+'-'+Math.round(max/fcMax*100)+'%'};
+  });
 }
 
 function renderZoneLegend(){
-  const fc=HR_HISTORY.length?HR_HISTORY[HR_HISTORY.length-1].fc_max:198;
-  const zones=buildZones(fc);
+  const fc=WATCH_ZONES.fcMax;
+  const zones=buildZones();
   document.getElementById('zone-legend-fcmax-label').textContent=`FC max ${fc} bpm →`;
   const chips=document.getElementById('zone-legend-chips');
   if(chips) chips.innerHTML=zones.map(z=>
@@ -444,7 +473,6 @@ function renderZoneLegend(){
 }
 
 const GEL_MAP={};
-const VOTI={};
 
 // ── HELPERS ───────────────────────────────────────────────────────────────────
 const fmtP=s=>{const m=Math.floor(s/60),sc=Math.round(s%60);return m+"'"+String(sc).padStart(2,'0')+'"';};
@@ -463,8 +491,6 @@ const getWMon=ds=>{const d=new Date(ds),dy=d.getDay()===0?6:d.getDay()-1,m=new D
 const DN=['Lun','Mar','Mer','Gio','Ven','Sab','Dom'];
 const TC={easy:'#1d4ed8',recovery:'#15803d',lungo:'#b45309',qualita:'#FC4C02',rest:'#a8a29e'};
 const TL={easy:'Facile',recovery:'Recovery',lungo:'Lungo',qualita:'Qualità',rest:'Riposo'};
-const SC=s=>s>=7?'#1c1c1e':s>=5?'#8a8a8e':s>=3?'#FF9500':'#FF3B30';
-const SL=s=>s>=8?'Ottimo':s>=6?'Buono':s>=4?'Rivedere':'Critico';
 
 function plannedKm(p){
   const s=p.summary.toLowerCase();
@@ -479,110 +505,11 @@ function plannedKm(p){
   return 8;
 }
 
-// ── SCORING ───────────────────────────────────────────────────────────────────
-function scoreFC(hr,hrMin,hrMax){
-  if(!hr||!hrMax)return 7;
-  const mid=(hrMin+hrMax)/2,range=(hrMax-hrMin)/2,delta=Math.abs(hr-mid);
-  if(delta<=range*0.5)return 10;if(delta<=range)return 9;
-  const over=hr-hrMax;
-  if(over<=0)return 9;if(over<=5)return 8;if(over<=10)return 6;if(over<=15)return 4;if(over<=25)return 2;return 1;
-}
-function scoreDist(actual,target){
-  if(!target)return 7;
-  const diff=Math.abs(1-actual/target);
-  if(diff<=0.10)return 10;if(diff<=0.15)return 8;if(diff<=0.25)return 6;if(diff<=0.35)return 4;return 2;
-}
-function scorePasso(spk,plan){
-  const m=plan.desc&&plan.desc.match(/(\d):(\d{2})[–\-](\d):(\d{2})/);
-  if(!m)return 7;
-  const minPace=(parseInt(m[1])*60+parseInt(m[2])),maxPace=(parseInt(m[3])*60+parseInt(m[4]));
-  if(spk>=minPace&&spk<=maxPace)return 10;
-  const over=spk-maxPace,under=minPace-spk;
-  if(over>0){if(over<=15)return 8;if(over<=30)return 6;if(over<=60)return 4;return 2;}
-  if(under>0){if(under<=15)return 8;if(under<=30)return 6;if(under<=60)return 4;return 2;}
-  return 7;
-}
-function scoreLaps(laps,plan){
-  if(!laps||!laps.length)return null;
-  const fastLaps=laps.filter(l=>l.distance_m>200&&l.avg_pace_s_km&&l.avg_pace_s_km<310);
-  if(!fastLaps.length)return null;
-  const avgFastPace=fastLaps.reduce((s,l)=>s+l.avg_pace_s_km,0)/fastLaps.length;
-  return scorePasso(avgFastPace,plan);
-}
-function autoScore(plan,act){
-  if(!act||plan.type==='rest')return null;
-  const hr=act.avg_hr||0;
-  const spk=act.avg_pace_s_km||0;
-  const distKm=act.distance_km||act.distance_m/1000||0;
-  const targetKm=plannedKm(plan);
-  const actDate=act.date||'2026-01-01';
-  const fc_max=act.fc_max_at_date||getFcMaxForDate(actDate);
-  // Risolvi target FC: percentuali hanno priorità
-  const resolvedHrMin=plan.hrPctMin?Math.round(fc_max*plan.hrPctMin):(plan.hrMin||Math.round(fc_max*0.742));
-  const resolvedHrMax=plan.hrPctMax?Math.round(fc_max*plan.hrPctMax):(plan.hrMax||Math.round(fc_max*0.808));
-  const laps=act.laps||[];
-  const fc=scoreFC(hr,resolvedHrMin,resolvedHrMax);
-  const dist=scoreDist(distKm,targetKm);
-  const passo=scorePasso(spk,plan);
-  let score,breakdown;
-  if(plan.type==='recovery'){
-    score=fc*0.5+passo*0.3+dist*0.2;breakdown={fc,passo,dist};
-  }else if(plan.type==='qualita'){
-    const lapScore=scoreLaps(laps,plan);
-    if(lapScore!==null){score=fc*0.3+lapScore*0.5+passo*0.2;breakdown={fc,lap:lapScore,passo};}
-    else{score=fc*0.4+passo*0.4+dist*0.2;breakdown={fc,passo,dist};}
-  }else{
-    score=fc*0.3+passo*0.5+dist*0.2;breakdown={fc,passo,dist};
-  }
-  score=Math.round(Math.max(1,Math.min(10,score)));
-  return{score,fc:hr,hrTarget:[resolvedHrMin,resolvedHrMax],breakdown};
-}
-
 const setStatus=(st,msg)=>{document.getElementById('sdot').className='sdot '+st;document.getElementById('s-txt').textContent=msg;};
 
 // ── BUILD DASHBOARD ───────────────────────────────────────────────────────────
-// ── GEAR SNAPSHOT (km totali per scarpa alla data di snapshot) ──
-const GEAR_SNAPSHOT_KM={
-  'Nike Vomero plus':      541.7,
-  'Nike Vomero':           541.7,
-  'adidas Adizero EVO SL': 132.4,
-  'Kiprun KS900 light':    688.6,
-};
-const GEAR_SNAPSHOT_DATE='2026-07-10';
-// Override per scarpe con data di riferimento diversa
-const GEAR_SNAPSHOT_DATE_OVERRIDE={
-  'Kiprun KS900 light': '2026-06-05',
-};
-
-function buildGearTotals(activities){
-  const sorted=[...activities].sort((a,b)=>(a.date||'').localeCompare(b.date||''));
-  const kmInBefore={};
-  const gearBase={};
-  const gearRunning={};
-  const actGearKm={};
-
-  Object.keys(GEAR_SNAPSHOT_KM).forEach(name=>{
-    const snapDate=GEAR_SNAPSHOT_DATE_OVERRIDE[name]||GEAR_SNAPSHOT_DATE;
-    const kmBefore=sorted
-      .filter(a=>a.gear_name===name&&a.date<=snapDate)
-      .reduce((s,a)=>s+(a.distance_km||0),0);
-    gearBase[name]=Math.max(0, GEAR_SNAPSHOT_KM[name]-kmBefore);
-  });
-
-  sorted.forEach(a=>{
-    const g=a.gear_name; if(!g) return;
-    if(gearRunning[g]===undefined) gearRunning[g]=gearBase[g]||0;
-    gearRunning[g]+=(a.distance_km||0);
-    actGearKm[a.garmin_id]={name:g, km:Math.round(gearRunning[g]*10)/10};
-  });
-  return actGearKm;
-}
-
 function buildDashboard(activities){
   // Indicizza attività per data
-  // Calcola km cumulativi per gear
-  const gearTotals=buildGearTotals(activities||[]);
-
   const byDate={};
   (activities||[]).forEach(a=>{
     const ds=a.date;
@@ -600,7 +527,6 @@ function buildDashboard(activities){
   PIANO.forEach(p=>{const w=getWMon(p.date);if(!weekMap[w])weekMap[w]=[];weekMap[w].push(p);});
   const sortedW=Object.keys(weekMap).sort();
   const wrap=document.getElementById('weeks-wrap');wrap.innerHTML='';
-  const allScoresMap={};
   let currentWeekIdx=-1;
   sortedW.forEach((mon,wi)=>{const end=new Date(mon);end.setDate(end.getDate()+6);if(mon<=TODAY&&TODAY<=end.toISOString().slice(0,10))currentWeekIdx=wi;});
 
@@ -622,14 +548,6 @@ function buildDashboard(activities){
       const isPast=p.date<TODAY,isToday=p.date===TODAY,isFut=p.date>TODAY;
       const isRace=p.summary==='FIRENZE MARATHON';
 
-      // Voto — legge dal JSON Garmin (priorità) poi fallback autoScore JS
-      let sv=VOTI[p.date]||null;
-      if(!sv&&real&&real.score&&typeof real.score==='object'&&real.score.subscores){
-        sv=real.score;  // usa il voto calcolato dallo script Python
-      }
-      if(!sv&&real&&p.type!=='rest')sv=autoScore(p,real);  // fallback vecchio motore
-      if(sv)allScoresMap[p.date]=sv.score;
-
       // Piano cell
       const planCol=TC[p.type]||'#888';
       const gelData=GEL_MAP[p.date];
@@ -637,7 +555,7 @@ function buildDashboard(activities){
       const typeLabel=p.type!=='rest'&&TL[p.type]?` <span style="font-family:var(--font);font-size:11px;font-weight:400;color:var(--text2);">(${TL[p.type]})</span>`:'';
       let fcChip='';
       if(p.fcDesc&&p.type!=='rest'){
-        const fc=getFcMaxForDate(p.date);
+        const fc=WATCH_ZONES.fcMax;
         let label='';
         if(p.hrPctMin&&p.hrPctMax){
           const bpmLo=Math.round(fc*p.hrPctMin);
@@ -708,30 +626,21 @@ function buildDashboard(activities){
         realHtml='<span class="act-e" style="color:var(--red);">Non registrata</span>';badge='<span class="bdg b-miss">manca</span>';
       }
 
-      // Score cell
-      let scoreCell='<td style="text-align:center;vertical-align:middle;padding:5px 4px;">';
-      if(isRace){scoreCell+='<div style="font-size:18px;">🏁</div>';}
-      else if(sv){
-        const c=SC(sv.score);
-        const panelId='sp_'+p.date.replace(/-/g,'');
-        scoreCell+=`<div class="sc-wrap" onclick="openScorePanel('${panelId}')"><div class="sc-circle" style="background:var(--bg3);color:${c};">${sv.score}</div><div class="sc-lbl">${SL(sv.score)}</div></div>`;
-        // Pannello nascosto (creato nel DOM)
-        scoreCell+=`<div id="${panelId}" style="display:none" data-score="${encodeURIComponent(JSON.stringify(sv))}" data-type="${p.type}" data-date="${p.date}"></div>`;
-      }else if(p.type==='rest'){scoreCell+='<span style="color:var(--text3);font-size:13px;">—</span>';}
-      else{scoreCell+='<span style="color:var(--text3);font-family:var(--mono);font-size:12px;">?</span>';}
+      // Pulsante dettaglio
+      let detailCell='<td style="text-align:center;vertical-align:middle;padding:5px 4px;">';
+      if(isRace){detailCell+='<div style="font-size:18px;">🏁</div>';}
       if(real){
         const detailId='dt_'+(real.garmin_id||p.date.replace(/-/g,''));
-        scoreCell+=`<div class="detail-btn" onclick="openActivityDetail('${detailId}')" title="Dettagli completi">⤢</div>`;
-        scoreCell+=`<div id="${detailId}" style="display:none" data-activity="${encodeURIComponent(JSON.stringify(real))}"></div>`;
+        detailCell+=`<div class="detail-btn" onclick="openActivityDetail('${detailId}')" title="Dettagli completi">⤢</div>`;
+        detailCell+=`<div id="${detailId}" style="display:none" data-activity="${encodeURIComponent(JSON.stringify(real))}"></div>`;
       }
-      scoreCell+='</td>';
+      detailCell+='</td>';
 
       const rowCls=isToday?'today-row':'';
       // Gear cell con km cumulativi
       let gearHtml2='<span class="act-e">—</span>';
       if(real&&real.gear_name){
-        const gt=gearTotals[real.garmin_id];
-        const kmTot=gt?gt.km:null;
+        const kmTot=!real.gear_manual&&real.gear_km!=null?real.gear_km:null;
         gearHtml2=`<div class="gear-name"${real.gear_manual?' title="Corretta a mano"':''}>${escGear(real.gear_name)}</div>${kmTot!==null?`<div class="gear-km">${kmTot} km</div>`:''}`;
       }
       if(real){
@@ -744,7 +653,7 @@ function buildDashboard(activities){
         <td>${planCell}</td>
         <td>${realHtml}</td>
         ${gearCell}
-        ${scoreCell}
+        ${detailCell}
       </tr>`;
 
       const mobileCard=`<div class="m-card${isToday?' today-card':''}">
@@ -755,7 +664,7 @@ function buildDashboard(activities){
         <div class="m-card-sec"><div class="m-card-lbl">Piano Firenze</div><div>${planCell}</div></div>
         ${real?`<div class="m-card-sec"><div class="m-card-lbl">Garmin</div><div>${realHtml}</div></div>`:''}
         ${real?`<div class="m-card-sec"><div class="m-card-lbl">Scarpa</div>${gearHtml2}</div>`:''}
-        ${scoreCell.replace('<td','<div').replace('</td>','</div>').replace(/style="[^"]*"/,'')}
+        ${detailCell.replace('<td','<div').replace('</td>','</div>').replace(/style="[^"]*"/,'')}
       </div>`;
 
       return{tableRow,mobileCard};
@@ -779,7 +688,7 @@ function buildDashboard(activities){
               <th style="width:30%;">Piano Firenze</th>
               <th style="width:30%;">Garmin live</th>
               <th style="width:130px;">Gear</th>
-              <th style="width:70px;text-align:center;">Voto</th>
+              <th style="width:48px;" aria-label="Dettaglio"></th>
             </tr></thead>
             <tbody>${rows}</tbody>
           </table>
@@ -800,34 +709,29 @@ function buildDashboard(activities){
     const dn=run.filter(d=>byDate[d.date]&&byDate[d.date].length>0);
     const kmR=days.reduce((s,p)=>(s+(byDate[p.date]||[]).reduce((ss,a)=>ss+(a.distance_km||0),0)),0);
     const kmP=run.reduce((s,p)=>s+plannedKm(p),0);
-    const scores=days.filter(d=>allScoresMap[d.date]).map(d=>allScoresMap[d.date]);
     const end=new Date(mon);end.setDate(end.getDate()+6);
     const isPastW=end.toISOString().slice(0,10)<TODAY;
-    return{label:`S${wi+1}`,pct:run.length?Math.round(dn.length/run.length*100):null,kmR:+kmR.toFixed(1),kmP:+kmP.toFixed(1),run:run.length,done:dn.length,avgSc:scores.length?(scores.reduce((s,x)=>s+x,0)/scores.length).toFixed(1):null,isPast:isPastW};
+    return{label:`S${wi+1}`,pct:run.length?Math.round(dn.length/run.length*100):null,kmR:+kmR.toFixed(1),kmP:+kmP.toFixed(1),run:run.length,done:dn.length,isPast:isPastW};
   }).filter(d=>d.pct!==null);
 
   const totP=compW.reduce((s,w)=>s+w.run,0),totD=compW.reduce((s,w)=>s+w.done,0);
   const totKmAll=(activities||[]).reduce((s,a)=>s+(a.distance_km||0),0);
-  const allSc=Object.values(allScoresMap);
-  const avgSc=allSc.length?(allSc.reduce((s,x)=>s+x,0)/allSc.length).toFixed(1):null;
 
   document.getElementById('comp-stats').innerHTML=[
     {l:'Sessioni pianificate',v:totP,s:'nel periodo'},
     {l:'Sessioni fatte',v:totD,s:'su Garmin'},
     {l:'Compliance',v:totP?Math.round(totD/totP*100)+'%':'—',s:'media'},
     {l:'Km totali',v:totKmAll.toFixed(0)+' km',s:'da Garmin Connect'},
-    {l:'Voto medio',v:avgSc?avgSc+'/10':'—',s:'sessioni valutate'},
     {l:'Giorni alla gara',v:Math.ceil((RACE-new Date())/864e5),s:'Firenze 29 nov'},
   ].map(c=>`<div class="stat-box"><div class="st-lbl">${c.l}</div><div class="st-val">${c.v}</div><div class="st-sub">${c.s}</div></div>`).join('');
 
   setTimeout(()=>{
-    ['cComp','cKm','cScore'].forEach(id=>{const old=Chart.getChart(id);if(old)old.destroy();});
+    ['cComp','cKm'].forEach(id=>{const old=Chart.getChart(id);if(old)old.destroy();});
     Chart.defaults.color='#8a8a8e';Chart.defaults.borderColor='#e5e5ea';
     Chart.defaults.font.family="-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif";
     const pastW=compW.filter(w=>w.kmR>0||w.done>0);
     const SPEEDO=['#34C759','#8BD455','#FFCC00','#FF9500','#FF3B30','#991b1b'];
     const speedoComp=w=>{if(w.pct>=84)return SPEEDO[0];if(w.pct>=67)return SPEEDO[1];if(w.pct>=50)return SPEEDO[2];if(w.pct>=34)return SPEEDO[3];if(w.pct>=17)return SPEEDO[4];return SPEEDO[5];};
-    const speedoScore=v=>{if(v>=9)return SPEEDO[0];if(v>=7.5)return SPEEDO[1];if(v>=6)return SPEEDO[2];if(v>=4.5)return SPEEDO[3];if(v>=3)return SPEEDO[4];return SPEEDO[5];};
 
     new Chart(document.getElementById('cComp'),{type:'bar',data:{
       labels:pastW.map(w=>w.label),
@@ -842,12 +746,354 @@ function buildDashboard(activities){
       ]
     },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>v+' km',font:{size:11}},grid:{color:'#eeeef1'}},x:{ticks:{font:{size:10},maxRotation:0},grid:{display:false}}}}});
 
-    const ws=compW.filter(w=>w.avgSc);
-    new Chart(document.getElementById('cScore'),{type:'bar',data:{
-      labels:ws.map(w=>w.label),
-      datasets:[{data:ws.map(w=>+w.avgSc),backgroundColor:ws.map(w=>speedoScore(+w.avgSc)),borderRadius:8}]
-    },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:0,max:10,ticks:{callback:v=>v+'/10',font:{size:11}},grid:{color:'#eeeef1'}},x:{ticks:{font:{size:10}},grid:{display:false}}}}});
+    renderForma(activities);
+    renderRecupero();
   },300);
+}
+
+// ── FORMA E RECUPERO ──────────────────────────────────────────────────────────
+const SALUTE_VAULT_JSON='./data/salute.enc.json';
+let SALUTE=null; // sonno e HRV decifrati: solo in memoria, fino alla chiusura della pagina
+
+const TE_INFO={
+  recovery:{t:'Recupero',c:'#2E9BD6'},
+  aerobic_base:{t:'Base aerobica',c:'#1E8E3E'},
+  tempo:{t:'Tempo',c:'#EFA000'},
+  lactate_threshold:{t:'Soglia',c:'#C4261D'},
+  vo2max:{t:'VO₂max',c:'#AF52DE'},
+};
+const teInfo=l=>TE_INFO[l]||{t:'Non classificato',c:'#c7c7cc'};
+
+const dateAdd=(ds,n)=>{const d=new Date(ds+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10);};
+const fmtHm=h=>{const t=Math.round(h*60);return Math.floor(t/60)+'h '+String(t%60).padStart(2,'0')+'m';};
+const fmtClock=v=>{const m=Math.round(((v%24)+24)%24*60)%1440;return String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0');};
+const clockHours=s=>{const [h,m]=s.split(':').map(Number);return h+m/60;};
+const avg=a=>a.reduce((s,x)=>s+x,0)/a.length;
+const statHtml=c=>`<div class="stat-box"><div class="st-lbl">${c.l}</div><div class="st-val">${c.v}</div><div class="st-sub">${c.s}</div></div>`;
+const newChart=(id,cfg)=>{const old=Chart.getChart(id);if(old)old.destroy();return new Chart(document.getElementById(id),cfg);};
+const LEGEND_BOTTOM={position:'bottom',labels:{usePointStyle:true,pointStyle:'rectRounded',boxWidth:8,boxHeight:8,padding:14,font:{size:11}}};
+const AXIS_X={ticks:{font:{size:10},maxRotation:0,autoSkipPadding:10},grid:{display:false}};
+const GRID_Y={color:'#eeeef1'};
+
+const GEAR_JSON='./data/gear.json';
+const GEAR_STATUS_JSON='./data/gear_status.json';
+const GH_GEAR_STATUS_PATH='data/gear_status.json';
+const GEAR_STATUS_PENDING_KEY='gear_status_pending';
+let GEAR_LIST=[];
+let GEAR_STATUS={}; // nome scarpa -> 'active' o 'retired', vince sullo stato di Garmin
+async function loadGear(){
+  try{
+    const r=await fetch(GEAR_JSON,{cache:'no-store'});
+    if(r.ok)return await r.json();
+  }catch(e){console.warn('gear.json non disponibile:',e);}
+  return [];
+}
+
+const fmtGearKm=v=>Number(v).toLocaleString('it-IT',{maximumFractionDigits:1});
+const gearState=g=>GEAR_STATUS[g.name]||g.status;
+
+function readGearStatusPending(){
+  try{return JSON.parse(localStorage.getItem(GEAR_STATUS_PENDING_KEY)||'{}')||{};}catch(e){return {};}
+}
+function writeGearStatusPending(p){
+  try{localStorage.setItem(GEAR_STATUS_PENDING_KEY,JSON.stringify(p));}catch(e){}
+}
+
+async function loadGearStatus(){
+  let fromFile={};
+  try{
+    const r=await fetch(GEAR_STATUS_JSON,{cache:'no-store'});
+    if(r.ok)fromFile=(await r.json())||{};
+  }catch(e){console.warn('gear_status.json non disponibile:',e);}
+  // Gli spostamenti in attesa si scartano quando il file pubblicato li contiene gia'.
+  const pending=readGearStatusPending();
+  Object.keys(pending).forEach(n=>{if(fromFile[n]===pending[n])delete pending[n];});
+  writeGearStatusPending(pending);
+  return {...fromFile,...pending};
+}
+
+function gearCardHtml(g,i){
+  const pct=g.max_km?Math.round(g.km/g.max_km*100):null;
+  const retired=gearState(g)==='retired';
+  return `<div class="gear-card" role="button" tabindex="0" onclick="openGearDetail(${i})" onkeydown="if(event.key==='Enter'&&event.target===this)openGearDetail(${i})">
+    <div class="gear-card-top">
+      <img class="gear-thumb" src="${escGear(g.photo)}" alt="" loading="lazy">
+      <div>
+        <div class="gear-card-name">${escGear(g.name)}</div>
+        <div class="gear-card-sub">${g.label?escGear(g.label):''}</div>
+      </div>
+    </div>
+    <div class="gear-card-km">${fmtGearKm(g.km)} <span>km</span></div>
+    ${pct!==null?`<div class="gear-track"><div class="gear-fill" style="width:${Math.min(pct,100)}%;"></div></div>`:''}
+    <div class="gear-card-meta"><span>${g.activities} attività</span><span>${pct!==null?`${pct}% di ${fmtGearKm(g.max_km)} km`:''}</span></div>
+    <div class="gear-card-meta"><span>${g.first_used?'dal '+fmtDtShort(g.first_used):''}</span><span>${g.last_used?'ultima '+fmtDtShort(g.last_used):''}</span></div>
+    <button class="gear-move" onclick="event.stopPropagation();moveGear(${i})">${retired?'Sposta in Attive':'Sposta in Ritirate'}</button>
+  </div>`;
+}
+
+function renderScarpe(){
+  const box=document.getElementById('scarpe-list');
+  if(!GEAR_LIST.length){box.innerHTML='<div class="salute-empty">Dati delle scarpe non disponibili</div>';return;}
+  const section=(title,state)=>{
+    const cards=GEAR_LIST.map((g,i)=>gearState(g)===state?gearCardHtml(g,i):'').filter(Boolean);
+    return `<div class="gear-section">
+      <div class="act-section-title">${title} (${cards.length})</div>
+      ${cards.length?`<div class="gear-grid">${cards.join('')}</div>`:`<div class="gear-section-empty">Nessuna scarpa</div>`}
+    </div>`;
+  };
+  box.innerHTML=section('Attive','active')+section('Ritirate','retired');
+}
+
+function moveGear(i){
+  const g=GEAR_LIST[i];
+  const next=gearState(g)==='retired'?'active':'retired';
+  GEAR_STATUS[g.name]=next;
+  const pending=readGearStatusPending();
+  pending[g.name]=next;
+  writeGearStatusPending(pending);
+  renderScarpe();
+  publishGearStatus();
+}
+
+async function publishGearStatus(){
+  const box=document.getElementById('gear-move-status');
+  const token=getGhToken();
+  if(!token){
+    box.innerHTML=`<form class="act-map-lock" onsubmit="submitGearToken(event)">
+      <div class="act-map-lock-title">Spostata su questo dispositivo. Per vederla ovunque serve il token GitHub.</div>
+      <div class="act-map-lock-row">
+        <input type="password" placeholder="ghp_xxxxxxxxxxxx" aria-label="Token GitHub" required>
+        <button type="submit">Salva</button>
+      </div>
+    </form>`;
+    return;
+  }
+  box.textContent='Salvataggio in corso...';
+  const apiUrl=`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_GEAR_STATUS_PATH}`;
+  const headers={'Authorization':'token '+token,'Accept':'application/vnd.github+json'};
+  try{
+    let current={},sha;
+    const getRes=await fetch(apiUrl,{headers,cache:'no-store'});
+    if(getRes.ok){
+      const data=await getRes.json();
+      sha=data.sha;
+      current=JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g,'')))))||{};
+    }else if(getRes.status!==404){
+      throw new Error('GitHub '+getRes.status);
+    }
+    const content=JSON.stringify({...current,...readGearStatusPending()},null,2)+'\n';
+    const body={message:'Scarpe: attive e ritirate (da dashboard)',content:btoa(unescape(encodeURIComponent(content)))};
+    if(sha)body.sha=sha;
+    const putRes=await fetch(apiUrl,{method:'PUT',headers:{...headers,'Content-Type':'application/json'},body:JSON.stringify(body)});
+    if(!putRes.ok)throw new Error('GitHub '+putRes.status);
+    box.textContent='Salvato';
+  }catch(e){
+    console.error(e);
+    box.textContent='Spostata su questo dispositivo, ma non salvata su GitHub: '+e.message;
+  }
+}
+
+function submitGearToken(e){
+  e.preventDefault();
+  localStorage.setItem(GH_TOKEN_KEY,e.target.querySelector('input').value.trim());
+  publishGearStatus();
+}
+
+function openGearDetail(i){
+  const g=GEAR_LIST[i];
+  const pct=g.max_km?Math.round(g.km/g.max_km*100):null;
+  const stats=[
+    {l:'Distanza',v:fmtGearKm(g.km)+' km',s:pct!==null?`${pct}% di ${fmtGearKm(g.max_km)} km`:''},
+    {l:'Attività',v:g.activities,s:g.last_used?'ultima '+fmtDtShort(g.last_used):''},
+    {l:'Giorni d\'uso',v:new Set(g.runs.map(r=>r.date)).size,s:g.first_used?'dal '+fmtDtShort(g.first_used):''},
+  ].map(statHtml).join('');
+  const runs=g.runs.map(r=>`<div class="gear-run">
+      <div>
+        <div class="gear-run-name">${escGear(r.name||'Corsa')}</div>
+        <div class="gear-run-sub">${fmtDtShort(r.date)}</div>
+      </div>
+      <div class="gear-run-km">${fmtGearKm(r.km)} km</div>
+    </div>`).join('');
+  const state=gearState(g)==='retired'?'Ritirata':'Attiva';
+  let container=document.getElementById('act-modal-container');
+  if(!container){container=document.createElement('div');container.id='act-modal-container';document.body.appendChild(container);}
+  container.innerHTML=`
+  <div class="act-modal-overlay" onclick="closeActivityDetail()"></div>
+  <div class="act-modal" role="dialog" aria-label="${escGear(g.name)}">
+    <div class="act-modal-hdr">
+      <button class="act-modal-close" onclick="closeActivityDetail()">✕</button>
+      <div class="act-modal-title">${escGear(g.name)}</div>
+      <div class="act-modal-sub">${g.label?escGear(g.label)+' · ':''}${state}</div>
+    </div>
+    <div class="act-modal-body">
+      <img class="gear-photo" src="${escGear(g.photo)}" alt="Foto ${escGear(g.name)}">
+      <div class="stat-grid">${stats}</div>
+      <div class="act-section-title">Attività</div>
+      <div>${runs}</div>
+    </div>
+  </div>`;
+  document.body.style.overflow='hidden';
+}
+
+function renderForma(activities){
+  const acts=(activities||[]).filter(a=>a.date&&a.date<=TODAY);
+  const recent=acts.filter(a=>a.date>=dateAdd(TODAY,-28));
+  const peak=recent.reduce((b,a)=>a.max_hr&&(!b||a.max_hr>b.max_hr)?a:b,null);
+  const withTe=recent.filter(a=>a.training_effect_aerobic!=null);
+  const vo2=SALUTE&&SALUTE.vo2max;
+
+  document.getElementById('forma-stats').innerHTML=[
+    {l:'FC max in uso',v:WATCH_ZONES.fcMax+' bpm',s:'impostata sull\'orologio'},
+    {l:vo2&&vo2.estimate?'VO₂max (stima)':'VO₂max',v:vo2?(vo2.estimate?'~':'')+vo2.value:'—',s:vo2?(vo2.estimate?'Stima VDOT, test 10 km 7/10':'Garmin'):'sblocca in Lifestyle'},
+    {l:'Picco FC 4 settimane',v:peak?peak.max_hr+' bpm':'—',s:peak?fmtDtShort(peak.date):'nessuna corsa'},
+    {l:'Training effect medio',v:withTe.length?avg(withTe.map(a=>a.training_effect_aerobic)).toFixed(1):'—',s:withTe.length?`anaerobico ${avg(withTe.map(a=>a.training_effect_anaerobic||0)).toFixed(1)} · ${withTe.length} corse`:'nessuna corsa'},
+  ].map(statHtml).join('');
+
+  // Tabella zone
+  const zones=buildZones();
+  const keys=['z1','z2','z3','z4','z5'];
+  const secs=keys.map(k=>recent.reduce((s,a)=>s+((a.hr_zones&&a.hr_zones[k])||0),0));
+  const totSec=secs.reduce((s,x)=>s+x,0);
+  document.getElementById('forma-zones').innerHTML=`<table class="zone-tbl">
+    <thead><tr><th>Zona</th><th>% FC max</th><th>bpm</th><th>Tempo</th><th>Quota</th></tr></thead>
+    <tbody>${zones.map((z,i)=>{
+      const pct=totSec?secs[i]/totSec*100:0;
+      return `<tr>
+        <td><span class="zone-tag" style="background:${z.bg};color:${z.col};">${z.label}</span></td>
+        <td>${z.pctLabel}</td>
+        <td>${z.min}–${z.max}</td>
+        <td>${fmtHMS(secs[i])}</td>
+        <td><div class="zone-share"><div class="zone-share-bar" style="width:${Math.max(pct,1)}px;flex:0 0 ${Math.max(pct,1)}px;background:${HRZONE_COLORS[keys[i]]};"></div><span class="zone-share-val">${pct.toFixed(0)}%</span></div></td>
+      </tr>`;
+    }).join('')}</tbody></table>`;
+
+  document.getElementById('forma-zones-note').textContent=
+    `Soglie dell'orologio Garmin: FC max ${WATCH_ZONES.fcMax}, FC a riposo ${WATCH_ZONES.rest}.`;
+
+  // Tempo in zona per settimana
+  const byWeek={};
+  acts.filter(a=>a.date>=WATCH_DATA_FROM).forEach(a=>{
+    const tot=keys.reduce((s,k)=>s+((a.hr_zones&&a.hr_zones[k])||0),0);
+    if(!tot)return;
+    const w=getWMon(a.date);
+    if(!byWeek[w])byWeek[w]={z1:0,z2:0,z3:0,z4:0,z5:0};
+    keys.forEach(k=>byWeek[w][k]+=(a.hr_zones[k]||0));
+  });
+  const weeks=Object.keys(byWeek).sort().slice(-10);
+  const weekPct=(w,k)=>{const t=keys.reduce((s,x)=>s+byWeek[w][x],0);return +(byWeek[w][k]/t*100).toFixed(1);};
+  newChart('cZoneW',{type:'bar',data:{
+    labels:weeks.map(fmtDtShort),
+    datasets:keys.map(k=>({label:HRZONE_LABELS[k],data:weeks.map(w=>weekPct(w,k)),backgroundColor:HRZONE_COLORS[k],borderColor:'#fff',borderWidth:1,borderRadius:3}))
+  },options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+    plugins:{legend:LEGEND_BOTTOM,tooltip:{callbacks:{title:i=>'Settimana del '+i[0].label,label:c=>`${c.dataset.label}: ${c.parsed.y.toFixed(0)}%`}}},
+    scales:{x:{...AXIS_X,stacked:true},y:{stacked:true,min:0,max:100,ticks:{callback:v=>v+'%',font:{size:11}},grid:GRID_Y}}}});
+
+  // Training effect
+  const teRuns=acts.filter(a=>a.training_effect_aerobic!=null&&a.date>=dateAdd(TODAY,-56)).sort((a,b)=>a.date.localeCompare(b.date));
+  newChart('cTE',{type:'bar',data:{
+    labels:teRuns.map(a=>fmtDtShort(a.date)),
+    datasets:[
+      {label:'Aerobico',data:teRuns.map(a=>a.training_effect_aerobic),backgroundColor:teRuns.map(a=>teInfo(a.te_label).c),borderRadius:4,order:2},
+      {label:'Anaerobico',data:teRuns.map(a=>a.training_effect_anaerobic||0),backgroundColor:'rgba(60,60,67,.55)',borderRadius:4,order:1},
+    ]
+  },options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},datasets:{bar:{grouped:false,barPercentage:.75,categoryPercentage:.9,maxBarThickness:20}},
+    plugins:{legend:{display:false},tooltip:{callbacks:{
+      title:i=>`${i[0].label} · ${teRuns[i[0].dataIndex].name}`,
+      label:c=>c.datasetIndex===0?`Aerobico ${c.parsed.y.toFixed(1)} · ${teInfo(teRuns[c.dataIndex].te_label).t}`:`Anaerobico ${c.parsed.y.toFixed(1)}`,
+    }}},
+    scales:{x:AXIS_X,y:{min:0,max:5,ticks:{stepSize:1,font:{size:11}},grid:GRID_Y}}}});
+  const present=[...new Set(teRuns.map(a=>a.te_label))];
+  document.getElementById('te-legend').innerHTML=present.map(l=>{const i=teInfo(l);return `<div class="act-hrzone-legend-item"><div class="act-hrzone-dot" style="background:${i.c};"></div>${i.t}</div>`;}).join('')
+    +`<div class="act-hrzone-legend-item"><div class="act-hrzone-dot" style="background:rgba(60,60,67,.55);"></div>Anaerobico</div>`;
+}
+
+function renderNextWorkout(){
+  const done=new Set(ALL_ACTIVITIES.map(a=>a.date));
+  const next=PIANO.filter(p=>p.type!=='rest'&&p.date>=TODAY&&!(p.date===TODAY&&done.has(p.date)))
+    .sort((a,b)=>a.date.localeCompare(b.date))[0];
+  document.getElementById('next-workout').innerHTML=!next?'':`<div class="race-card next-workout">
+    <div class="rc-ey">${next.date===TODAY?'Oggi':'Prossimo · '+fmtDt(next.date)}</div>
+    <div class="rc-name">${escGear(next.summary)}</div>
+    <div class="rc-meta">${escGear(next.desc)}</div>
+  </div>`;
+}
+
+function renderRecupero(){
+  const has=SALUTE&&SALUTE.sleep&&SALUTE.sleep.length;
+  document.getElementById('recupero-empty').style.display=has?'none':'flex';
+  document.getElementById('recupero-body').style.display=has?'block':'none';
+  if(!has)return;
+
+  const sleep=SALUTE.sleep;
+  const last7=sleep.slice(-7);
+  const lastSleep=sleep[sleep.length-1];
+  const hrv=SALUTE.hrv||[];
+  const lastHrv=hrv[hrv.length-1];
+  const steps=SALUTE.steps||[];
+  const lastSteps=steps.slice(-7);
+  const fmtSteps=v=>Math.round(v).toLocaleString('it-IT');
+  const range=SALUTE.hrvRange||[];
+  const bedAfterNoon=s=>{const h=clockHours(s);return h<12?h+24:h;};
+
+  document.getElementById('recupero-stats').innerHTML=[
+    {l:'Sonno medio 7 giorni',v:fmtHm(avg(last7.map(s=>s.h))),s:'fabbisogno '+fmtHm(avg(last7.map(s=>s.need)))},
+    {l:'A letto (media)',v:fmtClock(avg(last7.map(s=>bedAfterNoon(s.bed)))),s:'ultimi 7 giorni'},
+    {l:'HRV stanotte',v:lastHrv?lastHrv.hrv+' ms':'—',s:lastHrv?`media 7 gg ${lastHrv.avg7} · range ${range[0]}–${range[1]}`:'non disponibile'},
+    {l:'Sleep score',v:lastSleep.score!=null?lastSleep.score:'—',s:'notte del '+fmtDtShort(lastSleep.date)},
+    {l:'Passi medi 7 giorni',v:fmtSteps(avg(lastSteps.map(s=>s.steps))),s:'obiettivo '+fmtSteps(avg(lastSteps.map(s=>s.goal)))},
+  ].map(statHtml).join('');
+
+  newChart('cSleep',{type:'bar',data:{
+    labels:sleep.map(s=>fmtDtShort(s.date)),
+    datasets:[
+      {label:'Profondo',data:sleep.map(s=>s.deep),backgroundColor:'#1d4ed8',borderColor:'#fff',borderWidth:1,borderRadius:3,stack:'sonno',order:2},
+      {label:'Leggero',data:sleep.map(s=>s.light),backgroundColor:'#2E9BD6',borderColor:'#fff',borderWidth:1,borderRadius:3,stack:'sonno',order:2},
+      {label:'REM',data:sleep.map(s=>s.rem),backgroundColor:'#EFA000',borderColor:'#fff',borderWidth:1,borderRadius:3,stack:'sonno',order:2},
+      {type:'line',label:'Fabbisogno',data:sleep.map(s=>s.need),borderColor:'#1c1c1e',borderWidth:2,borderDash:[5,4],pointRadius:0,stack:'fabbisogno',order:1},
+    ]
+  },options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+    plugins:{legend:LEGEND_BOTTOM,tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmtHm(c.parsed.y)}`,footer:i=>{const s=sleep[i[0].dataIndex];return `Totale: ${fmtHm(s.h)}`;}}}},
+    scales:{x:{...AXIS_X,stacked:true},y:{stacked:true,min:0,ticks:{callback:v=>v+'h',font:{size:11}},grid:GRID_Y}}}});
+
+  const bandFor=v=>hrv.map(()=>v);
+  newChart('cHrv',{type:'line',data:{
+    labels:hrv.map(h=>fmtDtShort(h.date)),
+    datasets:[
+      {label:'Range balanced',data:bandFor(range[1]),borderWidth:0,pointRadius:0,backgroundColor:'rgba(52,199,89,.14)',fill:'+1'},
+      {label:'_low',data:bandFor(range[0]),borderWidth:0,pointRadius:0,fill:false},
+      {label:'HRV notte',data:hrv.map(h=>h.hrv),borderColor:'#007AFF',backgroundColor:'#007AFF',borderWidth:2,pointRadius:0,pointHoverRadius:4,tension:.25},
+      {label:'Media 7 giorni',data:hrv.map(h=>h.avg7),borderColor:'#1c1c1e',backgroundColor:'#1c1c1e',borderWidth:2,borderDash:[5,4],pointRadius:0,tension:.25},
+    ]
+  },options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+    plugins:{legend:{...LEGEND_BOTTOM,labels:{...LEGEND_BOTTOM.labels,filter:i=>i.text!=='_low'}},tooltip:{filter:i=>i.datasetIndex>1,callbacks:{label:c=>`${c.dataset.label}: ${c.parsed.y} ms`}}},
+    scales:{x:AXIS_X,y:{ticks:{callback:v=>v+' ms',font:{size:11}},grid:GRID_Y}}}});
+
+  const spans=sleep.map(s=>{
+    const bed=bedAfterNoon(s.bed);
+    let wake=clockHours(s.wake);
+    while(wake<bed)wake+=24;
+    return [bed,wake];
+  });
+  const yMin=Math.min(21,Math.floor(Math.min(...spans.map(x=>x[0]))));
+  const yMax=Math.max(36,Math.ceil(Math.max(...spans.map(x=>x[1]))));
+  newChart('cBed',{type:'bar',data:{
+    labels:sleep.map(s=>fmtDtShort(s.date)),
+    datasets:[{label:'Sonno',data:spans,backgroundColor:'#007AFF',borderRadius:4,borderSkipped:false}]
+  },options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`A letto ${sleep[c.dataIndex].bed} · Sveglia ${sleep[c.dataIndex].wake}`}}},
+    scales:{x:AXIS_X,y:{reverse:true,min:yMin,max:yMax,ticks:{stepSize:3,callback:v=>fmtClock(v),font:{size:11}},
+      grid:{color:c=>c.tick&&c.tick.value===24?'#1c1c1e':'#eeeef1',lineWidth:c=>c.tick&&c.tick.value===24?2:1}}}}});
+  newChart('cSteps',{type:'bar',data:{
+    labels:steps.map(s=>fmtDtShort(s.date)),
+    datasets:[
+      {label:'Passi',data:steps.map(s=>s.steps),backgroundColor:'#007AFF',borderRadius:3,maxBarThickness:14,order:2},
+      {type:'line',label:'Obiettivo',data:steps.map(s=>s.goal),borderColor:'#1c1c1e',borderWidth:2,borderDash:[5,4],pointRadius:0,order:1},
+    ]
+  },options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+    plugins:{legend:LEGEND_BOTTOM,tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmtSteps(c.parsed.y)}`}}},
+    scales:{x:AXIS_X,y:{min:0,ticks:{callback:v=>fmtSteps(v),font:{size:11}},grid:GRID_Y}}}});
+
+  document.getElementById('recupero-note').textContent=`La riga scura indica la mezzanotte. Dati aggiornati al ${fmtDtShort(SALUTE.updated)}.`;
 }
 
 // ── SYNC ──────────────────────────────────────────────────────────────────────
@@ -876,9 +1122,14 @@ async function sync(){
   if(finalHrHistory.length){
     HR_HISTORY=[...finalHrHistory].sort((a,b)=>a.date.localeCompare(b.date));
   }
+  GEAR_LIST=await loadGear();
+  GEAR_STATUS=await loadGearStatus();
   renderZoneLegend();
 
   buildDashboard(activities);
+  renderScarpe();
+  renderNextWorkout();
+  if(!SALUTE)restorePrivateUnlock();
   setStatus('ok','Aggiornato');
   document.getElementById('loading').classList.add('hidden');
 }
@@ -886,116 +1137,105 @@ async function sync(){
 function toggleW(id){const el=document.getElementById(id);el.style.display=el.style.display==='none'?'block':'none';}
 function showTab(n){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.querySelector(`[onclick="showTab('${n}')"]`).classList.add('active');document.getElementById('panel-'+n).classList.add('active');}
 
-// ── SCORE PANEL ───────────────────────────────────────────────────────────────
-const SUBSCORE_LABELS={
-  hr:'FC', hr_drift:'FC + deriva', pace:'Passo', distance:'Distanza',
-  wu_cd:'WU + CD', fast_blocks:'Blocchi veloci', structure:'Struttura',
-  recoveries:'Recuperi', hr_hr:'FC'
-};
-const SUBSCORE_WEIGHTS={
-  recovery:  {hr:50, pace:20, distance:30},
-  easy:      {hr:35, pace:35, distance:30},
-  lungo:     {hr_drift:25, pace:25, distance:50, wu_cd:20},
-  qualita:   {fast_blocks:40, structure:25, recoveries:10, wu_cd:10, hr:10, distance:5},
-};
-const FLAG_TYPE={
-  HR_HIGH:'err', TOO_FAST:'err', FADE:'err', INCOMPLETE:'err', NO_FAST_BLOCKS:'err',
-  HR_LOW:'diag', CARDIAC_DRIFT:'diag', HIGH_STRESS:'diag',
-  MISSING_WARMUP:'warn', MISSING_COOLDOWN:'warn', SHORT_RECOVERY:'warn',
-};
-const FLAG_QUALITA_ONLY=new Set(['MISSING_WARMUP','MISSING_COOLDOWN']);
-const FLAG_LABELS={
-  HR_HIGH:'FC troppo alta', HR_LOW:'FC bassa (diagnostica)', TOO_FAST:'Passo troppo veloce',
-  FADE:'Calo progressivo', INCOMPLETE:'Distanza incompleta', NO_FAST_BLOCKS:'Nessuna ripetuta',
-  CARDIAC_DRIFT:'Deriva cardiaca', MISSING_WARMUP:'Warm-up breve/assente',
-  MISSING_COOLDOWN:'Cooldown breve/assente', SHORT_RECOVERY:'Recuperi corti',
-};
-
-function openScorePanel(panelId){
-  const el=document.getElementById(panelId);
-  if(!el)return;
-  const sv=JSON.parse(decodeURIComponent(el.getAttribute('data-score')));
-  const wtype=el.getAttribute('data-type');
-  const c=SC(sv.score);
-  const weights=SUBSCORE_WEIGHTS[wtype]||{};
-  const subscores=sv.subscores||{};
-  const flags=sv.flags||[];
-  const notes=sv.notes||[];
-
-  // Barre sotto-voti
-  const barRows=Object.entries(subscores).map(([k,v])=>{
-    // WU+CD mostrato solo per qualita e lungo
-    if(k==='wu_cd'&&wtype!=='qualita'&&wtype!=='lungo') return '';
-    const w=weights[k]||'—';
-    const col=SC(v);
-    const lbl=SUBSCORE_LABELS[k]||k;
-    return `<div class="sp-bar-row">
-      <div class="sp-bar-label">${lbl}</div>
-      <div class="sp-bar-wrap"><div class="sp-bar" style="width:${v*10}%;background:${col};"></div></div>
-      <div class="sp-bar-val" style="color:${col};">${Number(v).toFixed(2)}</div>
-      <div class="sp-bar-w">${w!=='—'?w+'%':'—'}</div>
-    </div>`;
-  }).join('');
-
-  // Flag
-  const visibleFlags=flags.filter(f=>!FLAG_QUALITA_ONLY.has(f)||wtype==='qualita');
-  const flagHtml=visibleFlags.length?visibleFlags.map(f=>{
-    const t=FLAG_TYPE[f]||'warn';
-    const lbl=FLAG_LABELS[f]||f;
-    return `<span class="sp-flag sp-flag-${t}">${lbl}</span>`;
-  }).join(''):'<span style="font-family:var(--mono);font-size:11px;color:var(--text3);">Nessuna flag</span>';
-
-  // Note
-  const wucdKeywords=['Warm-up','Cooldown','warm-up','cooldown'];
-  const notesHtml=notes.filter(n=>!n.startsWith('Cap:')&&(wtype==='qualita'||!wucdKeywords.some(k=>n.includes(k)))).map(n=>`<div class="sp-note">${n}</div>`).join('');
-  const capNote=notes.find(n=>n.startsWith('Cap:'));
-  const capHtml=capNote?`<div class="sp-note" style="color:var(--amber);">⚠ ${capNote}</div>`:'';
-
-  // Legenda tipo allenamento
-  const typeLabels={recovery:'Recovery',easy:'Facile',lungo:'Lungo',qualita:'Qualità'};
-
-  const html=`
-  <div class="score-panel-overlay" onclick="closeScorePanel()"></div>
-  <div class="score-panel">
-    <button class="sp-close" onclick="closeScorePanel()">✕</button>
-    <div class="sp-header">
-      <div>
-        <div class="sp-title" style="color:${c};">${Number(sv.score).toFixed(2)}<span style="font-size:14px;font-weight:400;color:var(--text2);"> / 10</span></div>
-        <div class="sp-sub">${typeLabels[wtype]||wtype} · ${SL(sv.score)}</div>
-      </div>
-    </div>
-    <div class="sp-section">Sotto-voti</div>
-    ${barRows}
-    <div class="sp-section">Flag</div>
-    <div style="margin-bottom:4px;">${flagHtml}</div>
-    ${notesHtml}
-    ${capHtml}
-    <div class="sp-legend">
-      <div class="sp-leg-item"><div class="sp-leg-dot" style="background:#FF3B30;"></div>Errore</div>
-      <div class="sp-leg-item"><div class="sp-leg-dot" style="background:#FF9500;"></div>Avviso</div>
-      <div class="sp-leg-item"><div class="sp-leg-dot" style="background:#34C759;"></div>Diagnostica</div>
-      <div style="margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--text3);">% = peso nel voto</div>
-    </div>
-  </div>`;
-
-  let container=document.getElementById('score-panel-container');
-  if(!container){container=document.createElement('div');container.id='score-panel-container';document.body.appendChild(container);}
-  container.innerHTML=html;
-  document.body.style.overflow='hidden';
-}
-
-function closeScorePanel(){
-  const c=document.getElementById('score-panel-container');
-  if(c)c.innerHTML='';
-  document.body.style.overflow='';
-}
-
-document.addEventListener('keydown',function(e){if(e.key==='Escape')closeScorePanel();});
-
 // ── PANNELLO DETTAGLIO ATTIVITA COMPLETO (stile Garmin) ──────────────────────
 const HRZONE_COLORS={z1:'#3b82f6',z2:'#22c55e',z3:'#eab308',z4:'#f97316',z5:'#ef4444'};
 const HRZONE_LABELS={z1:'Z1',z2:'Z2',z3:'Z3',z4:'Z4',z5:'Z5'};
 let _actMapInstance=null;
+let _actMapGarminId=null;
+let _gpsData=null; // percorsi decifrati: solo in memoria, fino alla chiusura della pagina
+
+// I parametri devono restare allineati a scripts/gps_vault.py.
+async function decryptVault(url,material){
+  const r=await fetch(url,{cache:'no-store'});
+  if(!r.ok)throw new Error(url+' non trovato');
+  const vault=await r.json();
+  const bytes=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+  const key=await crypto.subtle.deriveKey(
+    {name:'PBKDF2',hash:'SHA-256',salt:bytes(vault.salt),iterations:vault.iterations},
+    material,{name:'AES-GCM',length:256},false,['decrypt']);
+  const plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:bytes(vault.iv)},key,bytes(vault.ciphertext));
+  return JSON.parse(new TextDecoder().decode(plain));
+}
+
+// La password resta su questo dispositivo solo come chiave non esportabile.
+function privateKeyStore(mode,run){
+  return new Promise((resolve,reject)=>{
+    const open=indexedDB.open('matteo-firenze',1);
+    open.onupgradeneeded=()=>open.result.createObjectStore('keys');
+    open.onerror=()=>reject(open.error);
+    open.onsuccess=()=>{
+      const db=open.result,tx=db.transaction('keys',mode),req=run(tx.objectStore('keys'));
+      tx.oncomplete=()=>{db.close();resolve(req.result);};
+      tx.onerror=()=>reject(tx.error);
+    };
+  });
+}
+
+async function unlockPrivateData(material){
+  [_gpsData,SALUTE]=await Promise.all([decryptVault(GPS_VAULT_JSON,material),decryptVault(SALUTE_VAULT_JSON,material)]);
+  renderForma(ALL_ACTIVITIES);
+  renderRecupero();
+}
+
+async function restorePrivateUnlock(){
+  try{
+    const material=await privateKeyStore('readonly',s=>s.get('vault'));
+    if(material)await unlockPrivateData(material);
+  }catch(e){
+    console.warn('Sblocco automatico non riuscito:',e);
+    if(e.name==='OperationError')privateKeyStore('readwrite',s=>s.delete('vault')).catch(()=>{});
+  }
+}
+
+async function lockPrivateData(){
+  try{await privateKeyStore('readwrite',s=>s.delete('vault'));}catch(e){console.warn(e);}
+  _gpsData=null;
+  SALUTE=null;
+  renderForma(ALL_ACTIVITIES);
+  renderRecupero();
+}
+
+async function submitPrivatePassword(e,onUnlock){
+  e.preventDefault();
+  const form=e.target,input=form.querySelector('input'),btn=form.querySelector('button'),err=form.querySelector('.unlock-err');
+  err.textContent='';
+  btn.disabled=true;
+  try{
+    const material=await crypto.subtle.importKey('raw',new TextEncoder().encode(input.value.normalize('NFKC')),'PBKDF2',false,['deriveKey']);
+    await unlockPrivateData(material);
+    await privateKeyStore('readwrite',s=>s.put(material,'vault')).catch(ex=>console.warn('Chiave non salvata:',ex));
+  }catch(ex){
+    err.textContent=ex.name==='OperationError'?'Password errata':'Dati non disponibili, riprova';
+    btn.disabled=false;
+    input.select();
+    return;
+  }
+  input.value='';
+  btn.disabled=false;
+  if(onUnlock)onUnlock(form);
+}
+
+function showUnlockedMap(form){
+  form.outerHTML='<div class="act-map" id="act-map-canvas"></div>';
+  renderActMap();
+}
+
+function renderActMap(){
+  const entry=_gpsData&&_gpsData[_actMapGarminId];
+  const latlngs=entry&&entry.gps_polyline;
+  if(!latlngs||latlngs.length<2)return;
+  setTimeout(()=>{
+    if(!document.getElementById('act-map-canvas'))return;
+    if(_actMapInstance){_actMapInstance.remove();_actMapInstance=null;}
+    const map=L.map('act-map-canvas',{zoomControl:false,attributionControl:false});
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{maxZoom:19}).addTo(map);
+    const poly=L.polyline(latlngs,{color:'#007AFF',weight:4,opacity:.9}).addTo(map);
+    map.fitBounds(poly.getBounds(),{padding:[16,16]});
+    L.circleMarker(latlngs[0],{radius:5,color:'#fff',fillColor:'#34C759',fillOpacity:1,weight:2}).addTo(map);
+    L.circleMarker(latlngs[latlngs.length-1],{radius:5,color:'#fff',fillColor:'#FF3B30',fillOpacity:1,weight:2}).addTo(map);
+    _actMapInstance=map;
+  },50);
+}
 
 function fmtHMS(totSec){
   if(!totSec)return '—';
@@ -1018,7 +1258,7 @@ function openActivityDetail(detailId){
     {lbl:'Dislivello +',      val: act.elevation_gain!=null?Math.round(act.elevation_gain)+' m':'—'},
     {lbl:'Calorie',           val: act.calories!=null?Math.round(act.calories)+' kcal':'—'},
     {lbl:'Liquidi persi',     val: act.sweat_loss_ml!=null?Math.round(act.sweat_loss_ml)+' ml':'—'},
-    {lbl:'Effetto aerobico',  val: act.training_effect_aerobic!=null?Number(act.training_effect_aerobic).toFixed(1):'—'},
+    {lbl:'Effetto aerobico',  val: act.training_effect_aerobic!=null?Number(act.training_effect_aerobic).toFixed(1)+(act.te_label?`<div class="st-sub">${teInfo(act.te_label).t}</div>`:''):'—'},
     {lbl:'Effetto anaerobico',val: act.training_effect_anaerobic!=null?Number(act.training_effect_anaerobic).toFixed(1):'—'},
   ];
 
@@ -1065,10 +1305,17 @@ function openActivityDetail(detailId){
   }
 
   // ── Mappa GPS ──
-  const hasGps = act.gps_polyline && act.gps_polyline.length>1;
-  const mapHtml = hasGps
-    ? `<div class="act-map" id="act-map-canvas"></div>`
-    : `<div class="act-map-empty">Nessun dato GPS per questa attività</div>`;
+  const hasGps = !!act.has_gps;
+  _actMapGarminId = hasGps ? String(act.garmin_id) : null;
+  const mapHtml = !hasGps
+    ? `<div class="act-map-empty">Nessun dato GPS per questa attività</div>`
+    : _gpsData
+      ? `<div class="act-map" id="act-map-canvas"></div>`
+      : `<form class="unlock" onsubmit="submitPrivatePassword(event,showUnlockedMap)">
+          <input type="password" placeholder="Password" aria-label="Password" autocomplete="current-password" required>
+          <button type="submit" aria-label="Sblocca">→</button>
+          <div class="unlock-err" role="alert"></div>
+        </form>`;
 
   const html=`
   <div class="act-modal-overlay" onclick="closeActivityDetail()"></div>
@@ -1091,19 +1338,7 @@ function openActivityDetail(detailId){
   container.innerHTML=html;
   document.body.style.overflow='hidden';
 
-  if(hasGps){
-    setTimeout(()=>{
-      if(_actMapInstance){_actMapInstance.remove();_actMapInstance=null;}
-      const map=L.map('act-map-canvas',{zoomControl:false,attributionControl:false});
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{maxZoom:19}).addTo(map);
-      const latlngs=act.gps_polyline;
-      const poly=L.polyline(latlngs,{color:'#007AFF',weight:4,opacity:.9}).addTo(map);
-      map.fitBounds(poly.getBounds(),{padding:[16,16]});
-      L.circleMarker(latlngs[0],{radius:5,color:'#fff',fillColor:'#34C759',fillOpacity:1,weight:2}).addTo(map);
-      L.circleMarker(latlngs[latlngs.length-1],{radius:5,color:'#fff',fillColor:'#FF3B30',fillOpacity:1,weight:2}).addTo(map);
-      _actMapInstance=map;
-    },50);
-  }
+  if(hasGps&&_gpsData)renderActMap();
 }
 
 function closeActivityDetail(){
@@ -1303,7 +1538,7 @@ function applyGearOverrides(activities){
 }
 
 function gearChoices(){
-  const names=new Set(Object.keys(GEAR_SNAPSHOT_KM));
+  const names=new Set(GEAR_LIST.map(g=>g.name));
   ALL_ACTIVITIES.forEach(a=>{if(a.gear_garmin)names.add(a.gear_garmin);});
   Object.values(GEAR_OVERRIDES).forEach(n=>{if(n)names.add(n);});
   return [...names].sort((a,b)=>a.localeCompare(b));

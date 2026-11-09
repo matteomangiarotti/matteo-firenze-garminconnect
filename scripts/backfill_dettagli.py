@@ -49,7 +49,13 @@ def main():
     with open(output_file, encoding="utf-8") as f:
         data = json.load(f)
 
-    cutoff = "0000-00-00" if days_arg.lower() == "all" else (datetime.now() - timedelta(days=int(days_arg))).strftime("%Y-%m-%d")
+    map_password = os.environ.get("MAP_PASSWORD", "")
+    if not map_password:
+        print("MAP_PASSWORD manca nel file .env")
+        sys.exit(1)
+    sg.gps_vault.restore(data, repo_path, map_password)
+
+    cutoff ="0000-00-00" if days_arg.lower() == "all" else (datetime.now() - timedelta(days=int(days_arg))).strftime("%Y-%m-%d")
     targets = [a for a in data["activities"] if a.get("date", "") >= cutoff]
 
     if not targets:
@@ -114,6 +120,8 @@ def main():
         print(f"    Zone FC: {hrz}")
 
         print()
+
+    sg.gps_vault.seal(data, repo_path, map_password)
 
     with open(output_file, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
